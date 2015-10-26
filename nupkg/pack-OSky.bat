@@ -1,0 +1,14 @@
+"..\.nuget\NuGet.exe" "pack" "..\src\OSky.Utility\OSky.Utility.csproj" -Properties Configuration=Debug -IncludeReferencedProjects
+"..\.nuget\NuGet.exe" "pack" "..\src\OSky.Core\OSky.Core.csproj" -Properties Configuration=Debug -IncludeReferencedProjects
+"..\.nuget\NuGet.exe" "pack" "..\src\OSky.Core.Data.Entity\OSky.Core.Data.Entity.csproj" -Properties Configuration=Debug -IncludeReferencedProjects
+"..\.nuget\NuGet.exe" "pack" "..\src\OSky.Core.Data.Entity.MySql\OSky.Core.Data.Entity.MySql.csproj" -Properties Configuration=Debug -IncludeReferencedProjects
+"..\.nuget\NuGet.exe" "pack" "..\src\OSky.Web.Client\OSky.Web.Client.csproj" -Properties Configuration=Debug -IncludeReferencedProjects
+"..\.nuget\NuGet.exe" "pack" "..\src\OSky.Web.Mvc\OSky.Web.Mvc.csproj" -Properties Configuration=Debug -IncludeReferencedProjects
+"..\.nuget\NuGet.exe" "pack" "..\src\OSky.Web.WebApi\OSky.Web.WebApi.csproj" -Properties Configuration=Debug -IncludeReferencedProjects
+"..\.nuget\NuGet.exe" "pack" "..\src\OSky.Web.SignalR\OSky.Web.SignalR.csproj" -Properties Configuration=Debug -IncludeReferencedProjects
+"..\.nuget\NuGet.exe" "pack" "..\src\OSky.Autofac.Mvc\OSky.Autofac.Mvc.csproj" -Properties Configuration=Debug -IncludeReferencedProjects
+"..\.nuget\NuGet.exe" "pack" "..\src\OSky.Autofac.WebApi\OSky.Autofac.WebApi.csproj" -Properties Configuration=Debug -IncludeReferencedProjects
+"..\.nuget\NuGet.exe" "pack" "..\src\OSky.Autofac.SignalR\OSky.Autofac.SignalR.csproj" -Properties Configuration=Debug -IncludeReferencedProjects
+"..\.nuget\NuGet.exe" "pack" "..\src\OSky.App.Local\OSky.App.Local.csproj" -Properties Configuration=Debug -IncludeReferencedProjects
+"..\.nuget\NuGet.exe" "pack" "..\src\OSky.Logging.Log4Net\OSky.Logging.Log4Net.csproj" -Properties Configuration=Debug -IncludeReferencedProjects
+"..\.nuget\NuGet.exe" "pack" "..\src\OSky.Core.Permissions\OSky.Core.Permissions.csproj" -Properties Configuration=Debug -IncludeReferencedProjects

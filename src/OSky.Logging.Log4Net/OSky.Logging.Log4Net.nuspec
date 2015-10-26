@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>OSky.Logging.Log4Net</id>
+    <version>$version$</version>
+    <title>OSky.Logging.Log4Net</title>
+    <authors></authors>
+    <owners>http://www.OSky.org</owners>
+    <projectUrl>https://github.com/i66soft/OSky</projectUrl>
+    <iconUrl>https://avatars0.githubusercontent.com/u/3930317?v=3&amp;s=80</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>OSky Log4Net日志组件，提供基于Log4Net的基础日志记录功能的封装</description>
+    <summary>OSky Log4Net日志组件</summary>
+    <copyright>Copyright © OSky 2015</copyright>
+    <language>zh-CN</language>
+    <tags>OSky</tags>
+  </metadata>
+  <files>
+    <file src="bin\$configuration$\$id$.pdb" target="lib\net45\" />
+  </files>
+</package>

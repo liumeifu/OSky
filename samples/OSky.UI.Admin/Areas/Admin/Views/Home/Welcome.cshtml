@@ -1,0 +1,78 @@
+﻿@using OSky.Web.Mvc.Extensions
+
+@{
+    ViewBag.Title = "Welcome";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Welcome</h2>
+@*<ul>
+    <li>组织机构数量：@ViewBag.Data.OrganizationCount</li>
+    <li>角色数量：@ViewBag.Data.RoleCount</li>
+    <li>用户数量：@ViewBag.Data.UserCount</li>
+</ul>*@
+<input id="btn1" type="button" class="btn btn-default" value="确 定">
+<input id="btn2" type="button" class="btn btn-primary" value="确 定">
+<input id="btn3" type="button" class="btn btn-success" value="确 定">
+<input id="btn4" type="button" class="btn btn-info" value="确 定">
+<input id="btn5" type="button" class="btn btn-warning " value="确 定">
+<input id="btn6" type="button" class="btn btn-danger" value="确 定">
+<br />
+<input id="txt1" type="text" class="easyui-validatebox textbox" data-options="required:true,validType:'length[3,10]'" />
+<input id="txt2" type="text" class="textbox" />
+<select id="=sel1" class="easyui-validatebox combo">
+    <option value="1">请选择</option>
+    <option value="2">你喜欢什么食物</option>
+</select>
+<input class="easyui-textbox" data-options="multiline:true" style="height:60px" />
+
+<input class="easyui-searchbox" style="height:30px;width:250px">
+
+       @section footer{<script type="text/javascript">
+            $(function () {
+                $("#btn1").click(function () {
+                    $.OSky.layer.msg.tab([{
+                        title: 'TAB1',
+                        content: '内容1'
+                    }, {
+                        title: 'TAB2',
+                        content: '内容2'
+                    }, {
+                        title: 'TAB3',
+                        content: '内容3'
+                    }]);
+                    //$.OSky.layer.msg.info("你好！");
+                    //$.OSky.layer.msg.confirm("见到你真的很高兴", function() {alert("执行成功！") });
+                    //$.OSky.layer.msg.full("welcome");
+                    //$.OSky.layer.msg.open("你好！");
+                    //var obj = $.OSky.layer.msg.prompt("你好！", '你还好吗？', function (obj) {
+                    //    $.OSky.layer.msg.info(obj.pass + "-----" + obj.context);
+                    //});
+
+                });
+                $("#btn2").click(function () {
+                    $.OSky.layer.msg.loading(0);
+                });
+                $("#btn3").click(function () {
+                    $.OSky.layer.msg.confirm("见到你真的很高兴", function () { alert("执行成功！") });
+                });
+                $("#btn4").click(function () {
+                    $.OSky.layer.msg.open(1,"你好！",true, function (index, layero) {
+                        $("#txt1").val("111");
+                    },null,"查看");
+                });
+                $("#btn5").click(function () {
+                    $.OSky.layer.msg.full(2, "welcome", true, function (index, layero) {
+                        $("#txt2").val("111");
+                    }, null, "查看");
+                });
+                $("#btn6").click(function () {
+                    var obj = $.OSky.layer.msg.prompt("你好！", '你还好吗？', function (obj) {
+                            $.OSky.layer.msg.info(obj.pass + "-----" + obj.context);
+                        });
+                });
+
+            })
+
+    </script>
+}

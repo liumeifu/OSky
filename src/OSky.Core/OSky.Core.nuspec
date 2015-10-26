@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>OSky.Core</id>
+    <version>$version$</version>
+    <title>OSky.Core</title>
+    <authors></authors>
+    <owners>http://www.OSky.org</owners>
+    <projectUrl>https://github.com/i66soft/OSky</projectUrl>
+    <iconUrl>https://avatars0.githubusercontent.com/u/3930317?v=3&amp;s=80</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>OSky核心组件，封装着框架核心及数据存储，缓存等功能</description>
+    <summary>OSky核心组件</summary>
+    <copyright>Copyright © OSky 2014</copyright>
+    <language>zh-CN</language>
+    <tags>OSky</tags>
+  </metadata>
+  <files>
+    <file src="bin\$configuration$\$id$.pdb" target="lib\net45\" />
+  </files>
+</package>
