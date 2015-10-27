@@ -31,9 +31,9 @@ namespace OSky.Logging.Log4Net
         /// </summary>
         public static void AddLog4NetServices(this IServiceCollection services)
         {
-            if (OSharpConfig.LoggingConfigReseter == null)
+            if (OSkyConfig.LoggingConfigReseter == null)
             {
-                OSharpConfig.LoggingConfigReseter = new Log4NetLoggingConfigReseter();
+                OSkyConfig.LoggingConfigReseter = new Log4NetLoggingConfigReseter();
             }
             services.AddSingleton<IBasicLoggingInitializer, Log4NetLoggingInitializer>();
             services.AddSingleton<Log4NetLoggerAdapter>();

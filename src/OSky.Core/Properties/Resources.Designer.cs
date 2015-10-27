@@ -79,7 +79,7 @@ namespace OSky.Core.Properties {
         }
         
         /// <summary>
-        ///   查找类似 请先初始化依赖注入服务，再使用OSharpContext.IocRegisterServices属性 的本地化字符串。
+        ///   查找类似 请先初始化依赖注入服务，再使用OSkyContext.IocRegisterServices属性 的本地化字符串。
         /// </summary>
         internal static string Context_BuildServicesFirst {
             get {

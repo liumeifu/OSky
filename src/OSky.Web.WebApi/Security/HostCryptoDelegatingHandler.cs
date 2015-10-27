@@ -79,11 +79,11 @@ namespace OSky.Web.Http.Security
 
         private Task<HttpResponseMessage> DecryptRequest(HttpRequestMessage request)
         {
-            if (!request.Headers.Contains(HttpHeaderNames.OSharpClientPublicKey))
+            if (!request.Headers.Contains(HttpHeaderNames.OSkyClientPublicKey))
             {
                 return CreateResponseTask(request, HttpStatusCode.BadRequest, "在请求头中客户端公钥信息无法找到。");
             }
-            string publicKey = request.Headers.GetValues(HttpHeaderNames.OSharpClientPublicKey).First();
+            string publicKey = request.Headers.GetValues(HttpHeaderNames.OSkyClientPublicKey).First();
             _cryptor = new CommunicationCryptor(_privateKey, publicKey, _hashType);
 
             if (request.Content == null)
@@ -103,7 +103,7 @@ namespace OSky.Web.Http.Security
                 }
                 if (data == null)
                 {
-                    throw new OSharpException("服务器解析请求数据时发生异常。");
+                    throw new OSkyException("服务器解析请求数据时发生异常。");
                 }
                 HttpContent content = new StringContent(data);
                 content.Headers.ContentType = request.Content.Headers.ContentType;

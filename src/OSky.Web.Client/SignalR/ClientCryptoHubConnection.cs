@@ -82,7 +82,7 @@ namespace OSky.Web.SignalR
             if (_cryptor == null)
             {
                 RsaHelper ownRsa = new RsaHelper();
-                Headers.Add(HttpHeaderNames.OSharpClientPublicKey, ownRsa.PublicKey);
+                Headers.Add(HttpHeaderNames.OSkyClientPublicKey, ownRsa.PublicKey);
                 _cryptor = new CommunicationCryptor(ownRsa.PrivateKey, facePublicKey, hashType);
             }
         }

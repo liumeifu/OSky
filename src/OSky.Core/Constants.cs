@@ -20,7 +20,7 @@ namespace OSky.Core
     /// </summary>
     public class Constants
     {
-        public const string CurrentMvcFunctionKey = "OSHARP_MVC_FUNCTION_CURRENT";
-        public const string CurrentWebApiFunctionKey = "OSHARP_WEBAPI_FUNCTION_CURRENT";
+        public const string CurrentMvcFunctionKey = "OSky_MVC_FUNCTION_CURRENT";
+        public const string CurrentWebApiFunctionKey = "OSky_WEBAPI_FUNCTION_CURRENT";
     }
 }

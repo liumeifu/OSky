@@ -94,7 +94,7 @@ namespace OSky.Core.Logging
         {
             if (_outLogLevel == null)
             {
-                OSharpConfig config = OSharpConfig.Instance;
+                OSkyConfig config = OSkyConfig.Instance;
                 _outLogLevel = config.LoggingConfig.DataLoggingConfig.OutLevel;
             }
             return level >= _outLogLevel;

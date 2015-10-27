@@ -26,11 +26,11 @@ namespace OSky.Web.Http.Handlers
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            if (!request.Headers.Contains(HttpHeaderNames.OSharpAuthenticationToken))
+            if (!request.Headers.Contains(HttpHeaderNames.OSkyAuthenticationToken))
             {
                 return base.SendAsync(request, cancellationToken);
             }
-            string authenticationToken = request.Headers.GetValues(HttpHeaderNames.OSharpAuthenticationToken).First();
+            string authenticationToken = request.Headers.GetValues(HttpHeaderNames.OSkyAuthenticationToken).First();
             if (!Authorize(authenticationToken))
             {
                 return CreateForbiddenResponseMessage(request);

@@ -30,7 +30,7 @@ namespace OSky.Web.Mvc.Initialize
         /// <summary>
         /// 初始化Mvc框架
         /// </summary>
-        public static IAppBuilder UseOsharpMvc(this IAppBuilder app, IServiceCollection services, IIocBuilder iocBuilder)
+        public static IAppBuilder UseOSkyMvc(this IAppBuilder app, IServiceCollection services, IIocBuilder iocBuilder)
         {
             services.CheckNotNull("services");
             iocBuilder.CheckNotNull("iocBuilder");

@@ -109,7 +109,7 @@ namespace OSky.Utility.Filter
                 PropertyInfo property = type.GetProperty(propertyName);
                 if (property == null)
                 {
-                    throw new OSharpException(string.Format(Resources.ObjectExtensions_PropertyNameNotExistsInType, propertyName));
+                    throw new OSkyException(string.Format(Resources.ObjectExtensions_PropertyNameNotExistsInType, propertyName));
                 }
                 type = property.PropertyType;
                 propertyAccess = Expression.MakeMemberAccess(propertyAccess, property);

@@ -31,7 +31,7 @@ namespace OSky.Web.SignalR.Initialize
         /// <summary>
         /// 初始化SignalR框架
         /// </summary>
-        public static IAppBuilder UseOsharpSignalR(this IAppBuilder app, IServiceCollection services, IIocBuilder iocBuilder)
+        public static IAppBuilder UseOSkySignalR(this IAppBuilder app, IServiceCollection services, IIocBuilder iocBuilder)
         {
             services.CheckNotNull("services");
             iocBuilder.CheckNotNull("iocBuilder");

@@ -22,7 +22,7 @@ namespace OSky.Core.Security
     /// <summary>
     /// 权限检查结果
     /// </summary>
-    public class AuthenticationResult : OSharpResult<AuthenticationResultType>
+    public class AuthenticationResult : OSkyResult<AuthenticationResultType>
     {
         static AuthenticationResult()
         {

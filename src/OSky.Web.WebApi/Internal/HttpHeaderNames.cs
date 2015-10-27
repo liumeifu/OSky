@@ -17,7 +17,7 @@ namespace OSky.Web.Http.Internal
         public const string IfModifiedSince = "If-Modified-Since";
         public const string IfUnmodifiedSince = "If-Unmodified-Since";
         public const string Vary = "Vary";
-        public const string OSharpClientPublicKey = "OSharp_ClientPublicKey";
-        public const string OSharpAuthenticationToken = "OSharp_AuthenticationToken";
+        public const string OSkyClientPublicKey = "OSky_ClientPublicKey";
+        public const string OSkyAuthenticationToken = "OSky_AuthenticationToken";
     }
 }

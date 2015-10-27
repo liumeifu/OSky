@@ -118,7 +118,7 @@ namespace OSky.Core.Data.Entity
         /// <returns></returns>
         private static DbContextConfig GetDbContextConfig()
         {
-            return _contextConfig ?? (_contextConfig = OSharpConfig.Instance.DataConfig.ContextConfigs
+            return _contextConfig ?? (_contextConfig = OSkyConfig.Instance.DataConfig.ContextConfigs
                 .FirstOrDefault(m => m.ContextType == typeof(TDbContext)));
         }
 
@@ -273,7 +273,7 @@ namespace OSky.Core.Data.Entity
                 {
                     SqlException sqlEx = e.InnerException.InnerException as SqlException;
                     string msg = DataHelper.GetSqlExceptionMessage(sqlEx.Number);
-                    throw new OSharpException("提交数据更新时发生异常：" + msg, sqlEx);
+                    throw new OSkyException("提交数据更新时发生异常：" + msg, sqlEx);
                 }
                 throw;
             }
@@ -363,7 +363,7 @@ namespace OSky.Core.Data.Entity
                 {
                     SqlException sqlEx = e.InnerException.InnerException as SqlException;
                     string msg = DataHelper.GetSqlExceptionMessage(sqlEx.Number);
-                    throw new OSharpException("提交数据更新时发生异常：" + msg, sqlEx);
+                    throw new OSkyException("提交数据更新时发生异常：" + msg, sqlEx);
                 }
                 throw;
             }

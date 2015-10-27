@@ -69,7 +69,7 @@ namespace OSky.Core.Security
         /// </summary>
         protected override string GetArea(Type type)
         {
-            return "OSHARP_DEFAULT_AREA";
+            return "OSky_DEFAULT_AREA";
         }
     }
 }

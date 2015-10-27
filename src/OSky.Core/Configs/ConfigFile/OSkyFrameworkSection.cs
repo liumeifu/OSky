@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-//  <copyright file="OSharpFrameworkSection.cs" company="">
+//  <copyright file="OSkyFrameworkSection.cs" company="">
 //      Copyright (c) 2014-2015 OSky. All rights reserved.
 //  </copyright>
 //  <last-editor>Lmf</last-editor>
@@ -11,7 +11,7 @@ using System.Configuration;
 
 namespace OSky.Core.Configs.ConfigFile
 {
-    internal class OSharpFrameworkSection : ConfigurationSection
+    internal class OSkyFrameworkSection : ConfigurationSection
     {
         private const string XmlnsKey = "xmlns";
         private const string DataKey = "data";

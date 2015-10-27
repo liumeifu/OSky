@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-//  <copyright file="OSharpConfig.cs" company="">
+//  <copyright file="OSkyConfig.cs" company="">
 //      Copyright (c) 2014-2015 OSky. All rights reserved.
 //  </copyright>
 //  <site>http://www.OSky.org</site>
@@ -22,18 +22,18 @@ namespace OSky.Core.Configs
     /// <summary>
     /// OSky配置类
     /// </summary>
-    public sealed class OSharpConfig
+    public sealed class OSkyConfig
     {
-        private const string OSharpSectionName = "OSky";
-        private static readonly Lazy<OSharpConfig> InstanceLazy
-            = new Lazy<OSharpConfig>(() => new OSharpConfig());
+        private const string OSkySectionName = "OSky";
+        private static readonly Lazy<OSkyConfig> InstanceLazy
+            = new Lazy<OSkyConfig>(() => new OSkyConfig());
 
         /// <summary>
-        /// 初始化一个心得<see cref="OSharpConfig"/>实例
+        /// 初始化一个心得<see cref="OSkyConfig"/>实例
         /// </summary>
-        private OSharpConfig()
+        private OSkyConfig()
         {
-            OSharpFrameworkSection section = (OSharpFrameworkSection)ConfigurationManager.GetSection(OSharpSectionName);
+            OSkyFrameworkSection section = (OSkyFrameworkSection)ConfigurationManager.GetSection(OSkySectionName);
             if (section == null)
             {
                 DataConfig = new DataConfig();
@@ -47,11 +47,11 @@ namespace OSky.Core.Configs
         /// <summary>
         /// 获取 配置类的单一实例
         /// </summary>
-        public static OSharpConfig Instance
+        public static OSkyConfig Instance
         {
             get
             {
-                OSharpConfig config = InstanceLazy.Value;
+                OSkyConfig config = InstanceLazy.Value;
                 if (DataConfigReseter != null)
                 {
                     config.DataConfig = DataConfigReseter.Reset(config.DataConfig);

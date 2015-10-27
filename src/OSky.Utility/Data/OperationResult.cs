@@ -64,7 +64,7 @@ namespace OSky.Utility.Data
     /// 泛型版本的业务操作结果信息类，对操作结果进行封装
     /// </summary>
     /// <typeparam name="TData">返回数据的类型</typeparam>
-    public class OperationResult<TData> : OSharpResult<OperationResultType, TData>
+    public class OperationResult<TData> : OSkyResult<OperationResultType, TData>
     {
         /// <summary>
         /// 初始化一个<see cref="OperationResult"/>类型的新实例

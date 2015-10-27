@@ -36,11 +36,11 @@ namespace OSky.Core
         public static void AddDataServices(this IServiceCollection services)
         {
             //添加上下文类型
-            if (OSharpConfig.DataConfigReseter == null)
+            if (OSkyConfig.DataConfigReseter == null)
             {
-                OSharpConfig.DataConfigReseter = new DataConfigReseter();
+                OSkyConfig.DataConfigReseter = new DataConfigReseter();
             }
-            DataConfig config = OSharpConfig.Instance.DataConfig;
+            DataConfig config = OSkyConfig.Instance.DataConfig;
             Type[] contextTypes = config.ContextConfigs.Where(m => m.Enabled).Select(m => m.ContextType).ToArray();
             Type baseType = typeof(IUnitOfWork);
             foreach (var contextType in contextTypes)

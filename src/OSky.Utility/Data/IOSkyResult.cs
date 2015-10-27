@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-//  <copyright file="IOSharpResult.cs" company="">
+//  <copyright file="IOSkyResult.cs" company="">
 //      Copyright (c) 2014-2015 OSky. All rights reserved.
 //  </copyright>
 //  <site>http://www.OSky.org</site>
@@ -19,14 +19,14 @@ namespace OSky.Utility.Data
     /// OSky操作结果
     /// </summary>
     /// <typeparam name="TResultType"></typeparam>
-    public interface IOSharpResult<TResultType> : IOSharpResult<TResultType, object>
+    public interface IOSkyResult<TResultType> : IOSkyResult<TResultType, object>
     { }
 
 
     /// <summary>
     /// OSky操作结果
     /// </summary>
-    public interface IOSharpResult<TResultType, TData>
+    public interface IOSkyResult<TResultType, TData>
     {
         /// <summary>
         /// 获取或设置 结果类型

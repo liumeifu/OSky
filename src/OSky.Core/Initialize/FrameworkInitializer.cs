@@ -39,7 +39,7 @@ namespace OSky.Core
             services.CheckNotNull("services");
             iocBuilder.CheckNotNull("iocBuilder");
 
-            OSharpConfig config = OSharpConfig.Instance;
+            OSkyConfig config = OSkyConfig.Instance;
 
             //使用副本进行初始化，防止不同平台间的相互污染
             IServiceCollection newServices = services.Clone();

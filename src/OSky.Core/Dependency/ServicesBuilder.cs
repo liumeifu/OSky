@@ -53,7 +53,7 @@ namespace OSky.Core.Dependency
         public IServiceCollection Build()
         {
             IServiceCollection services = new ServiceCollection();
-            OSharpContext.IocRegisterServices = services;
+            OSkyContext.IocRegisterServices = services;
             ServiceBuildOptions options = _options;
 
             //添加即时生命周期类型的映射

@@ -31,7 +31,7 @@ namespace OSky.Web.Http.Initialize
         /// <summary>
         /// 初始化WebApi框架
         /// </summary>
-        public static IAppBuilder UseOsharpWebApi(this IAppBuilder app, IServiceCollection services, IIocBuilder iocBuilder)
+        public static IAppBuilder UseOSkyWebApi(this IAppBuilder app, IServiceCollection services, IIocBuilder iocBuilder)
         {
             services.CheckNotNull("services" );
             iocBuilder.CheckNotNull("iocBuilder");

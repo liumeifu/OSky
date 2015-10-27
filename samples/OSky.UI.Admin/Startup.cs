@@ -45,9 +45,9 @@ namespace OSky.UI.Admin
             services.AddLog4NetServices();
             services.AddDataServices();
 
-            app.UseOsharpMvc(services, new MvcAutofacIocBuilder());
-            app.UseOsharpWebApi(services, new WebApiAutofacIocBuilder());
-            app.UseOsharpSignalR(services, new SignalRAutofacIocBuilder());
+            app.UseOSkyMvc(services, new MvcAutofacIocBuilder());
+            app.UseOSkyWebApi(services, new WebApiAutofacIocBuilder());
+            app.UseOSkySignalR(services, new SignalRAutofacIocBuilder());
 
             ConfigurationWebApi(app);
             ConfigureSignalR(app);

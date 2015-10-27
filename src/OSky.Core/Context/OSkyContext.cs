@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-//  <copyright file="OSharpContext.cs" company="">
+//  <copyright file="OSkyContext.cs" company="">
 //      Copyright (c) 2014-2015 OSky. All rights reserved.
 //  </copyright>
 //  <last-editor>Lmf</last-editor>
@@ -17,7 +17,7 @@ namespace OSky.Core.Context
     /// <summary>
     /// OSky上下文，存储OSky全局配置信息
     /// </summary>
-    public static class OSharpContext
+    public static class OSkyContext
     {
         private static IServiceCollection _iocRegisterServices;
 

@@ -80,7 +80,7 @@ namespace OSky.Web.Http.Security
 
         private Task<HttpResponseMessage> EncryptRequest(HttpRequestMessage request)
         {
-            request.Headers.Add(HttpHeaderNames.OSharpClientPublicKey, _clientPublicKey);
+            request.Headers.Add(HttpHeaderNames.OSkyClientPublicKey, _clientPublicKey);
 
             if (request.Method == HttpMethod.Get || request.Content == null)
             {
@@ -118,7 +118,7 @@ namespace OSky.Web.Http.Security
                 data = _cryptor.DecryptAndVerifyData(data);
                 if (data == null)
                 {
-                    throw new OSharpException(Resources.Http_Security_Client_VerifyResponse_Failt);
+                    throw new OSkyException(Resources.Http_Security_Client_VerifyResponse_Failt);
                 }
                 HttpContent content = new StringContent(data);
                 content.Headers.ContentType = response.Content.Headers.ContentType;

@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-//  <copyright file="OSharpResult.cs" company="">
+//  <copyright file="OSkyResult.cs" company="">
 //      Copyright (c) 2014-2015 OSky. All rights reserved.
 //  </copyright>
 //  <site>http://www.OSky.org</site>
@@ -19,33 +19,33 @@ namespace OSky.Utility.Data
     /// OSky结果基类
     /// </summary>
     /// <typeparam name="TResultType"></typeparam>
-    public abstract class OSharpResult<TResultType> : OSharpResult<TResultType, object>, IOSharpResult<TResultType>
+    public abstract class OSkyResult<TResultType> : OSkyResult<TResultType, object>, IOSkyResult<TResultType>
     {
         /// <summary>
-        /// 初始化一个<see cref="OSharpResult{TResultType}"/>类型的新实例
+        /// 初始化一个<see cref="OSkyResult{TResultType}"/>类型的新实例
         /// </summary>
-        protected OSharpResult()
+        protected OSkyResult()
             : this(default(TResultType))
         { }
 
         /// <summary>
-        /// 初始化一个<see cref="OSharpResult{TResultType}"/>类型的新实例
+        /// 初始化一个<see cref="OSkyResult{TResultType}"/>类型的新实例
         /// </summary>
-        protected OSharpResult(TResultType type)
+        protected OSkyResult(TResultType type)
             : this(type, null, null)
         { }
 
         /// <summary>
-        /// 初始化一个<see cref="OSharpResult{TResultType}"/>类型的新实例
+        /// 初始化一个<see cref="OSkyResult{TResultType}"/>类型的新实例
         /// </summary>
-        protected OSharpResult(TResultType type, string message)
+        protected OSkyResult(TResultType type, string message)
             : this(type, message, null)
         { }
 
         /// <summary>
-        /// 初始化一个<see cref="OSharpResult{TResultType}"/>类型的新实例
+        /// 初始化一个<see cref="OSkyResult{TResultType}"/>类型的新实例
         /// </summary>
-        protected OSharpResult(TResultType type, string message, object data)
+        protected OSkyResult(TResultType type, string message, object data)
             : base(type, message, data)
         { }
     }
@@ -56,33 +56,33 @@ namespace OSky.Utility.Data
     /// </summary>
     /// <typeparam name="TResultType">结果类型</typeparam>
     /// <typeparam name="TData">结果数据类型</typeparam>
-    public abstract class OSharpResult<TResultType, TData> : IOSharpResult<TResultType, TData>
+    public abstract class OSkyResult<TResultType, TData> : IOSkyResult<TResultType, TData>
     {
         /// <summary>
-        /// 初始化一个<see cref="OSharpResult{TResultType,TData}"/>类型的新实例
+        /// 初始化一个<see cref="OSkyResult{TResultType,TData}"/>类型的新实例
         /// </summary>
-        protected OSharpResult()
+        protected OSkyResult()
             : this(default(TResultType))
         { }
 
         /// <summary>
-        /// 初始化一个<see cref="OSharpResult{TResultType,TData}"/>类型的新实例
+        /// 初始化一个<see cref="OSkyResult{TResultType,TData}"/>类型的新实例
         /// </summary>
-        protected OSharpResult(TResultType type)
+        protected OSkyResult(TResultType type)
             : this(type, null, default(TData))
         { }
 
         /// <summary>
-        /// 初始化一个<see cref="OSharpResult{TResultType,TData}"/>类型的新实例
+        /// 初始化一个<see cref="OSkyResult{TResultType,TData}"/>类型的新实例
         /// </summary>
-        protected OSharpResult(TResultType type, string message)
+        protected OSkyResult(TResultType type, string message)
             : this(type, message, default(TData))
         { }
 
         /// <summary>
-        /// 初始化一个<see cref="OSharpResult{TResultType,TData}"/>类型的新实例
+        /// 初始化一个<see cref="OSkyResult{TResultType,TData}"/>类型的新实例
         /// </summary>
-        protected OSharpResult(TResultType type, string message, TData data)
+        protected OSkyResult(TResultType type, string message, TData data)
         {
             ResultType = type;
             Message = message;

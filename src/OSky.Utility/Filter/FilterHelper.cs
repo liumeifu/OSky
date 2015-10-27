@@ -180,7 +180,7 @@ namespace OSky.Utility.Filter
             {
                 return bodys.Aggregate(Expression.OrElse);
             }
-            throw new OSharpException(Resources.Filter_GroupOperateError);
+            throw new OSkyException(Resources.Filter_GroupOperateError);
         }
 
         private static Expression GetExpressionBody(ParameterExpression param, FilterRule rule)
@@ -204,7 +204,7 @@ namespace OSky.Utility.Filter
                 PropertyInfo property = type.GetProperty(propertyName);
                 if (property == null)
                 {
-                    throw new OSharpException(string.Format(Resources.Filter_RuleFieldInTypeNotFound, rule.Field, type.FullName));
+                    throw new OSkyException(string.Format(Resources.Filter_RuleFieldInTypeNotFound, rule.Field, type.FullName));
                 }
                 type = property.PropertyType;
                 propertyAccess = Expression.MakeMemberAccess(propertyAccess, property);

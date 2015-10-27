@@ -75,7 +75,7 @@ namespace OSky.Utility.Filter
             {
                 if (value != FilterOperate.And && value != FilterOperate.Or)
                 {
-                    throw new OSharpException(Resources.Filter_GroupOperateError);
+                    throw new OSkyException(Resources.Filter_GroupOperateError);
                 }
                 _operate = value;
             }
