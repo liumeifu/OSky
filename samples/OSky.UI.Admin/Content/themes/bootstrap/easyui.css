@@ -402,7 +402,9 @@
   padding: 0;
 }
 .l-btn-focus {
-  outline: #0000FF dotted thin;
+  background: #e6e6e6;
+  color: #00438a;
+  border: 1px solid #ddd;
 }
 .l-btn-large .l-btn-text {
   line-height: 40px;
