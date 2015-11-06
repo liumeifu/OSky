@@ -4,9 +4,16 @@
     string navDataUrl = Url.Action("GetMenuData");
 }
 <div class="easyui-layout" data-options="fit:true">
-    <div data-options="region:'north', height:70" style="padding: 10px;">
+    <div data-options="region:'north', height:70" @*style="padding: 10px; background: #2D3E50; color: #fff; "*@>
         <span style="font-size: 18px;">OSky后台管理系统</span>
         <a href="/" target="_blank">返回首页</a>
+        <div style="float:right;padding:2px 20px 0px 0px">
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-picture',group:'g2',size:'large',iconAlign:'top'">Picture</a>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-clipart',group:'g2',size:'large',iconAlign:'top'">Clip Art</a>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-shapes',group:'g2',size:'large',iconAlign:'top'">Shapes</a>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-smartart',group:'g2',size:'large',iconAlign:'top'">SmartArt</a>
+
+        </div>
     </div>
     <div data-options="region:'west', split:true, minWidth:100, width:220, title:'导航菜单'">
         <div id="main-nav" class="easyui-accordion" data-options="fit:true, border:false, selected:true">

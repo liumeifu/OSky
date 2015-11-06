@@ -37,10 +37,27 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
 
         #region 视力功能
 
-        [Description("管理-组织机构-列表")]
+        [Description("管理-组织机构-列表视图")]
         public override ActionResult Index()
         {
-            return base.Index();
+            return View(new OrganizationDto());
+        }
+
+        [Description("管理-组织机构-编辑视图")]
+        public ActionResult VisitEdit(int id)
+        {
+            var dto= IdentityContract.Organizations.Where(c => c.Id == id).Select(m =>
+                new OrganizationDto
+                {
+                    Id = m.Id,
+                    Name = m.Name,
+                    Remark = m.Remark,
+                    SortCode = m.SortCode,
+                    ParentId = m.Parent.Id
+                }).SingleOrDefault();
+            if (dto==null)
+                dto = new OrganizationDto();
+            return View("Edit", dto);
         }
 
         #endregion
