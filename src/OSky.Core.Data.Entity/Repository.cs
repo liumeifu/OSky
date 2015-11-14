@@ -377,6 +377,7 @@ namespace OSky.Core.Data.Entity
         public int Update(TEntity entity)
         {
             entity.CheckNotNull("entity");
+            entity.CheckIUpdateAudited<TEntity, TKey>();
             ((DbContext)UnitOfWork).Update<TEntity, TKey>(entity);
             return SaveChanges();
         }
@@ -414,6 +415,7 @@ namespace OSky.Core.Data.Entity
                     {
                         entity = updateFunc(dto, entity);
                     }
+                    entity.CheckIUpdateAudited<TEntity, TKey>();
                     ((DbContext)UnitOfWork).Update<TEntity, TKey>(entity);
                 }
                 catch (Exception e)

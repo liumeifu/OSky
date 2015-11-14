@@ -91,6 +91,23 @@
     <Compile Include="Identity\RoleStore.cs" />
     <Compile Include="Identity\UserManager.cs" />
     <Compile Include="Identity\UserStore.cs" />
+    <Compile Include="ModelConfigurations\Flow\WorkFlowArchiveConfiguration.cs" />
+    <Compile Include="ModelConfigurations\Flow\WorkFlowArchiveConfiguration.generated.cs" />
+    <Compile Include="ModelConfigurations\Flow\WorkFlowDelegationConfiguration.cs" />
+    <Compile Include="ModelConfigurations\Flow\WorkFlowDesignConfiguration.cs" />
+    <Compile Include="ModelConfigurations\Flow\WorkFlowDesignConfiguration.generated.cs" />
+    <Compile Include="ModelConfigurations\Flow\WorkFlowFormConfiguration.cs" />
+    <Compile Include="ModelConfigurations\Flow\WorkFlowFormConfiguration.generated.cs" />
+    <Compile Include="ModelConfigurations\Flow\WorkFlowItemConfiguration.cs" />
+    <Compile Include="ModelConfigurations\Flow\WorkFlowItemConfiguration.generated.cs" />
+    <Compile Include="ModelConfigurations\Flow\WorkFlowLineConfiguration.cs" />
+    <Compile Include="ModelConfigurations\Flow\WorkFlowLineConfiguration.generated.cs" />
+    <Compile Include="ModelConfigurations\Flow\WorkFlowRelateFormConfiguration.cs" />
+    <Compile Include="ModelConfigurations\Flow\WorkFlowRelateFormConfiguration.generated.cs" />
+    <Compile Include="ModelConfigurations\Flow\WorkFlowStepConfiguration.cs" />
+    <Compile Include="ModelConfigurations\Flow\WorkFlowStepConfiguration.generated.cs" />
+    <Compile Include="ModelConfigurations\Flow\WorkFlowTaskConfiguration.cs" />
+    <Compile Include="ModelConfigurations\Flow\WorkFlowTaskConfiguration.generated.cs" />
     <Compile Include="ModelConfigurations\Identity\OrganizationConfiguration.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -131,6 +148,15 @@
     <Compile Include="ModelConfigurations\Security\FunctionConfiguration.cs" />
     <Compile Include="ModelConfigurations\Security\FunctionRoleMapConfiguration.cs" />
     <Compile Include="ModelConfigurations\Security\FunctionUserMapConfiguration.cs" />
+    <Compile Include="Models\Flow\WorkFlowArchive.cs" />
+    <Compile Include="Models\Flow\WorkFlowDelegation.cs" />
+    <Compile Include="Models\Flow\WorkFlowDesign.cs" />
+    <Compile Include="Models\Flow\WorkFlowForm.cs" />
+    <Compile Include="Models\Flow\WorkFlowItem.cs" />
+    <Compile Include="Models\Flow\WorkFlowLine.cs" />
+    <Compile Include="Models\Flow\WorkFlowRelateForm.cs" />
+    <Compile Include="Models\Flow\WorkFlowStep.cs" />
+    <Compile Include="Models\Flow\WorkFlowTask.cs" />
     <Compile Include="Models\Identity\Organization.cs" />
     <Compile Include="Models\Identity\Role.cs" />
     <Compile Include="Models\Identity\User.cs" />
@@ -159,6 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <Compile Include="ModelConfigurations\Flow\WorkFlowDelegationConfiguration.generated.cs" />
     <None Include="OSky.Keys.snk" />
     <None Include="packages.config" />
   </ItemGroup>

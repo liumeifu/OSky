@@ -40,7 +40,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         [Description("管理-组织机构-列表视图")]
         public override ActionResult Index()
         {
-            return View(new OrganizationDto());
+            return base.Index();
         }
 
         [Description("管理-组织机构-编辑视图")]
@@ -144,7 +144,6 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         #region 功能方法
 
         [HttpPost]
-        [AjaxOnly]
         [Description("管理-组织机构-新增")]
         public ActionResult Add(OrganizationDto dto)
         {
