@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using OSky.Core.Dependency;
 using OSky.UI.Models.Flow;
+using OSky.Utility.Data;
+using OSky.UI.Dtos.Flow;
 
 namespace OSky.UI.Contracts
 {
@@ -59,6 +61,20 @@ namespace OSky.UI.Contracts
         /// 获取 流程表单数据集
         /// </summary>
         IQueryable<WorkFlowForm> FlowForms { get; }
+
+         /// <summary>
+        /// 添加工作流表单信息
+        /// </summary>
+        /// <param name="dtos">要添加的表单信息dto</param>
+        /// <returns>业务操作结果</returns>
+        OperationResult AddFlowForm(params FlowFormDto[] dtos);
+
+         /// <summary>
+        /// 更新工作流表单信息
+        /// </summary>
+        /// <param name="dtos">包含更新的表单信息dto</param>
+        /// <returns>业务操作结果</returns>
+        OperationResult EditFlowForm(params FlowFormDto[] dtos);
 
         #endregion
 

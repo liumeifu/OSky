@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using OSky.UI.Models.Flow;
 using OSky.Utility.Data;
+using OSky.UI.Dtos.Flow;
+using OSky.Utility.Extensions;
 
 namespace OSky.UI.Services
 {
@@ -18,6 +20,31 @@ namespace OSky.UI.Services
         public IQueryable<WorkFlowForm> FlowForms
         {
             get { return FlowFormRepository.Entities; }
+        }
+        /// <summary>
+        /// 添加工作流表单信息
+        /// </summary>
+        /// <param name="dtos">要添加的表单信息dto</param>
+        /// <returns>业务操作结果</returns>
+        public OperationResult AddFlowForm(params FlowFormDto[] dtos) 
+        {
+            return FlowFormRepository.Insert(dtos, dto =>
+            {
+                if (FlowFormRepository.CheckExists(m => m.FormName == dto.FormName && m.Type==dto.Type))
+                {
+                    throw new Exception("名称为“{0}”的表单信息已存在，不能重复添加。".FormatWith(dto.FormName));
+                }
+            }, null);
+        }
+
+        /// <summary>
+        /// 更新工作流表单信息
+        /// </summary>
+        /// <param name="dtos">包含更新的表单信息dto</param>
+        /// <returns>业务操作结果</returns>
+        public OperationResult EditFlowForm(params FlowFormDto[] dtos)
+        {
+            return FlowFormRepository.Insert(dtos, null, null);
         }
 
         #endregion

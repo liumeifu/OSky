@@ -39,6 +39,10 @@ namespace OSky.UI.Dtos.Flow
         /// 保存Action
         /// </summary>
         public string ActionPath { get; set; }
+        /// <summary>
+        /// 是否配有流程
+        /// </summary>
+        public bool EnabledFlow { get; set; }
 
         /// <summary>
         /// 状态信息：0 启用 1 停用

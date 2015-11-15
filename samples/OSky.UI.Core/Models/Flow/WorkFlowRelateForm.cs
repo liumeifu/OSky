@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using OSky.Core.Data;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OSky.UI.Models.Flow
 {

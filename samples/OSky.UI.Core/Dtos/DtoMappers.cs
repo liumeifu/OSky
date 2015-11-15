@@ -7,10 +7,11 @@
 // -----------------------------------------------------------------------
 
 using AutoMapper;
-
 using OSky.Core.Security;
+using OSky.UI.Dtos.Flow;
 using OSky.UI.Dtos.Identity;
 using OSky.UI.Dtos.Security;
+using OSky.UI.Models.Flow;
 using OSky.UI.Models.Identity;
 
 
@@ -33,6 +34,8 @@ namespace OSky.UI.Dtos
             //Security
             Mapper.CreateMap<FunctionDto, Function>();
             Mapper.CreateMap<EntityInfoDto, EntityInfo>();
+            //WorkFlow
+            Mapper.CreateMap<FlowFormDto, WorkFlowForm>();
         }
     }
 }
