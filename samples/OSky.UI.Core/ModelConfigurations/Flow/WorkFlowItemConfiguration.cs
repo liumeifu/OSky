@@ -10,7 +10,7 @@ namespace OSky.UI.ModelConfigurations.Flow
     {
         partial void WorkFlowItemConfigurationAppend()
         {
-            HasRequired(c => c.FlowDesign).WithRequiredDependent();
+            HasRequired(c => c.FlowDesign).WithRequiredPrincipal();
         }
     }
 }

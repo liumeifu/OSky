@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\IFlowContract.cs" />
     <Compile Include="Contracts\IIdentityContract.cs" />
     <Compile Include="Contracts\ILoggingContract.cs" />
     <Compile Include="Contracts\ISecurityContract.cs" />
@@ -79,6 +80,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Dtos\DtoMappers.cs" />
+    <Compile Include="Dtos\Flow\FlowFormDto.cs" />
+    <Compile Include="Dtos\Flow\FlowOperateStatusDto.cs" />
+    <Compile Include="Dtos\Flow\FlowProjectDto.cs" />
+    <Compile Include="Dtos\Flow\FlowRelateFormDto.cs" />
     <Compile Include="Dtos\Identity\OrganizationDto.cs" />
     <Compile Include="Dtos\Identity\RoleDto.cs" />
     <Compile Include="Dtos\Identity\UserDto.cs" />
@@ -172,6 +177,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\EntityMapStore.cs" />
     <Compile Include="Security\FunctionMapStore.cs" />
+    <Compile Include="Services\FlowService.Archive.cs" />
+    <Compile Include="Services\FlowService.Delegation.cs" />
+    <Compile Include="Services\FlowService.cs" />
+    <Compile Include="Services\FlowService.Design.cs" />
+    <Compile Include="Services\FlowService.Form.cs" />
+    <Compile Include="Services\FlowService.Item.cs" />
+    <Compile Include="Services\FlowService.Line.cs" />
+    <Compile Include="Services\FlowService.RelateForm.cs" />
+    <Compile Include="Services\FlowService.Step.cs" />
+    <Compile Include="Services\FlowService.Task.cs" />
     <Compile Include="Services\IdentityService.cs" />
     <Compile Include="Services\IdentityService.Organization.cs" />
     <Compile Include="Services\IdentityService.Role.cs" />

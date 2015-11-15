@@ -18,7 +18,7 @@ namespace OSky.UI.Contracts
         /// <summary>
         /// 获取 流程设计数据集
         /// </summary>
-        IQueryable<WorkFlowDesign> FlowDesigns;
+        IQueryable<WorkFlowDesign> FlowDesigns { get; }
 
         #endregion
 
@@ -26,7 +26,7 @@ namespace OSky.UI.Contracts
         /// <summary>
         /// 获取 流程步骤数据集
         /// </summary>
-        IQueryable<WorkFlowStep> FlowSteps;
+        IQueryable<WorkFlowStep> FlowSteps { get; }
 
         #endregion
 
@@ -34,7 +34,7 @@ namespace OSky.UI.Contracts
         /// <summary>
         /// 获取 流程线数据集
         /// </summary>
-        IQueryable<WorkFlowLine> FlowLines;
+        IQueryable<WorkFlowLine> FlowLines { get; }
 
         #endregion
 
@@ -42,7 +42,7 @@ namespace OSky.UI.Contracts
         /// <summary>
         /// 获取 流程事项数据集
         /// </summary>
-        IQueryable<WorkFlowItem> FlowItems;
+        IQueryable<WorkFlowItem> FlowItems { get; }
 
         #endregion
 
@@ -50,7 +50,7 @@ namespace OSky.UI.Contracts
         /// <summary>
         /// 获取 流程任务数据集
         /// </summary>
-        IQueryable<WorkFlowTask> FlowTasks;
+        IQueryable<WorkFlowTask> FlowTasks { get; }
 
         #endregion
 
@@ -58,7 +58,7 @@ namespace OSky.UI.Contracts
         /// <summary>
         /// 获取 流程表单数据集
         /// </summary>
-        IQueryable<WorkFlowForm> FlowForms;
+        IQueryable<WorkFlowForm> FlowForms { get; }
 
         #endregion
 
@@ -66,7 +66,7 @@ namespace OSky.UI.Contracts
         /// <summary>
         /// 获取 流程表单关联数据集
         /// </summary>
-        IQueryable<WorkFlowRelateForm> FlowRelateForms;
+        IQueryable<WorkFlowRelateForm> FlowRelateForms { get; }
 
         #endregion
 
@@ -74,7 +74,7 @@ namespace OSky.UI.Contracts
         /// <summary>
         /// 获取 流程委托数据集
         /// </summary>
-        IQueryable<WorkFlowDelegation> FlowDelegations;
+        IQueryable<WorkFlowDelegation> FlowDelegations { get; }
 
         #endregion
 
@@ -82,7 +82,7 @@ namespace OSky.UI.Contracts
         /// <summary>
         /// 获取 流程档案数据集
         /// </summary>
-        IQueryable<WorkFlowArchive> FlowArchives;
+        IQueryable<WorkFlowArchive> FlowArchives { get; }
 
         #endregion
     }
