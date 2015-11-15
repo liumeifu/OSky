@@ -10,8 +10,8 @@ namespace OSky.UI.ModelConfigurations.Flow
     {
         partial void WorkFlowRelateFormConfigurationAppend()
         {
-            HasRequired(c => c.FlowForm).WithRequiredPrincipal();
-            HasOptional(c => c.FlowDesign).WithOptionalPrincipal();
+            HasRequired(c => c.FlowForm).WithMany();
+            HasRequired(c => c.FlowDesign).WithMany();
         }
     }
 }
