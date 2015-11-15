@@ -83,7 +83,6 @@ namespace OSky.UI.Models.Flow
         [Description("步骤说明")]
         public string StepDescription { get; set; }
 
-        [ForeignKey("FlowDesignId")]
         public virtual WorkFlowDesign FlowDesign { get; set; }
     }
 }

@@ -66,12 +66,10 @@ namespace OSky.UI.Models.Flow
         /// <summary>
         /// 流程信息
         /// </summary>
-        [ForeignKey("FlowDesignId")]
         public virtual WorkFlowDesign FlowDesign { get; set; }
         /// <summary>
         /// 表单信息
         /// </summary>
-        [ForeignKey("FlowFormId")]
         public virtual WorkFlowForm FlowForm { get; set; }
     }
 }

@@ -151,7 +151,6 @@ namespace OSky.UI.Models.Flow
         /// <summary>
         /// 流程事项信息
         /// </summary>
-        [ForeignKey("FlowItemId")]
         public virtual WorkFlowItem FlowItem { get; set; }
         /// <summary>
         /// 流程任务信息
