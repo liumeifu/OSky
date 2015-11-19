@@ -17,7 +17,7 @@ using OSky.Web.Mvc.Extensions;
 using OSky.Utility;
 using OSky.UI.Dtos.Flow;
 
-namespace OSky.UI.Admin.Areas.Admin.Controllers.Flow
+namespace OSky.UI.Admin.Areas.Admin.Controllers
 {
     [Description("工作流-表单管理")]
     public class FormController : AdminBaseController
@@ -85,7 +85,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers.Flow
         //public ActionResult Delete(int[] ids)
         //{
         //    ids.CheckNotNull("ids");
-        //    OperationResult result = IdentityContract.DeleteRoles(ids);
+        //    OperationResult result = FlowContract.DeleteRoles(ids);
         //    return Json(result.ToAjaxResult());
         //}
 

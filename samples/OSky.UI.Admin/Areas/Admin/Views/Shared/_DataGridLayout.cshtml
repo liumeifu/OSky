@@ -29,6 +29,13 @@
     </script>
     @RenderSection("paramInit", false)
     <script type="text/javascript">
+
+        //获取正在编辑行的索引Index
+        function getEditRowIndex(target) {
+            var tr = $(target).closest("tr.datagrid-row");
+            return parseInt(tr.attr("datagrid-row-index"));
+        };
+
         function formatBoolean(value) {
             var icon = value ? 'checkmark' : 'checknomark';
             return '<span class="tree-file icon-' + icon + '"></span>';
