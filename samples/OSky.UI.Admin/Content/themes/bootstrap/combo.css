@@ -8,14 +8,6 @@
   overflow: hidden;
   vertical-align: middle;
 }
-   .combo option {
-        display: block;
-        padding: 5px 12px;
-        clear: both;
-        font-weight: 400;
-        color: #333;
-        white-space: nowrap;
-    }
 .combo .combo-text {
   font-size: 12px;
   border: 0px;

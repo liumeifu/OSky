@@ -180,6 +180,7 @@
     <Content Include="Content\themes\black\combo.css" />
     <Content Include="Content\themes\black\combobox.css" />
     <Content Include="Content\themes\black\datagrid.css" />
+    <Content Include="Content\themes\black\datalist.css" />
     <Content Include="Content\themes\black\datebox.css" />
     <Content Include="Content\themes\black\dialog.css" />
     <Content Include="Content\themes\black\easyui.css" />
@@ -217,6 +218,7 @@
     <Content Include="Content\themes\black\slider.css" />
     <Content Include="Content\themes\black\spinner.css" />
     <Content Include="Content\themes\black\splitbutton.css" />
+    <Content Include="Content\themes\black\switchbutton.css" />
     <Content Include="Content\themes\black\tabs.css" />
     <Content Include="Content\themes\black\textbox.css" />
     <Content Include="Content\themes\black\tooltip.css" />
@@ -224,11 +226,11 @@
     <Content Include="Content\themes\black\validatebox.css" />
     <Content Include="Content\themes\black\window.css" />
     <Content Include="Content\themes\bootstrap\accordion.css" />
-    <Content Include="Content\themes\bootstrap\button.css" />
     <Content Include="Content\themes\bootstrap\calendar.css" />
     <Content Include="Content\themes\bootstrap\combo.css" />
     <Content Include="Content\themes\bootstrap\combobox.css" />
     <Content Include="Content\themes\bootstrap\datagrid.css" />
+    <Content Include="Content\themes\bootstrap\datalist.css" />
     <Content Include="Content\themes\bootstrap\datebox.css" />
     <Content Include="Content\themes\bootstrap\dialog.css" />
     <Content Include="Content\themes\bootstrap\easyui.css" />
@@ -266,6 +268,7 @@
     <Content Include="Content\themes\bootstrap\slider.css" />
     <Content Include="Content\themes\bootstrap\spinner.css" />
     <Content Include="Content\themes\bootstrap\splitbutton.css" />
+    <Content Include="Content\themes\bootstrap\switchbutton.css" />
     <Content Include="Content\themes\bootstrap\tabs.css" />
     <Content Include="Content\themes\bootstrap\textbox.css" />
     <Content Include="Content\themes\bootstrap\tooltip.css" />
@@ -278,6 +281,7 @@
     <Content Include="Content\themes\default\combo.css" />
     <Content Include="Content\themes\default\combobox.css" />
     <Content Include="Content\themes\default\datagrid.css" />
+    <Content Include="Content\themes\default\datalist.css" />
     <Content Include="Content\themes\default\datebox.css" />
     <Content Include="Content\themes\default\dialog.css" />
     <Content Include="Content\themes\default\easyui.css" />
@@ -315,6 +319,7 @@
     <Content Include="Content\themes\default\slider.css" />
     <Content Include="Content\themes\default\spinner.css" />
     <Content Include="Content\themes\default\splitbutton.css" />
+    <Content Include="Content\themes\default\switchbutton.css" />
     <Content Include="Content\themes\default\tabs.css" />
     <Content Include="Content\themes\default\textbox.css" />
     <Content Include="Content\themes\default\tooltip.css" />
@@ -326,6 +331,7 @@
     <Content Include="Content\themes\gray\combo.css" />
     <Content Include="Content\themes\gray\combobox.css" />
     <Content Include="Content\themes\gray\datagrid.css" />
+    <Content Include="Content\themes\gray\datalist.css" />
     <Content Include="Content\themes\gray\datebox.css" />
     <Content Include="Content\themes\gray\dialog.css" />
     <Content Include="Content\themes\gray\easyui.css" />
@@ -363,6 +369,7 @@
     <Content Include="Content\themes\gray\slider.css" />
     <Content Include="Content\themes\gray\spinner.css" />
     <Content Include="Content\themes\gray\splitbutton.css" />
+    <Content Include="Content\themes\gray\switchbutton.css" />
     <Content Include="Content\themes\gray\tabs.css" />
     <Content Include="Content\themes\gray\textbox.css" />
     <Content Include="Content\themes\gray\tooltip.css" />
@@ -390,6 +397,7 @@
     <Content Include="Content\themes\icons\mini_add.png" />
     <Content Include="Content\themes\icons\mini_edit.png" />
     <Content Include="Content\themes\icons\mini_refresh.png" />
+    <Content Include="Content\themes\icons\more.png" />
     <Content Include="Content\themes\icons\no.png" />
     <Content Include="Content\themes\icons\ok.png" />
     <Content Include="Content\themes\icons\pencil.png" />
@@ -405,6 +413,7 @@
     <Content Include="Content\themes\metro\combo.css" />
     <Content Include="Content\themes\metro\combobox.css" />
     <Content Include="Content\themes\metro\datagrid.css" />
+    <Content Include="Content\themes\metro\datalist.css" />
     <Content Include="Content\themes\metro\datebox.css" />
     <Content Include="Content\themes\metro\dialog.css" />
     <Content Include="Content\themes\metro\easyui.css" />
@@ -442,12 +451,14 @@
     <Content Include="Content\themes\metro\slider.css" />
     <Content Include="Content\themes\metro\spinner.css" />
     <Content Include="Content\themes\metro\splitbutton.css" />
+    <Content Include="Content\themes\metro\switchbutton.css" />
     <Content Include="Content\themes\metro\tabs.css" />
     <Content Include="Content\themes\metro\textbox.css" />
     <Content Include="Content\themes\metro\tooltip.css" />
     <Content Include="Content\themes\metro\tree.css" />
     <Content Include="Content\themes\metro\validatebox.css" />
     <Content Include="Content\themes\metro\window.css" />
+    <Content Include="Content\themes\mobile.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="packages.config">
@@ -486,8 +497,7 @@
     <Content Include="Scripts\jquery-1.11.3.min.js" />
     <Content Include="Scripts\jquery-1.11.3.min.map" />
     <None Include="Scripts\jquery.linq-vsdoc.js" />
-    <Content Include="Scripts\jquery.easyui-1.4.1.js" />
-    <Content Include="Scripts\jquery.easyui.min-1.4.1.js" />
+    <Content Include="Scripts\jquery.easyui.min-1.4.4.js" />
     <Content Include="Scripts\jquery.linq.js" />
     <Content Include="Scripts\jquery.linq.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -509,9 +519,7 @@
     <Content Include="Scripts\layer-2.0\skin\default\loading-2.gif" />
     <Content Include="Scripts\layer-2.0\skin\layer.css" />
     <Content Include="Scripts\layer-2.0\skin\layer.ext.css" />
-    <Content Include="Scripts\locale\easyui-lang-en.js" />
     <Content Include="Scripts\locale\easyui-lang-zh_CN.js" />
-    <Content Include="Scripts\locale\easyui-lang-zh_TW.js" />
     <Content Include="Scripts\OSky.data.demo.js" />
     <Content Include="Scripts\OSky.data.js" />
     <Content Include="Scripts\OSky.layer.js" />
