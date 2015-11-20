@@ -655,7 +655,7 @@
   overflow: auto;
 }
 .combo-arrow {
-  height:22px !important;
+  height:30px !important;
   display:block;
   background:url('images/combo_arrow.png') no-repeat center center;
 }
@@ -663,6 +663,11 @@
   background-color: #ffffff;
 }
 .combo {
+  border-color: #D4D4D4;
+  background-color: #fff;
+}
+.combo-input {
+  height:18px !important;
   border-color: #D4D4D4;
   background-color: #fff;
 }
@@ -1433,8 +1438,9 @@
   padding: 0;
 }
 .datagrid-view .datagrid-editable-input {
+  height:18px !important;
   margin: 0;
-  padding: 2px 4px;
+  padding: 6px 10px;
   border: 1px solid #D4D4D4;
   font-size: 12px;
   outline-style: none;

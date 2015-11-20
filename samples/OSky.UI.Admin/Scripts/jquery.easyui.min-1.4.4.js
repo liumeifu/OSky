@@ -12349,7 +12349,7 @@ $(_959).addClass("combo-f").textbox($.extend({},opts,{icons:_95f,onChange:functi
 }}));
 $(_959).attr("comboName",$(_959).attr("textboxName"));
 _95a.combo=$(_959).next();
-_95a.combo.addClass("combo");
+_95a.combo.addClass("combo").addClass("combo-input");
 };
 function _960(_961){
 var _962=$.data(_961,"combo");
