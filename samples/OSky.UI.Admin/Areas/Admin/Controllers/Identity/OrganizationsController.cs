@@ -44,9 +44,9 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         }
 
         [Description("管理-组织机构-编辑视图")]
-        public ActionResult VisitEdit(int id)
+        public ActionResult Edit(int id)
         {
-            var dto= IdentityContract.Organizations.Where(c => c.Id == id).Select(m =>
+            var dto = IdentityContract.Organizations.Where(c => c.Id == id).Select(m =>
                 new OrganizationDto
                 {
                     Id = m.Id,
@@ -55,11 +55,11 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                     SortCode = m.SortCode,
                     ParentId = m.Parent.Id
                 }).SingleOrDefault();
-            if (dto==null)
+            if (dto == null)
                 dto = new OrganizationDto();
-            return View("Edit", dto);
+            return View(dto);
         }
-
+       
         #endregion
 
         private class OrganizationView
@@ -145,7 +145,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
 
         [HttpPost]
         [Description("管理-组织机构-新增")]
-        public ActionResult Add(OrganizationDto dto)
+        public ActionResult AddOrgan(OrganizationDto dto)
         {
             dto.CheckNotNull("dto");
             OperationResult result = IdentityContract.AddOrganizations(dto);
@@ -155,7 +155,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         [HttpPost]
         [AjaxOnly]
         [Description("管理-组织机构-编辑")]
-        public ActionResult Edit(OrganizationDto dto)
+        public ActionResult EditOrgan(OrganizationDto dto)
         {
             dto.CheckNotNull("dto");
             OperationResult result = IdentityContract.EditOrganizations(dto);
@@ -165,7 +165,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         [HttpPost]
         [AjaxOnly]
         [Description("管理-组织机构-删除")]
-        public ActionResult Delete(int id)
+        public ActionResult DeleteOrgan(int id)
         {
             id.CheckGreaterThan("id", 0);
             OperationResult result = IdentityContract.DeleteOrganizations(id);

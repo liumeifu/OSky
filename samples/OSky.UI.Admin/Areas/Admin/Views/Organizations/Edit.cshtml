@@ -3,25 +3,27 @@
 
 <form id="form1" method="post">
     <input type="hidden" id="Id" value="@Model.Id"/>
-    <div>
-        <ul>
-            <li><label >父机构名称</label></li>
-            <li><input type="text" name="ParentName" value="@Model.Name" class="easyui-validatebox textbox" readonly="readonly" /></li>
-        </ul>
-        <ul>
-            <li><label >机构名称</label></li>
-            <li><input type="text" name="Name" value="@Model.Name" class="easyui-validatebox textbox" data-options="required:true,validType:'length[2,10]'" /></li>
-        </ul>
-        <ul>
-            <li><label >排序号</label></li>
-            <li><input type="text" name="SortCode" value="@Model.SortCode" class="easyui-validatebox textbox" data-options="required:true,validType:'number'" /></li>
-        </ul>
-        <ul>
-            <li><label >描述</label></li>
-            <li><input type="text" name="Remark" value="@Model.Remark" class="easyui-textbox" data-options="multiline:true" style="height:60px" /></li>
-        </ul>
-        <ul><li><input id="Add" type="button" class="btn btn-success" value="确 定" onclick="Add_Click();"><input id="Delete" type="button" class="btn btn-danger" value="删 除"></li></ul>
-    </div>
+    <input type="hidden" id="ParentId" value="@Model.ParentId" />
+    <table align="center">
+        <tr>
+            <td align="right"><label >父机构名称:</label></td>
+            <td><input type="text" name="ParentName" value="@Model.Name" class="easyui-validatebox textbox" readonly="readonly" style="width:228px" /></td>
+        </tr>
+        <tr>
+            <td align="right"><label>机构名称:</label></td>
+            <td><input type="text" name="Name" value="@Model.Name" class="easyui-validatebox textbox" data-options="required:true,validType:'length[2,10]'" style="width:228px" /></td>
+        </tr>
+        <tr>
+            <td align="right"><label>排序号:</label></td>
+            <td><input type="text" name="SortCode" value="@Model.SortCode" class="easyui-validatebox textbox" data-options="required:true,validType:'number'" style="width:228px" /></td>
+        </tr>
+        <tr>
+            <td align ="right"><label>描 述:</label></td>
+            <td><input type="text" name="Remark" value="@Model.Remark" class="easyui-textbox" data-options="multiline:true" style="height:60px;width:250px" /></td>
+        </tr>
+        <tr><td align="center" colspan="2"><input id="Add" type="button" class="btn btn-success" value="添 加" onclick="Add_Click();">
+                <input id="Delete" type="button" class="btn btn-danger" value="删 除" onclick="Del_Click();"></td></tr>
+    </table>
 </form>
 
 

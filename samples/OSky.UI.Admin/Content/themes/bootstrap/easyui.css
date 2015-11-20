@@ -528,7 +528,7 @@
   font-size: 12px;
   border: 0;
   margin: 0;
-  padding: 4px;
+  padding: 0px;
   white-space: normal;
   vertical-align: top;
   outline-style: none;
@@ -655,7 +655,9 @@
   overflow: auto;
 }
 .combo-arrow {
-  background: url('images/combo_arrow.png') no-repeat center center;
+  height:22px !important;
+  display:block;
+  background:url('images/combo_arrow.png') no-repeat center center;
 }
 .combo-panel {
   background-color: #ffffff;
