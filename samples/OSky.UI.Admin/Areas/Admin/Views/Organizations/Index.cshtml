@@ -32,7 +32,6 @@
                 lines: true,
                 onClick: function (node) {
                     id = node.id;
-                    $('#ParentId').val(id);
                     $('#p').panel('refresh', '@Url.Action("Edit", "Organizations")/' + node.id);
                 }
             });
@@ -41,6 +40,20 @@
         function Add_Click() {
             $('#form1').form('submit', {
                 url: "@Url.Action("AddOrgan")",
+                onSubmit: function () {
+                    $('#ParentId').val(id);
+                    return $(this).form('validate');
+                },
+                success: function (d) {
+                    var data = eval('(' + d + ')');
+                    ajaxResultHandler(data);
+                }
+            });
+        }
+
+        function Edit_Click() {
+            $('#form1').form('submit', {
+                url: "@Url.Action("EditOrgan")",
                 onSubmit: function () {
                     return $(this).form('validate');
                 },

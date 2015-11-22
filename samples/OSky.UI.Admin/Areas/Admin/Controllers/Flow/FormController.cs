@@ -43,6 +43,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             var page = GetPageResult(FlowContract.FlowForms, m => new
             {
                 m.Id,
+                FlowDesignId = m.FlowRelateForm.FlowDesignId,
                 m.FormName,
                 m.Type,
                 m.CreatorUserName,
@@ -97,7 +98,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
 
         #region Overrides of AdminBaseController
 
-        [Description("管理-实体数据-列表")]
+        [Description("管理-表单-列表")]
         public override ActionResult Index()
         {
             return base.Index();

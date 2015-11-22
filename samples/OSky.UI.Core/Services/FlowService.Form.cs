@@ -44,7 +44,7 @@ namespace OSky.UI.Services
         /// <returns>业务操作结果</returns>
         public OperationResult EditFlowForm(params FlowFormDto[] dtos)
         {
-            return FlowFormRepository.Insert(dtos, null, null);
+            return FlowFormRepository.Update(dtos, null, null);
         }
 
         #endregion

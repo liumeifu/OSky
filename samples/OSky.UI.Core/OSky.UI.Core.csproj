@@ -52,6 +52,9 @@
       <HintPath>..\..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="mxgraph">
+      <HintPath>..\..\Dll\mxgraph.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -80,6 +83,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Dtos\DtoMappers.cs" />
+    <Compile Include="Dtos\Flow\FlowDelegateDto.cs" />
+    <Compile Include="Dtos\Flow\FlowDesignerDto.cs" />
     <Compile Include="Dtos\Flow\FlowFormDto.cs" />
     <Compile Include="Dtos\Flow\FlowOperateStatusDto.cs" />
     <Compile Include="Dtos\Flow\FlowProjectDto.cs" />

@@ -30,5 +30,6 @@ namespace OSky.UI.Dtos.Identity
         public int SortCode { get; set; }
 
         public int? ParentId { get; set; }
+        public string ParentName { get; set; }
     }
 }

@@ -43,7 +43,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             return base.Index();
         }
 
-        [Description("管理-组织机构-编辑视图")]
+        [Description("管理-组织机构-视图数据")]
         public ActionResult Edit(int id)
         {
             var dto = IdentityContract.Organizations.Where(c => c.Id == id).Select(m =>
@@ -53,7 +53,8 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                     Name = m.Name,
                     Remark = m.Remark,
                     SortCode = m.SortCode,
-                    ParentId = m.Parent.Id
+                    ParentId = m.Parent.Id,
+                    ParentName=m.Parent.Name
                 }).SingleOrDefault();
             if (dto == null)
                 dto = new OrganizationDto();
@@ -153,7 +154,6 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [AjaxOnly]
         [Description("管理-组织机构-编辑")]
         public ActionResult EditOrgan(OrganizationDto dto)
         {

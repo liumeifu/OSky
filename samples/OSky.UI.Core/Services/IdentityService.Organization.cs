@@ -109,7 +109,7 @@ namespace OSky.UI.Services
                     }
                     else if (entity.Parent != null && entity.Parent.Id != dto.ParentId)
                     {
-                        Organization parent = OrganizationRepository.GetByKey(dto.Id);
+                        Organization parent = OrganizationRepository.GetByKey(dto.ParentId.Value);
                         if (parent == null)
                         {
                             throw new Exception("指定父组织机构不存在。");

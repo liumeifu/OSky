@@ -22,6 +22,13 @@ namespace OSky.UI.Contracts
         /// </summary>
         IQueryable<WorkFlowDesign> FlowDesigns { get; }
 
+        /// <summary>
+        /// 保存 流程设计数据
+        /// </summary>
+        /// <param name="dto">要添加的流程设计Dto</param>
+        /// <returns>业务操作结果</returns>
+        OperationResult Save(FlowDesignerDto dto);
+
         #endregion
 
         #region 流程步骤
@@ -91,6 +98,13 @@ namespace OSky.UI.Contracts
         /// 获取 流程委托数据集
         /// </summary>
         IQueryable<WorkFlowDelegation> FlowDelegations { get; }
+
+        /// <summary>
+        /// 保存 流程委托数据
+        /// </summary>
+        /// <param name="dto">要添加的流程委托Dto</param>
+        /// <returns>业务操作结果</returns>
+        OperationResult SaveDelegation(FlowDelegateDto dto);
 
         #endregion
 

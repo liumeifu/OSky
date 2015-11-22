@@ -63,5 +63,9 @@ namespace OSky.UI.Models.Flow
         /// </summary>
         [Description("信息创建时间")]
         public DateTime CreatedTime { get; set; }
+        /// <summary>
+        /// 表单关联信息
+        /// </summary>
+        public WorkFlowRelateForm FlowRelateForm { get; set; }
     }
 }

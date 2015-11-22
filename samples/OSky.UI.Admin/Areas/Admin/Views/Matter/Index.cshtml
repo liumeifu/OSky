@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "表单信息列表";
+    Layout = "~/Areas/Admin/Views/Shared/_DataGridLayout.cshtml";
+
+    ViewBag.GridId = "flowForm";
+    ViewBag.GridDataUrl = Url.Action("GridData");
+    ViewBag.ToolbarItem = "";
+}
+@section customScript
+{
+    <script type="text/javascript">
+        columns = [[
+            { field: "Id", title: "编号", hidden: true },
+            { field: "EntityName", title: "事项名称", width: 150, sortable: true, halign: "center", align: "center"},
+            { field: "CreatorUserName", title: "创建人", width: 100, sortable: true, halign: "center", align: "center" },
+            { field: "CreatedTime", title: "创建时间", width: 80, sortable: true, halign: "center", align: "center" },
+            { field: "StepDay", title: "时限（天）", width: 100, sortable: true, halign: "center", align: "center" },
+            { field: "DelayDay", title: "延期（天）", width: 100, sortable: true, halign: "center", align: "center" },
+            { field: "HandleDay", title: "办理天数", width: 100, sortable: true, halign: "center", align: "center" }
+            
+        ]];
+
+        startfunction = function () {
+            //设置流程
+            function OptionFlow() {
+                var row = grid.datagrid("getSelected");
+                if (!row) {
+                    $.OSky.layer.msg.tip("请选择要编辑的行。");
+                    return;
+                }
+                $.OSky.layer.msg.detail(2, "/Flow/Matter/Detail?Id=" + row.Id,false);
+                
+            }
+            toolbarData.push({ text: "查看详情", iconCls: "pic_139", handler: OptionFlow });
+        };
+    </script>
+}

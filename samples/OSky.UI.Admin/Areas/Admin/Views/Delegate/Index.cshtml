@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "表单信息列表";
+    Layout = "~/Areas/Admin/Views/Shared/_DataGridLayout.cshtml";
+
+    ViewBag.GridId = "flowForm";
+    ViewBag.GridDataUrl = Url.Action("GridData");
+    ViewBag.AddUrl = Url.Action("Add");
+    ViewBag.EditUrl = Url.Action("Edit");
+    ViewBag.DeleteUrl = Url.Action("Delete");
+}
+@section customScript
+{
+    <script type="text/javascript">
+        columns = [[
+            { field: "Id", title: "编号", hidden: true },
+            {
+                field: "FlowName", title: "流程名称", width: 150, sortable: true, halign: "center", align: "center",
+                editor: { type: "validatebox", options: { required: true, validType: "length[1,50]" } }
+            },
+            {
+                field: "CreatorUserName", title: "委托人", width: 100, sortable: true, halign: "center", align: "center", formatter: formatBoolean,
+                editor: { type: "combobox", options: { required: true, data: $.OSky.data.bool, valueField: "id", textField: "text" } }
+            },
+            {
+                field: "TrusteeName", title: "受托人", width: 200, sortable: true, halign: "center", align: "center", formatter: formatBoolean,
+                editor: { type: "validatebox", options: { required: true, validType: "length[1,100]" } }
+            },
+            {
+                field: "StartTime", title: "委托起始时间", width: 200, sortable: true, halign: "center", align: "center",
+                editor: { type: "validatebox", options: { required: true, validType: "length[1,100]" } }
+            },
+            {
+                field: "EndTime", title: "委托结束时间", width: 80, sortable: true, halign: "center", align: "center",
+                editor: { type: "combobox", options: { required: true, data: $.OSky.data.bool, valueField: "id", textField: "text" } }
+            },
+            {
+                field: "Status", title: "状态", width: 80, halign: "center", align: "center", sortable: true, halign: "center", align: "center",
+                formatter: function (value) { return $.OSky.tools.formatDate(value); }
+            }
+        ]];
+
+        startfunction = function () {
+            
+            function Add() {
+                var row = grid.datagrid("getSelected");
+                if (!row) {
+                    $.OSky.layer.msg.tip("请选择要编辑的行。");
+                    return;
+                }
+                $.OSky.layer.msg.open(2, "/Flow/Delegate/Edit?Id=" + row.Id, true,
+                    function (index, layero) {
+                        $('#form1').form('submit', {
+                            url: "@Url.Action("Save")",
+                            onSubmit: function () {
+                                return $(this).form('validate');
+                            },
+                            success: function (d) {
+                                var data = eval('(' + d + ')');
+                                ajaxResultHandler(data);
+                            }
+                        });
+                    });
+            }
+            toolbarData.push({ text: "新增", iconCls: "icon-add", handler: Add });
+        };
+    </script>
+}

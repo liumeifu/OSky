@@ -1,0 +1,44 @@
+﻿@model OSky.UI.Dtos.Flow.FlowDelegateDto
+
+<form id="Form1" method="post">
+    <div style="display:none">
+        <input name="Id" value="@Model.Id">
+        <input name="TrusteeId" value="@Model.TrusteeId">
+    </div>
+
+    <table cellpadding="0" cellspacing="0" summary="">
+        <tr>
+            <th>委托流程：</th>
+            <td colspan="3">
+                <select class="easyui-combobox" name="FlowDesignId" style="width: 300px; " value="@Model.TrusteeId" data-options="valueField:'Id',textField:'FlowName',panelHeight:'auto',url:'/Admin/WorkFlow/GetUserFlow/'"></select>
+            </td>
+        </tr>
+        <tr>
+            <th>委托人：</th>
+            <td colspan="3">
+                <input class="easyui-textbox" name="trusteename" value="@Model.TrusteeName" data-options=" buttontext:'选择委托人',prompt:'委托人...',onclickbutton:function(){selectuser(this,'touser_id');}" style="width:300px;height:32px;">
+            </td>
+        </tr>
+        <tr>
+            <th>起始时间：</th>
+            <td colspan="3">
+                <input class="easyui-datebox" name="StartTime" style="height: 28px; width: 120px;" value="@Model.StartTime" />
+            </td>
+        </tr>
+        <tr>
+            <th>结束时间：</th>
+            <td colspan="3">
+                <input class="easyui-datebox" name="EndTime" style="height: 28px; width: 120px;" value="@Model.EndTime" />
+            </td>
+        </tr>
+        <tr>
+            <th>状态：</th>
+            <td colspan="3">
+                <select id="Status" name="Status" class="form-control" style="width: 240px; " value="@Model.Status">
+                    <option value="0">未用</option>
+                    <option value="1">启用</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+</form>
