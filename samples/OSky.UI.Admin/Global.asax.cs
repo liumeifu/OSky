@@ -28,6 +28,8 @@ using OSky.Web.Http.Initialize;
 using OSky.Web.Mvc.Initialize;
 using OSky.Web.Mvc.Routing;
 using OSky.Web.SignalR.Initialize;
+using System.Web.Helpers;
+using System.Security.Claims;
 
 
 namespace OSky.UI.Admin
@@ -40,6 +42,7 @@ namespace OSky.UI.Admin
             RoutesRegister();
             DtoMappers.MapperRegister();
 
+            AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
             //Initialize();
         }
 

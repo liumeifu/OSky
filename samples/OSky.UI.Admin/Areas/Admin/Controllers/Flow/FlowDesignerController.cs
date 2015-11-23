@@ -65,7 +65,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         #region Overrides of AdminBaseController
 
         [Description("管理-流程-列表")]
-        public override ActionResult Index()
+        public ActionResult Index()
         {
             return View("Index", new FlowDesignerDto());
         }

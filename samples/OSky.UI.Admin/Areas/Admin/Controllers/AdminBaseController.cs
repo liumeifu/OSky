@@ -25,6 +25,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
     /// <summary>
     /// 后台管理控制器蕨类
     /// </summary>
+    [Authorize]
     [OperateLogFilter]
     public abstract class AdminBaseController : BaseController
     {
@@ -51,9 +52,6 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             return source.ToPage(predicate, request.PageCondition, selector);
         }
 
-        public virtual ActionResult Index()
-        {
-            return View();
-        }
+        
     }
 }

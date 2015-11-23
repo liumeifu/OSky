@@ -107,9 +107,9 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         #region 视力功能
 
         [Description("管理-角色-列表")]
-        public override ActionResult Index()
+        public ActionResult Index()
         {
-            return base.Index();
+            return View();
         }
 
         #endregion

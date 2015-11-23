@@ -8,6 +8,9 @@ using OSky.UI.Models.Flow;
 using OSky.Utility.Data;
 using OSky.UI.Dtos.Flow;
 using OSky.Utility.Extensions;
+using System.Security.Claims;
+using System.Threading;
+using OSky.Core.Exceptions;
 
 namespace OSky.UI.Services
 {
@@ -30,11 +33,19 @@ namespace OSky.UI.Services
         {
             return FlowFormRepository.Insert(dtos, dto =>
             {
-                if (FlowFormRepository.CheckExists(m => m.FormName == dto.FormName && m.Type==dto.Type))
+                if (FlowFormRepository.CheckExists(m => m.FormName == dto.FormName && m.Type == dto.Type))
                 {
                     throw new Exception("名称为“{0}”的表单信息已存在，不能重复添加。".FormatWith(dto.FormName));
                 }
-            }, null);
+            }, 
+            (dto, entity) => { 
+                ClaimsIdentity identity = Thread.CurrentPrincipal.Identity as ClaimsIdentity;
+                if (identity != null && identity.IsAuthenticated)
+                {
+                    entity.CreatorUserName = identity.GetClaimValue(ClaimTypes.Name);
+                }
+                return entity;
+            });
         }
 
         /// <summary>

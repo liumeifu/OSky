@@ -20,7 +20,7 @@ namespace OSky.UI.Admin.Areas.Admin
             context.MapLowerCaseUrlRoute(
                 "Admin_default",
                 "admin/{controller}/{action}/{id}",
-                new { controller="Home", action = "Index", id = UrlParameter.Optional },
+                new { controller="Login", action = "Index", id = UrlParameter.Optional },
                 new[] { "OSky.UI.Admin.Areas.Admin.Controllers" }
                 );
         }

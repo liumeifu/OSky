@@ -26,18 +26,18 @@
                 </h2>
                 <ul class="loginUl">
                     <li class="name">
-                        <input type="text" placeholder="请输入用户名" name="LoginName" tabindex="1" onkeypress="if (event.keyCode == 13) {$('#btnLogin').click();return false;}" />
+                        <input type="text" placeholder="请输入用户名" name="LoginName" value="@Model.LoginName" onkeypress="if (event.keyCode == 13) {$('#btnLogin').click();return false;}" />
                     </li>
                     <li class="password">
-                        <input type="password" placeholder="请输入密码" name="LoginPwd" tabindex="2" onkeypress="if (event.keyCode == 13) {$('#btnLogin').click();return false;}" />
+                        <input type="password" placeholder="请输入密码" name="LoginPwd" onkeypress="if (event.keyCode == 13) {$('#btnLogin').click();return false;}" />
                     </li>
                     <li class="code">
-                        <input type="text" placeholder="请输入验证码" name="CheckCode" tabindex="3" onkeypress="if (event.keyCode == 13) {$('#btnLogin').click();return false;}" />
+                        <input type="text" placeholder="请输入验证码" name="CheckCode" onkeypress="if (event.keyCode == 13) {$('#btnLogin').click();return false;}" />
                         <img id="codeImg" width="80" height="34" alt="验证码" src="/Admin/Login/ValidateCode" onclick="this.src = '/Admin/Login/ValidateCode?guid=' + new Date().getTime();" />
                     </li>
                     <li>
-                        <input type="image" id="btnLogin" src="/Content/style/img/btn.gif" name="" value="登录" class="btn" tabindex="5" />
-                        <a href="javascript:void(0)" onclick="javascript:alert('请拨打电话0731-82210256');">忘记密码</a>
+                        <input type="image" id="btnLogin" src="/Content/style/img/btn.gif" name="" value="登录" class="btn" />
+                        <a href="javascript:void(0)" onclick="javascript: alert('请拨打电话0731-88888888');">忘记密码</a>
                     </li>
                 </ul>
             </div>
@@ -61,19 +61,19 @@
                     $("input[name='loginName']").focus();
                     document.getElementById("btnLogin").disabled = false;
                     $("#btnLogin").attr("src", "/Content/style/img/btn.gif");
-                    return;
-                } else if ($("input[name='loginPwd']").val() == "") {
+                    return false;
+                } else if ($("input[name='LoginPwd']").val() == "") {
                     $.OSky.layer.msg.tip('请填写密码!');
-                    $("input[name='loginPwd']").focus();
+                    $("input[name='LoginPwd']").focus();
                     document.getElementById("btnLogin").disabled = false;
                     $("#btnLogin").attr("src", "/Content/style/img/btn.gif");
-                    return;
-                } else if ($("input[name='checkCode']").val() == "") {
+                    return false;
+                } else if ($("input[name='CheckCode']").val() == "") {
                     $.OSky.layer.msg.tip('请填写验证码!');
-                    $("input[name='checkCode']").focus();
+                    $("input[name='CheckCode']").focus();
                     document.getElementById("btnLogin").disabled = false;
                     $("#btnLogin").attr("src", "/Content/style/img/btn.gif");
-                    return;
+                    return false;
                 } else {
                     $("form").submit();
                 }

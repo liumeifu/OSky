@@ -108,7 +108,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         #region 视图功能
 
         [Description("管理-日志模块-首页")]
-        public override ActionResult Index()
+        public ActionResult Index()
         {
             return RedirectToAction("OperateLogs");
         }

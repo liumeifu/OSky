@@ -145,9 +145,9 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         #region 视图功能
 
         [Description("管理-功能-列表")]
-        public override ActionResult Index()
+        public ActionResult Index()
         {
-            return base.Index();
+            return View();
         }
 
         #endregion

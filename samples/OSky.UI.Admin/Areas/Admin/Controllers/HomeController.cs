@@ -21,7 +21,7 @@ using OSky.Web.Mvc.Security;
 namespace OSky.UI.Admin.Areas.Admin.Controllers
 {
     [Description("管理-后台")]
-    public class HomeController : Controller
+    public class HomeController : AdminBaseController
     {
         private static readonly ILogger Logger = LogManager.GetLogger(typeof(HomeController));
 

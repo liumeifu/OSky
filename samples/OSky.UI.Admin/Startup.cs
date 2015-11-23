@@ -25,6 +25,8 @@ using OSky.Web.Mvc.Initialize;
 using OSky.Web.SignalR.Initialize;
 
 using Owin;
+using Microsoft.Owin.Security.Cookies;
+using Microsoft.AspNet.Identity;
 
 [assembly: OwinStartup(typeof(Startup))]
 
@@ -48,9 +50,38 @@ namespace OSky.UI.Admin
             app.UseOSkyMvc(services, new MvcAutofacIocBuilder());
             app.UseOSkyWebApi(services, new WebApiAutofacIocBuilder());
             app.UseOSkySignalR(services, new SignalRAutofacIocBuilder());
-
+            
             ConfigurationWebApi(app);
             ConfigureSignalR(app);
+
+            // 使应用程序可以使用 Cookie 来存储已登录用户的信息
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                LoginPath = new PathString("/Admin/Login/Index"),
+                ExpireTimeSpan = TimeSpan.FromMinutes(20),    //20分钟过期
+                SlidingExpiration=true
+            });
+
+            //// Use a cookie to temporarily store information about a user logging in with a third party login provider
+            //app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
+
+            //// 取消注释以下行可允许使用第三方登录提供程序登录
+            //app.UseMicrosoftAccountAuthentication(
+            //    clientId: "",
+            //    clientSecret: "");
+
+            //app.UseTwitterAuthentication(
+            //   consumerKey: "",
+            //   consumerSecret: "");
+
+            //app.UseFacebookAuthentication(
+            //   appId: "",
+            //   appSecret: "");
+
+            // 支持使用 google 账户登录
+            //app.UseGoogleAuthentication();
+
         }
     }
 }

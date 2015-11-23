@@ -38,9 +38,9 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         #region 视力功能
 
         [Description("管理-组织机构-列表视图")]
-        public override ActionResult Index()
+        public ActionResult Index()
         {
-            return base.Index();
+            return View();
         }
 
         [Description("管理-组织机构-视图数据")]

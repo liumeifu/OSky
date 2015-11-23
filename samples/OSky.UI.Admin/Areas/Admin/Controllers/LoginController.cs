@@ -33,6 +33,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         #region Ajax功能
 
         #region 获取数据
+        
         [Description("登录-验证码")]
         public ActionResult ValidateCode()
         {
@@ -48,7 +49,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
 
         #region 功能方法
 
-        
+        [HttpPost]
         [ValidateAntiForgeryToken]
         [Description("登录-登录-验证")]
         public ActionResult Login(LoginDto dto)
@@ -95,7 +96,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                 }
             }
             ViewBag.ErrorsMessage = GetModelErrors(ModelState);
-            return View();
+            return View(dto);
         }
 
         #endregion
@@ -107,7 +108,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         public ActionResult Index(LoginDto dto)
         {
             if(dto.LoginName==null)
-                return View();
+                return View(dto);
             return Login(dto);
         }
         /// <summary>
