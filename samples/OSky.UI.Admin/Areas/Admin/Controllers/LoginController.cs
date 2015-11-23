@@ -104,9 +104,11 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         //
         // GET: /Admin/Login/
         [Description("管理-登录")]
-        public ActionResult Index()
+        public ActionResult Index(LoginDto dto)
         {
-            return View();
+            if(dto.LoginName==null)
+                return View();
+            return Login(dto);
         }
         /// <summary>
         /// 基于Claims-based的认证 
@@ -122,13 +124,14 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             var identity = new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie);
             identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, id));
             identity.AddClaim(new Claim(ClaimTypes.Name, name));
-            foreach (var item in roles)
-            {
-                if (!string.IsNullOrEmpty(item))
+            if (roles!=null)
+                foreach (var item in roles)
                 {
-                    identity.AddClaim(new Claim(ClaimTypes.Role, item));
+                    if (!string.IsNullOrEmpty(item))
+                    {
+                        identity.AddClaim(new Claim(ClaimTypes.Role, item));
+                    }
                 }
-            }
             identity.AddClaim(new Claim("http://schemas.microsoft.com/accesscontrolservice/2015/11/claims/identityprovider", "ASP.NET Identity"));
             foreach (var item in attr)
             {

@@ -197,7 +197,7 @@ namespace OSky.UI.Services
             {
                 if (user.IsLocked == false)
                 {
-                    if (UserManager.PasswordHasher.HashPassword(dto.LoginPwd).Equals(user.PasswordHash))
+                    if (UserManager.PasswordHasher.VerifyHashedPassword(user.PasswordHash, dto.LoginPwd) == PasswordVerificationResult.Success)
                     {
                         re.ResultType = OperationResultType.Success;
                         re.Message = "登录成功！";
