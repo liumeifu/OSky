@@ -1,0 +1,313 @@
+﻿@charset "utf-8";
+
+/*------------------------------------------------------------
+	样式设定
+------------------------------------------------------------*/
+
+/* 位置 */
+
+.taLeft { text-align: left !important; }
+
+.taCenter { text-align: center !important; }
+
+.taRight { text-align: right !important; }
+
+/*  */
+
+.fsP1 { font-size: 1.08em !important; }
+
+.fsP2 { font-size: 1.16em !important; }
+
+.fsP3 { font-size: 1.24em !important; }
+
+.fsP4 { font-size: 1.32em !important; }
+
+.fsP5 { font-size: 1.4em !important; }
+
+/*   */
+
+.fsM1 { font-size: 0.92em !important; }
+
+.fsM2 { font-size: 0.84em !important; }
+
+.fsM3 { font-size: 0.76em !important; }
+
+.fsM4 { font-size: 0.68em !important; }
+
+.fsM5 { font-size: 0.6em !important; }
+
+/*  */
+
+.fwNormal { font-weight: normal !important; }
+
+.fwBold { font-weight: bold !important; }
+
+/*------------------------------------------------------------
+	微調整
+------------------------------------------------------------*/
+
+.mt0 { margin-top: 0 !important; }
+
+.mb0 { margin-bottom: 0 !important; }
+
+/*------------------------------------------------------------
+	
+------------------------------------------------------------*/
+
+* html .clearfix { zoom: 1; }
+
+* + html .clearfix { zoom: 1; }
+
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+.clear { clear: both; }
+
+.dis { display: block; }
+
+.floatL { float: left !important; }
+
+.floatR { float: right !important; }
+
+/*------------------------------------------------------------
+	
+------------------------------------------------------------*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+    background: transparent;
+    border: 0;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+}
+
+body { font-size: 62.5%; }
+
+body,
+table,
+input, textarea, select, option { font-family: "微软雅黑"; }
+
+ol, ul { list-style: none; }
+
+blockquote, q { quotes: none; }
+
+:focus { outline: 0; }
+
+ins { text-decoration: none; }
+
+del { text-decoration: line-through; }
+
+a:link {
+    color: #561e1f;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #561e1f;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #561e1f;
+    text-decoration: underline;
+}
+
+a:active {
+    color: #561e1f;
+    text-decoration: none;
+}
+
+/*------------------------------------------------------------
+	body
+------------------------------------------------------------*/
+
+body {
+    color: #000;
+    line-height: 1.5;
+    text-align: center;
+}
+
+#container { text-align: left; }
+
+/*------------------------------------------------------------
+	login.html
+------------------------------------------------------------*/
+
+.loginBox {
+    min-height: 500px;
+    padding-top: 120px;
+}
+
+.loginBox .login {
+    background: url(/Content/style/img/login_bg.png) no-repeat center top;
+    height: 378px;
+    margin: 0 auto;
+    padding: 30px;
+    width: 682px;
+}
+
+.loginBox .login h2 { margin-bottom: 35px; }
+
+.loginBox .login .loginUl li {
+    font-size: 14px;
+    line-height: 38px;
+    padding-bottom: 16px;
+    vertical-align: middle;
+}
+
+.loginBox .login .loginUl li a {
+    color: #666;
+    display: inline-block;
+    margin-left: 15px;
+    vertical-align: top;
+}
+
+.loginBox .login .name,
+.loginBox .login .password,
+.loginBox .login .code {
+    border: none;
+    color: #A9A9A9;
+    font-size: 16px;
+    height: 30px;
+    line-height: 30px;
+    padding: 3px 10px 5px 78px;
+    vertical-align: middle;
+    width: 232px;
+}
+
+.loginBox .login .name { background: url(/Content/style/img/name.gif) no-repeat left top; }
+
+.loginBox .login .password { background: url(/Content/style/img/password.gif) no-repeat left top; }
+
+.loginBox .login .name input,
+.loginBox .login .password input,
+.loginBox .login .code input {
+    border: none;
+    font-size: 16px;
+    height: 28px;
+    line-height: 28px;
+    padding: 0;
+    width: 232px;
+}
+
+.loginBox .login .code {
+    background: url(/Content/style/img/code.gif) no-repeat left top;
+    padding: 7px 20px 5px 10px;
+    width: 306px;
+}
+
+.loginBox .login .code img { float: right; }
+
+.loginBox .login .code input {
+    float: left;
+    width: 210px;
+}
+
+.loginBox .login img { vertical-align: middle; }
+
+.loginBox .btn:hover {
+    filter: alpha(opacity=80);
+    opacity: 0.8;
+}
+
+/* -------------------------------------------
+					dataBox
+-----------------------------------------------*/
+
+.dataBox table {
+    border-collapse: collapse;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.dataBox th,
+.dataBox td {
+    border: 1px solid #ddd;
+    color: #000;
+    font-size: 13px;
+    padding: 5px 10px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.dataBox th {
+    background-color: #eee;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dataBox td ul { width: 100%; }
+
+.dataBox td ul li {
+    float: left;
+    overflow: hidden;
+    padding: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 12%;
+}
+
+.dataBox td ul li input {
+    margin-top: 1px;
+    vertical-align: middle;
+}
+
+.dataBox .jsMore { position: relative; }
+
+.dataBox .jsMore .wrap {
+    overflow: hidden;
+    position: relative;
+}
+
+.dataBox .jsMore .gradient {
+    bottom: 0;
+    height: 35px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.dataBox .jsMore .read-more {
+    position: absolute;
+    right: 6px;
+    top: 8px;
+}
+
+.dataBox .jsMore .read-more a { color: #03F; }
+
+.dataBox .btnList li {
+    float: left;
+    margin-right: 10px;
+    width: 70px;
+}
+
+.dataBox .btnList li a {
+    background-color: #2169A7;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    color: #fff;
+    display: block;
+    font-size: 14px;
+    padding: 3px;
+    text-align: center;
+}
+
+.dataBox .btnList li a:hover {
+    background-color: #FF9;
+    color: #000;
+    text-decoration: none;
+}

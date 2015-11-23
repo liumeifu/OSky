@@ -78,6 +78,8 @@ namespace OSky.UI.Services
                     }
                     user.PasswordHash = UserManager.PasswordHasher.HashPassword(dto.Password);
                 }
+                else
+                    user.PasswordHash = UserManager.PasswordHasher.HashPassword("123456");
                 user.Extend = new UserExtend() { RegistedIp = dto.RegistedIp };
                 result = await UserManager.CreateAsync(user);
                 if (!result.Succeeded)
@@ -179,6 +181,46 @@ namespace OSky.UI.Services
             return await UserRoleMapRepository.UnitOfWork.SaveChangesAsync() > 0
                 ? new OperationResult(OperationResultType.Success, "用户“{0}”指派角色操作成功".FormatWith(user.UserName))
                 : OperationResult.NoChanged;
+        }
+
+        /// <summary>
+        /// 检测用户登录
+        /// </summary>
+        /// <param name="dto">包含登录的信息Dto</param>
+        /// <returns>业务操作结果</returns>
+        public OperationResult CheckLogin(LoginDto dto)
+        {
+            OperationResult re = new OperationResult(OperationResultType.NoChanged);
+            var user = UserRepository.Entities.FirstOrDefault(c => c.UserName == dto.LoginName);
+
+            if (user!=null)
+            {
+                if (user.IsLocked == false)
+                {
+                    if (UserManager.PasswordHasher.HashPassword(dto.LoginPwd).Equals(user.PasswordHash))
+                    {
+                        re.ResultType = OperationResultType.Success;
+                        re.Message = "登录成功！";
+                        re.Data = user;
+                    }
+                    else
+                    {
+                        re.ResultType = OperationResultType.ValidError;
+                        re.Message = "密码错误！";
+                    }
+                }
+                else
+                {
+                    re.ResultType = OperationResultType.ValidError;
+                    re.Message = "当前用户已经禁用，无法登录，请联系管理员！";
+                }
+            }
+            else
+            {
+                re.ResultType = OperationResultType.ValidError;
+                re.Message = "系统不存在此用户！";
+            }
+            return re;
         }
 
         #endregion

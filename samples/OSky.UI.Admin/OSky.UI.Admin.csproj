@@ -175,6 +175,17 @@
     <Content Include="Content\images\tools.png" />
     <Content Include="Content\OSky-admin.css" />
     <Content Include="Content\OSky-icons.css" />
+    <Content Include="Content\style\adminLoginStyle.css" />
+    <Content Include="Content\style\img\body_bg.jpg" />
+    <Content Include="Content\style\img\btn.gif" />
+    <Content Include="Content\style\img\btn01.gif" />
+    <Content Include="Content\style\img\code.gif" />
+    <Content Include="Content\style\img\h2_img.gif" />
+    <Content Include="Content\style\img\login_bg.png" />
+    <Content Include="Content\style\img\name.gif" />
+    <Content Include="Content\style\img\name_bg.gif" />
+    <Content Include="Content\style\img\password.gif" />
+    <Content Include="Content\style\img\password_bg.gif" />
     <Content Include="Content\themes\black\accordion.css" />
     <Content Include="Content\themes\black\calendar.css" />
     <Content Include="Content\themes\black\combo.css" />
@@ -501,6 +512,7 @@
     <Content Include="Areas\Admin\Views\Matter\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Delegate\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Delegate\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Login\Index.cshtml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -572,6 +584,7 @@
     <Compile Include="Areas\Admin\Controllers\Flow\FlowDesignerController.cs" />
     <Compile Include="Areas\Admin\Controllers\Flow\FormController.cs" />
     <Compile Include="Areas\Admin\Controllers\Flow\MatterController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Startup\Startup.SignalR.cs" />
     <Compile Include="Startup\Startup.WebApi.cs" />
     <Content Include="Views\Tests\Index.cshtml" />

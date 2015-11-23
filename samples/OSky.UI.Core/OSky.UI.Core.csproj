@@ -89,6 +89,7 @@
     <Compile Include="Dtos\Flow\FlowOperateStatusDto.cs" />
     <Compile Include="Dtos\Flow\FlowProjectDto.cs" />
     <Compile Include="Dtos\Flow\FlowRelateFormDto.cs" />
+    <Compile Include="Dtos\Identity\LoginDto.cs" />
     <Compile Include="Dtos\Identity\OrganizationDto.cs" />
     <Compile Include="Dtos\Identity\RoleDto.cs" />
     <Compile Include="Dtos\Identity\UserDto.cs" />

@@ -147,6 +147,13 @@ namespace OSky.UI.Contracts
         /// <returns>业务操作结果</returns>
         Task<OperationResult> SetUserRoles(int id, int[] roleIds);
 
+         /// <summary>
+        /// 检测用户登录
+        /// </summary>
+        /// <param name="dto">包含登录的信息Dto</param>
+        /// <returns>业务操作结果</returns>
+        OperationResult CheckLogin(LoginDto dto);
+
         #endregion
     }
 }

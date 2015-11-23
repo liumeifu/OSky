@@ -19,7 +19,7 @@
 {
     <script type="text/javascript">
         columns = [[
-            { field: "Id", title: "编号", width: 40, align: "right", sortable: true },
+            { field: "Id", title: "编号", hidden: true },
             { field: "UserName", title: "用户名", width: 150, sortable: true, align: "center", editor: { type: "validatebox", options: { required: true, validType: "length[3,100]" } } },
             { field: "NickName", title: "用户昵称", width: 150, sortable: true, align: "center", editor: { type: "validatebox", options: { required: true, validType: "length[3,100]" } } },
             { field: "Email", title: "邮箱", width: 150, sortable: true, align: "center", editor: { type: "validatebox", options: { validType: "length[6,200]" } } },
