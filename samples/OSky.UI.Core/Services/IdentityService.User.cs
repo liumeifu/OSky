@@ -93,7 +93,7 @@ namespace OSky.UI.Services
                 }
                 else
                 {
-                    user.Organization = null;
+                    throw new Exception("请您先选择所属机构！");
                 }
 
                 result = await UserManager.CreateAsync(user);

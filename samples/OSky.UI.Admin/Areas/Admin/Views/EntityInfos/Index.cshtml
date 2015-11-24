@@ -18,10 +18,9 @@
                     field: "DataLogEnabled",
                     title: "数据日志",
                     width: 80,
-                    sortable: true,
                     align: "center",
                     formatter: formatBoolean,
-                    editor: { type: "combobox", options: { required: true, data: $.OSky.data.bool, valueField: "id" } }
+                    editor: { type: "combobox", options: { required: true, editable: false, data: $.OSky.data.bool, valueField: "id" } }
                 }
             ]
         ];

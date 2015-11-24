@@ -43,7 +43,7 @@ namespace OSky.Web.Mvc
             Logger.Error(exception.Message, exception);
             if (filterContext.HttpContext.Request.IsAjaxRequest())
             {
-                var message = "Ajax访问时引发异常：";
+                var message = "";
                 if (exception is HttpAntiForgeryException)
                 {
                     message += "安全性验证失败。<br>请刷新页面重试，详情请查看系统日志。";

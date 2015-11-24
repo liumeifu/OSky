@@ -24,20 +24,20 @@
                     sortable: true,
                     align: "center",
                     formatter: function (value) { return $.OSky.tools.data.valueToText(value, $.OSky.data.demo.functionTypes); },
-                    editor: { type: "combobox", options: { required: true, data: $.OSky.data.demo.functionTypes, valueField: "id" } }
+                    editor: { type: "combobox", options: { required: true, editable: false, data: $.OSky.data.demo.functionTypes, valueField: "id" } }
                 },
-                { field: "OperateLogEnabled", title: "操作日志", width: 70, sortable: true, align: "center", formatter: formatBoolean, editor: { type: "combobox", options: { required: true, data: $.OSky.data.bool, valueField: "id" } } },
-                { field: "DataLogEnabled", title: "数据日志", width: 70, sortable: true, align: "center", formatter: formatBoolean, editor: { type: "combobox", options: { required: true, data: $.OSky.data.bool, valueField: "id" } } },
-                { field: "CacheExpirationSeconds", title: "缓存秒数", width: 70, sortable: true, align: "center", editor: { type: "numberbox", options: { precision: 0 } } },
-                { field: "IsCacheSliding", title: "滑动过期", width: 70, sortable: true, align: "center", formatter: formatBoolean, editor: { type: "combobox", options: { required: true, data: $.OSky.data.bool, valueField: "id" } } },
-                { field: "IsLocked", title: "已锁定", width: 70, sortable: true, align: "center", formatter: formatBoolean, editor: { type: "combobox", options: { required: true, data: $.OSky.data.bool, valueField: "id" } } },
-                { field: "IsAjax", title: "Ajax访问", width: 70, sortable: true, align: "center", hidden: true, formatter: formatBoolean },
-                { field: "IsChild", title: "子功能", width: 70, sortable: true, align: "center", hidden: true, formatter: formatBoolean },
-                { field: "IsCustom", title: "自定义", width: 70, sortable: true, align: "center", formatter: formatBoolean },
+                { field: "OperateLogEnabled", title: "操作日志", width: 70, align: "center", formatter: formatBoolean, editor: { type: "combobox", options: { required: true, editable: false, data: $.OSky.data.bool, valueField: "id" } } },
+                { field: "DataLogEnabled", title: "数据日志", width: 70, align: "center", formatter: formatBoolean, editor: { type: "combobox", options: { required: true, editable: false, data: $.OSky.data.bool, valueField: "id" } } },
+                { field: "CacheExpirationSeconds", title: "缓存秒数", width: 70, align: "center", editor: { type: "numberbox", options: { precision: 0 } } },
+                { field: "IsCacheSliding", title: "滑动过期", width: 70, align: "center", formatter: formatBoolean, editor: { type: "combobox", options: { required: true, editable: false, data: $.OSky.data.bool, valueField: "id" } } },
+                { field: "IsLocked", title: "已锁定", width: 70, align: "center", formatter: formatBoolean, editor: { type: "combobox", options: { required: true, editable: false, data: $.OSky.data.bool, valueField: "id" } } },
+                { field: "IsAjax", title: "Ajax访问", width: 70, align: "center", hidden: true, formatter: formatBoolean },
+                { field: "IsChild", title: "子功能", width: 70, align: "center", hidden: true, formatter: formatBoolean },
+                { field: "IsCustom", title: "自定义", width: 70, align: "center", formatter: formatBoolean },
                 { field: "Area", title: "区域", width: 100, sortable: true, hidden: true },
                 { field: "Controller", title: "控制器", width: 150, sortable: true, hidden: true },
                 { field: "Action", title: "功能方法", width: 150, sortable: true, hidden: true },
-                { field: "Url", title: "URL地址", width: 150, sortable: true, editor: { type: "textarea", options: { validType: "length[1,500]" } } }
+                { field: "Url", title: "URL地址", width: 150, sortable: true, editor: { type: "combobox", options: { validType: "length[1,500]" } } }
             ]
         ];
         multiSort = true;

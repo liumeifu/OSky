@@ -47,7 +47,9 @@
     </div>
 }
     <script type="text/javascript">
+       
         $(function () {
+            loadTopWindow();   
             if ($('#hdErrors').val() != "") {
                 $.OSky.layer.msg.tip($('#hdErrors').val());
             }
@@ -79,6 +81,14 @@
                 }
             });
         });
+
+        //判断当前窗口是否有顶级窗口
+        function loadTopWindow() {
+            if (window.top != null && window.top.document.URL != document.URL) {
+                window.top.location = document.URL;
+            }
+        }
+
     </script>
 </body>
 </html>

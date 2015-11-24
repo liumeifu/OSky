@@ -1967,6 +1967,9 @@
   padding: 0 2px;
   vertical-align: middle;
 }
+.numberbox-input {
+    height:18px !important;
+}
 .textbox {
   padding: 6px 10px;
 }

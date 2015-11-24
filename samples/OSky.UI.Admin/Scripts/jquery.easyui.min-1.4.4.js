@@ -7422,7 +7422,7 @@ $(_547).addClass("numberbox-f").textbox(opts);
 $(_547).textbox("textbox").css({imeMode:"disabled"});
 $(_547).attr("numberboxName",$(_547).attr("textboxName"));
 _548.numberbox=$(_547).next();
-_548.numberbox.addClass("numberbox");
+_548.numberbox.addClass("numberbox").addClass("numberbox-input");
 var _549=opts.parser.call(_547,opts.value);
 var _54a=opts.formatter.call(_547,_549);
 $(_547).numberbox("initValue",_549).numberbox("setText",_54a);

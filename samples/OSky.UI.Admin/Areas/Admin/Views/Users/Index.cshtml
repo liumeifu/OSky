@@ -3,6 +3,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_DataGridLayout.cshtml";
 
     ViewBag.GridId = "users";
+    ViewBag.ToolbarItem = "add,edit,save,cancel,delete";
     ViewBag.GridDataUrl = Url.Action("GridData");
     ViewBag.NodeDataUrl = Url.Action("NodeData", "Organizations");
     ViewBag.AddUrl = Url.Action("Add");
@@ -56,11 +57,11 @@
 
         columns = [[
             { field: "Id", title: "编号", hidden: true },
-            { field: "UserName", title: "用户名", width: 150, sortable: true, align: "center", editor: { type: "validatebox", options: { required: true, validType: "length[3,100]" } } },
-            { field: "NickName", title: "用户姓名", width: 150, sortable: true, align: "center", editor: { type: "validatebox", options: { required: true, validType: "length[3,100]" } } },
-            { field: "Email", title: "邮箱", width: 150, align: "center", editor: { type: "validatebox", options: { validType: "length[6,200]" } } },
-            { field: "PhoneNumber", title: "手机号码", width: 150, align: "center", editor: { type: "validatebox", options: { validType: "length[3,50]" } } },
-            { field: "IsLocked", title: "已锁定", width: 80, align: "center", formatter: formatBoolean, editor: { type: "combobox", options: { required: true, data: $.OSky.data.bool, valueField: "id" } } },
+            { field: "UserName", title: "用户名", width: 150, sortable: true, align: "center", editor: { type: "validatebox", options: { required: true, validType: "length[3,20]" } } },
+            { field: "NickName", title: "用户姓名", width: 150, sortable: true, align: "center", editor: { type: "validatebox", options: { required: true, validType: "length[2,20]" } } },
+            { field: "Email", title: "邮箱", width: 150, align: "center", editor: { type: "validatebox", options: { validType: "length[6,20]" } } },
+            { field: "PhoneNumber", title: "手机号码", width: 150, align: "center", editor: { type: "validatebox", options: { validType: "length[11,50]" } } },
+            { field: "IsLocked", title: "已锁定", width: 80, align: "center", formatter: formatBoolean, editor: { type: "combobox", options: { required: true, editable: false, data: $.OSky.data.bool, valueField: "id" } } },
             { field: "CreatedTime", title: "创建时间", width: 150, align: "center", sortable: true, formatter: function (value) { return $.OSky.tools.formatDate(value); } },
         ]];
 
