@@ -46,10 +46,6 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         public ActionResult GridData(int? id)
         {
             GridRequest request = new GridRequest(Request);
-            if (id.HasValue && id.Value > 0)
-            {
-                request.FilterGroup.Rules.Add(new FilterRule("Organization.Id", id.Value));
-            }
             var page = GetPageResult(IdentityContract.Roles, m => new
             {
                 m.Id,
@@ -58,9 +54,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                 m.IsAdmin,
                 m.IsSystem,
                 m.IsLocked,
-                m.CreatedTime,
-                OrganizationId = m.Organization == null ? 0 : m.Organization.Id,
-                OrganizationName = m.Organization.Name
+                m.CreatedTime
             }, request);
 
             return Json(page.ToGridData(), JsonRequestBehavior.AllowGet);

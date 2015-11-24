@@ -20,7 +20,6 @@ namespace OSky.UI.ModelConfigurations.Identity
         partial void RoleConfigurationAppend()
         {
             //HasRequired(m => m.Organization).WithMany(n => n.Roles);
-            HasOptional(m => m.Organization).WithMany(n => n.Roles);
         }
     }
 }

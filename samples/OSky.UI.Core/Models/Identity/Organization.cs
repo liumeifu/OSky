@@ -30,7 +30,7 @@ namespace OSky.UI.Models.Identity
         public Organization()
         {
             Children = new List<Organization>();
-            Roles = new List<Role>();
+            Users = new List<User>();
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace OSky.UI.Models.Identity
         /// <summary>
         /// 获取或设置 角色信息集合
         /// </summary>
-        public virtual ICollection<Role> Roles { get; set; }
+        public virtual ICollection<User> Users { get; set; }
 
         /// <summary>
         /// 获取设置 信息创建时间

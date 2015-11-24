@@ -26,9 +26,5 @@ namespace OSky.UI.Models.Identity
         /// </summary>
         public bool IsLocked { get; set; }
 
-        /// <summary>
-        /// 获取或设置 角色所属组织机构
-        /// </summary>
-        public virtual Organization Organization { get; set; }
     }
 }

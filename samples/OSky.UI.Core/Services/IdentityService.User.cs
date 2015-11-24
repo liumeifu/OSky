@@ -81,6 +81,21 @@ namespace OSky.UI.Services
                 else
                     user.PasswordHash = UserManager.PasswordHasher.HashPassword("123456");
                 user.Extend = new UserExtend() { RegistedIp = dto.RegistedIp };
+                //判断组织机构是否存在
+                if (dto.OrganizationId.HasValue && dto.OrganizationId.Value > 0)
+                {
+                    Organization organization = OrganizationRepository.GetByKey(dto.OrganizationId.Value);
+                    if (organization == null)
+                    {
+                        throw new Exception("要加入的组织机构不存在。");
+                    }
+                    user.Organization = organization;
+                }
+                else
+                {
+                    user.Organization = null;
+                }
+
                 result = await UserManager.CreateAsync(user);
                 if (!result.Succeeded)
                 {
@@ -121,6 +136,7 @@ namespace OSky.UI.Services
                     }
                     user.PasswordHash = UserManager.PasswordHasher.HashPassword(dto.Password);
                 }
+
                 result = await UserManager.UpdateAsync(user);
                 if (!result.Succeeded)
                 {

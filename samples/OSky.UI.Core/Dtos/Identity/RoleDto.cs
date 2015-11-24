@@ -47,9 +47,5 @@ namespace OSky.UI.Dtos.Identity
         /// </summary>
         public bool IsLocked { get; set; }
 
-        /// <summary>
-        /// 获取或设置 组织机构编号
-        /// </summary>
-        public int? OrganizationId { get; set; }
     }
 }

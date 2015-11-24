@@ -23,6 +23,7 @@ namespace OSky.UI.ModelConfigurations.Identity
         {
             //Property(m => m.UserName).HasColumnAnnotation("Index",
             //    new IndexAnnotation(new IndexAttribute() { IsUnique = true }));
+            HasRequired(m => m.Organization).WithMany(n => n.Users);
         }
     }
 }

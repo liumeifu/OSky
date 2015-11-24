@@ -51,34 +51,10 @@ namespace OSky.UI.Services
             return RoleRepository.Insert(dtos,
                 dto =>
                 {
-                    if (dto.OrganizationId.HasValue)
+                    if (RoleRepository.CheckExists(m => m.Name == dto.Name))
                     {
-                        if (RoleRepository.CheckExists(m => m.Name == dto.Name && m.Organization != null && m.Organization.Id == dto.OrganizationId.Value))
-                        {
-                            throw new Exception("同组织机构中名称为“{0}”的角色已存在，不能重复添加。".FormatWith(dto.Name));
-                        }
+                        throw new Exception("名称为“{0}”的角色已存在，不能重复添加。".FormatWith(dto.Name));
                     }
-                    else if (RoleRepository.CheckExists(m => m.Name == dto.Name && m.Organization == null))
-                    {
-                        throw new Exception("无组织机构的名称为的角色已存在，不能重复添加".FormatWith(dto.Name));
-                    }
-                },
-                (dto, entity) =>
-                {
-                    if (dto.OrganizationId.HasValue && dto.OrganizationId.Value > 0)
-                    {
-                        Organization organization = OrganizationRepository.GetByKey(dto.OrganizationId.Value);
-                        if (organization == null)
-                        {
-                            throw new Exception("要加入的组织机构不存在。");
-                        }
-                        entity.Organization = organization;
-                    }
-                    else
-                    {
-                        entity.Organization = null;
-                    }
-                    return entity;
                 });
         }
 
@@ -96,34 +72,7 @@ namespace OSky.UI.Services
                     {
                         throw new Exception("角色“{0}”为系统角色，不能编辑".FormatWith(dto.Name));
                     }
-                    if (dto.OrganizationId.HasValue)
-                    {
-                        if (RoleRepository.CheckExists(m => m.Name == dto.Name && m.Organization != null && m.Organization.Id == dto.OrganizationId.Value, dto.Id))
-                        {
-                            throw new Exception("同组织机构中名称为“{0}”的角色已存在，不能重复添加。".FormatWith(dto.Name));
-                        }
-                    }
-                    else if (RoleRepository.CheckExists(m => m.Name == dto.Name && m.Organization == null, dto.Id))
-                    {
-                        throw new Exception("无组织机构的名称为的角色已存在，不能重复添加".FormatWith(dto.Name));
-                    }
-                },
-                (dto, entity) =>
-                {
-                    if (dto.OrganizationId.HasValue && dto.OrganizationId.Value > 0)
-                    {
-                        Organization organization = OrganizationRepository.GetByKey(dto.OrganizationId.Value);
-                        if (organization == null)
-                        {
-                            throw new Exception("要加入的组织机构不存在。");
-                        }
-                        entity.Organization = organization;
-                    }
-                    else
-                    {
-                        entity.Organization = null;
-                    }
-                    return entity;
+                    
                 });
         }
 

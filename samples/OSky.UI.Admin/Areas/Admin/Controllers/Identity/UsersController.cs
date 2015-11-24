@@ -60,6 +60,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                 m => new
                 {
                     m.Id,
+                    m.OrganizationId,
                     m.UserName,
                     m.NickName,
                     m.Email,

@@ -21,6 +21,7 @@ namespace OSky.UI.Models.Identity
     [Description("认证-用户信息")]
     public class User : UserBase<int>
     {
+        public int OrganizationId { get; set; }
         /// <summary>
         /// 获取或设置 是否冻结
         /// </summary>
@@ -30,5 +31,10 @@ namespace OSky.UI.Models.Identity
         /// 获取或设置 用户扩展信息
         /// </summary>
         public virtual UserExtend Extend { get; set; }
+
+        /// <summary>
+        /// 获取或设置 角色所属组织机构
+        /// </summary>
+        public virtual Organization Organization { get; set; }
     }
 }
