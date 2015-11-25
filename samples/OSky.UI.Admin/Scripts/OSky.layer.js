@@ -36,7 +36,7 @@ document.write('<script src="/Scripts/layer-2.0/extend/layer.ext.js"></script>')
                 content: content,               //内容（type=1 content可传入任意的文本或html；type=2 content是一个URL）
                 title: title,                   //标题（类型：String/Array/Boolean，默认：'信息'）
                 //skin: 'layui-layer-molv',     //样式类名 墨绿深蓝风
-                area: [width ? width : '800px', height ? height : '550px'],      //宽高（类型：String/Array，默认：'auto'）
+                area: [width ? width : '500px', height ? height : '550px'],      //宽高（类型：String/Array，默认：'auto'）
                 fix: false,                     //不固定
                 maxmin: true,                   //最大最小化(类型：Boolean，默认：false)
                 btn: btn == true ? ['确定', '取消'] : null,       //按钮（类型：String/Array，默认：'确认'）

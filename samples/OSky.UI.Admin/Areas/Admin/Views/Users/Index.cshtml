@@ -68,7 +68,15 @@
         startfunction = function () {
             //设置角色
             function setRoles() {
-                $.OSky.layer.msg.info("设置用户的角色");
+                var row = grid.datagrid("getSelected");
+                if (!row) {
+                    $.OSky.layer.msg.tip("请选择要编辑的行。");
+                    return;
+                }
+                $.OSky.layer.msg.open(2, "/Admin/Users/SetRole?Id=" + row.Id, true,
+                    function (index, layero) {
+                       
+            });
             }
 
             toolbarData.push({ text: "设置角色", iconCls: "pic_198", handler: setRoles });

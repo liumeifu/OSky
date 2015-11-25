@@ -32,6 +32,10 @@ namespace OSky.UI.Models.Identity
             Children = new List<Organization>();
             Users = new List<User>();
         }
+        /// <summary>
+        /// 获取或设置 父级组织机构Id
+        /// </summary>
+        public int? ParentId { get; set; }
 
         /// <summary>
         /// 获取或设置 名称

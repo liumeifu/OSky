@@ -24,6 +24,9 @@ using OSky.Utility.Data;
 using OSky.Web.Mvc.Extensions;
 using OSky.Web.Mvc.Security;
 using OSky.Web.Mvc.UI;
+using System.Dynamic;
+using Newtonsoft.Json;
+using OSky.UI.Admin.ViewModels;
 
 
 namespace OSky.UI.Admin.Areas.Admin.Controllers
@@ -40,6 +43,12 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
 
         [Description("管理-用户-列表")]
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        [Description("管理-用户-设置角色")]
+        public ActionResult SetRole()
         {
             return View();
         }
