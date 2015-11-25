@@ -21,6 +21,9 @@ namespace OSky.UI.Models.Identity
     [Description("认证-用户信息")]
     public class User : UserBase<int>
     {
+        /// <summary>
+        /// 组织机构Id
+        /// </summary>
         public int OrganizationId { get; set; }
         /// <summary>
         /// 获取或设置 是否冻结

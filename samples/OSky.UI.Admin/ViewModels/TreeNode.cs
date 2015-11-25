@@ -38,4 +38,29 @@ namespace OSky.UI.Admin.ViewModels
 
         public ICollection<TreeNode> Children { get; set; }
     }
+    /// <summary>
+    /// 组织结构树
+    /// </summary>
+    public class OrganTree
+    {
+        public int id { get; set; }
+        /// <summary>
+        /// 父节点Id
+        /// </summary>
+        public int? pid { get; set; }
+
+        public string text { get; set; }
+
+        public bool Checked { get; set; }
+
+        /// <summary>
+        /// 节点状态, 'open' 或者 'closed'
+        /// </summary>
+        public string state { get; set; }
+        /// <summary>
+        /// 0 机构 1 人员
+        /// </summary>
+        public int Type { get; set; }
+
+    }
 }

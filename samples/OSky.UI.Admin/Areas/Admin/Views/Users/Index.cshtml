@@ -34,52 +34,58 @@
 }
 @section customScript
 {
+    <script src="~/Scripts/plugins/OSky.easyui.tree.js"></script>
     <script type="text/javascript">
-        $(function () {
-            treeFun();
-        })
-        function treeFun() {
-            var $tree = $("#tree-organization");
-            $tree.tree({
-                url: "@ViewBag.NodeDataUrl",
-                method: 'post',
-                animate: true,
-                lines: true,
-                onClick: function (node) {
-                    OrgId = node.id;
-                    grid.datagrid('load', {
-                        filterRules: [{ field: "OrganizationId", op: "equal", value: OrgId }]
-                    });
-                }
-            });
+    $(function () {
+        treeFun();
+    })
+    function treeFun() {
+        $Tree = $("#tree-organization");
+        $Tree.tree({
+            url: "@ViewBag.NodeDataUrl",
+            lines: true,
+            animate: true,
+            loadFilter: function (data) {
+                var treeData = new TreeHelper(data).dataTransferer();
+                return treeData;
+            },
+            onClick: function (node) {
+                OrgId = node.id;
+                grid.datagrid('load', {
+                    filterRules: [{ field: "OrganizationId", op: "equal", value: OrgId }]
+                });
+            }
+        });
+
+
+    }
+
+
+    columns = [[
+        { field: "Id", title: "编号", hidden: true },
+        { field: "UserName", title: "用户名", width: 150, sortable: true, align: "center", editor: { type: "validatebox", options: { required: true, validType: "length[3,20]" } } },
+        { field: "NickName", title: "用户姓名", width: 150, sortable: true, align: "center", editor: { type: "validatebox", options: { required: true, validType: "length[2,20]" } } },
+        { field: "Email", title: "邮箱", width: 150, align: "center", editor: { type: "validatebox", options: { validType: "length[6,20]" } } },
+        { field: "PhoneNumber", title: "手机号码", width: 150, align: "center", editor: { type: "validatebox", options: { validType: "length[11,50]" } } },
+        { field: "IsLocked", title: "已锁定", width: 80, align: "center", formatter: formatBoolean, editor: { type: "combobox", options: { required: true, editable: false, data: $.OSky.data.bool, valueField: "id" } } },
+        { field: "CreatedTime", title: "创建时间", width: 150, align: "center", sortable: true, formatter: function (value) { return $.OSky.tools.formatDate(value); } },
+    ]];
+
+    startfunction = function () {
+        //设置角色
+        function setRoles() {
+            var row = grid.datagrid("getSelected");
+            if (!row) {
+                $.OSky.layer.msg.tip("请选择要编辑的行。");
+                return;
+            }
+            $.OSky.layer.msg.open(2, "/Admin/Users/SetRole?Id=" + row.Id, true,
+                function (index, layero) {
+
+                });
         }
 
-
-        columns = [[
-            { field: "Id", title: "编号", hidden: true },
-            { field: "UserName", title: "用户名", width: 150, sortable: true, align: "center", editor: { type: "validatebox", options: { required: true, validType: "length[3,20]" } } },
-            { field: "NickName", title: "用户姓名", width: 150, sortable: true, align: "center", editor: { type: "validatebox", options: { required: true, validType: "length[2,20]" } } },
-            { field: "Email", title: "邮箱", width: 150, align: "center", editor: { type: "validatebox", options: { validType: "length[6,20]" } } },
-            { field: "PhoneNumber", title: "手机号码", width: 150, align: "center", editor: { type: "validatebox", options: { validType: "length[11,50]" } } },
-            { field: "IsLocked", title: "已锁定", width: 80, align: "center", formatter: formatBoolean, editor: { type: "combobox", options: { required: true, editable: false, data: $.OSky.data.bool, valueField: "id" } } },
-            { field: "CreatedTime", title: "创建时间", width: 150, align: "center", sortable: true, formatter: function (value) { return $.OSky.tools.formatDate(value); } },
-        ]];
-
-        startfunction = function () {
-            //设置角色
-            function setRoles() {
-                var row = grid.datagrid("getSelected");
-                if (!row) {
-                    $.OSky.layer.msg.tip("请选择要编辑的行。");
-                    return;
-                }
-                $.OSky.layer.msg.open(2, "/Admin/Users/SetRole?Id=" + row.Id, true,
-                    function (index, layero) {
-                       
-            });
-            }
-
-            toolbarData.push({ text: "设置角色", iconCls: "pic_198", handler: setRoles });
-        };
+        toolbarData.push({ text: "设置角色", iconCls: "pic_198", handler: setRoles });
+    };
     </script>
 }

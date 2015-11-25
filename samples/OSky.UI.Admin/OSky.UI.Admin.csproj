@@ -577,6 +577,7 @@
     <Content Include="Scripts\plugins\datagrid-detailview.js" />
     <Content Include="Scripts\plugins\datagrid-filter.js" />
     <Content Include="Scripts\plugins\datagrid-groupview.js" />
+    <Content Include="Scripts\plugins\OSky.easyui.tree.js" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\web.config" />
     <Content Include="Views\_ViewStart.cshtml" />

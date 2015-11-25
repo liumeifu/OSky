@@ -23,6 +23,7 @@ using OSky.Utility.Data;
 using OSky.Web.Mvc.Binders;
 using OSky.Web.Mvc.Security;
 using OSky.Web.Mvc.UI;
+using OSky.UI.Admin.ViewModels;
 
 
 namespace OSky.UI.Admin.Areas.Admin.Controllers
@@ -120,24 +121,36 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         [Description("管理-组织机构-节点数据")]
         public ActionResult NodeData()
         {
-            Func<Organization, object> getNodeData = null;
-            getNodeData = org =>
-            {
-                dynamic node = new ExpandoObject();
-                node.id = org.Id;
-                node.text = org.Name;
-                node.children = new List<dynamic>();
-                var children = org.Children.OrderBy(m => m.SortCode).ToList();
-                foreach (var child in children)
+            #region
+            //Func<Organization, object> getNodeData = null;
+            //getNodeData = org =>
+            //{
+            //    dynamic node = new ExpandoObject();
+            //    node.id = org.Id;
+            //    node.text = org.Name;
+            //    node.children = new List<dynamic>();
+            //    var children = org.Children.OrderBy(m => m.SortCode).ToList();
+            //    foreach (var child in children)
+            //    {
+            //        node.children.Add(getNodeData(child));
+            //    }
+            //    return node;
+            //};
+            //List<Organization> roots = IdentityContract.Organizations.Where(m => m.Parent == null).OrderBy(m => m.SortCode).ToList();
+            //List<object> nodes = roots.Select(getNodeData).ToList();
+            //string json = JsonConvert.SerializeObject(nodes);
+            //return Content(json, "application/json");
+            #endregion
+
+            var roots = IdentityContract.Organizations
+                .OrderBy(m => m.SortCode).Select(m => new OrganTree
                 {
-                    node.children.Add(getNodeData(child));
-                }
-                return node;
-            };
-            List<Organization> roots = IdentityContract.Organizations.Where(m => m.Parent == null).OrderBy(m => m.SortCode).ToList();
-            List<object> nodes = roots.Select(getNodeData).ToList();
-            string json = JsonConvert.SerializeObject(nodes);
-            return Content(json, "application/json");
+                    id= m.Id, 
+                    pid=m.ParentId,
+                    text=m.Name
+                }).ToList();
+            return Content(JsonConvert.SerializeObject(roots), "application/json");
+
         }
 
         #endregion

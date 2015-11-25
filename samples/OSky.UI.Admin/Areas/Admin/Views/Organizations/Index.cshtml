@@ -17,67 +17,72 @@
 </div>
 
 @section footer{
+<script src="~/Scripts/plugins/OSky.easyui.tree.js"></script>
     <script type="text/javascript">
-        $(function () {
-            treeFun();
-            $('#p').panel('refresh', '@Url.Action("Edit", "Organizations", new { id = 0 })');
-        })
-        var id;
-        function treeFun() {
-            var $tree = $("#tree-organization");
-            $tree.tree({
-                url: "@ViewBag.NodeDataUrl",
-                method: 'post',
-                animate: true,
-                lines: true,
-                onClick: function (node) {
-                    id = node.id;
-                    $('#p').panel('refresh', '@Url.Action("Edit", "Organizations")/' + node.id);
-                }
-            });
-        }
-
-        function Add_Click() {
-            $('#form1').form('submit', {
-                url: "@Url.Action("AddOrgan")",
-                onSubmit: function () {
-                    $('#ParentId').val(id);
-                    return $(this).form('validate');
-                },
-                success: function (d) {
-                    var data = eval('(' + d + ')');
-                    ajaxResultHandler(data);
-                }
-            });
-        }
-
-        function Edit_Click() {
-            $('#form1').form('submit', {
-                url: "@Url.Action("EditOrgan")",
-                onSubmit: function () {
-                    return $(this).form('validate');
-                },
-                success: function (d) {
-                    var data = eval('(' + d + ')');
-                    ajaxResultHandler(data);
-                }
-            });
-        }
-
-        function Del_Click() {
-            $.post('@Url.Action("DeleteOrgan")', { id: id }, ajaxResultHandler);
-        }
-
-        function ajaxResultHandler(data) {
-            if (data.Type == "Success") {
-                window.location.reload();
-                $.OSky.layer.msg.tip(data.Content);
+    $(function () {
+        treeFun();
+        $('#p').panel('refresh', '@Url.Action("Edit", "Organizations", new { id = 0 })');
+    })
+    var id;
+    function treeFun() {
+        $Tree = $("#tree-organization");
+        $Tree.tree({
+            url: "@ViewBag.NodeDataUrl",
+            lines: true,
+            animate: true,
+            loadFilter: function (data) {
+                var treeData = new TreeHelper(data).dataTransferer();
+                return treeData;
+            },
+            onClick: function (node) {
+                id = node.id;
+                $('#p').panel('refresh', '@Url.Action("Edit", "Organizations")/' + node.id);
             }
-            if (data.Type == "Error") {
-                $.OSky.layer.msg.error(data.Content);
-            } else {
-                $.OSky.layer.msg.info(data.Content);
+        });
+
+    }
+
+    function Add_Click() {
+        $('#form1').form('submit', {
+            url: "@Url.Action("AddOrgan")",
+            onSubmit: function () {
+                $('#ParentId').val(id);
+                return $(this).form('validate');
+            },
+            success: function (d) {
+                var data = eval('(' + d + ')');
+                ajaxResultHandler(data);
             }
+        });
+    }
+
+    function Edit_Click() {
+        $('#form1').form('submit', {
+            url: "@Url.Action("EditOrgan")",
+            onSubmit: function () {
+                return $(this).form('validate');
+            },
+            success: function (d) {
+                var data = eval('(' + d + ')');
+                ajaxResultHandler(data);
+            }
+        });
+    }
+
+    function Del_Click() {
+        $.post('@Url.Action("DeleteOrgan")', { id: id }, ajaxResultHandler);
+    }
+
+    function ajaxResultHandler(data) {
+        if (data.Type == "Success") {
+            window.location.reload();
+            $.OSky.layer.msg.tip(data.Content);
         }
+        if (data.Type == "Error") {
+            $.OSky.layer.msg.error(data.Content);
+        } else {
+            $.OSky.layer.msg.info(data.Content);
+        }
+    }
     </script>
 }
