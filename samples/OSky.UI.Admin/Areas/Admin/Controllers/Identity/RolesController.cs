@@ -63,7 +63,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
 
         [AjaxOnly]
         [Description("管理-角色-节点数据")]
-        public ActionResult NodeData()
+        public ActionResult NodeData(int Id)
         {
             var roots = IdentityContract.Organizations
                 .OrderBy(m => m.SortCode).Select(m => new OrganTree
@@ -80,6 +80,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                 text = m.NickName,
                 Type = 1
             }).ToList();
+            
             roots.AddRange(users);
             return Content(JsonConvert.SerializeObject(roots), "application/json");
 
@@ -88,9 +89,9 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         [HttpPost]
         [AjaxOnly]
         [Description("管理-角色-用户信息")]
-        public ActionResult GetUsersByRoleId(int RoleId)
+        public ActionResult GetUsersByRoleId(int Id)
         {
-            var userIds= IdentityContract.UserRoleMaps.Where(m => m.RoleId == RoleId).ToList();
+            var userIds = IdentityContract.UserRoleMaps.Where(m => m.RoleId == Id).Select(m=>m.UserId).ToList();
             return Content(JsonConvert.SerializeObject(userIds), "application/json");
 
         }
@@ -141,6 +142,11 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             return View();
         }
 
+        [Description("管理-角色-设置人员")]
+        public ActionResult SetUsers()
+        {
+            return View();
+        }
         #endregion
     }
 }

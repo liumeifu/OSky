@@ -32,8 +32,15 @@
             }
             //功能权限
             function functionUser() {
-
-                $.OSky.layer.msg.info("设置角色的功能权限");
+                var row = grid.datagrid("getSelected");
+                if (!row) {
+                    $.OSky.layer.msg.tip("请选择要编辑的行。");
+                    return;
+                }
+                $.OSky.layer.msg.open(2, "@Url.Action("SetUsers")?Id=" + row.Id, true,
+                    function (index, layero) {
+                        var nodes = $('#tt').tree('getChecked');
+                    });
             }
             toolbarData.push({ text: "设置人员", iconCls: "pic_2", handler: functionUser });
             toolbarData.push({ text: "功能权限", iconCls: "pic_94", handler: functionPermission });
