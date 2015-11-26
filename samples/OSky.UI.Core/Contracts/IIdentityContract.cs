@@ -155,5 +155,13 @@ namespace OSky.UI.Contracts
         OperationResult CheckLogin(LoginDto dto);
 
         #endregion
+
+        #region 用户角色映射信息业务
+        /// <summary>
+        /// 获取 用户角色映射信息查询数据集
+        /// </summary>
+        IQueryable<UserRoleMap> UserRoleMaps { get; }
+
+        #endregion
     }
 }

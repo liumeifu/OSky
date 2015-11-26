@@ -31,6 +31,14 @@ namespace OSky.Core.Security.Models
         where TRole : RoleBase<TRoleKey>
     {
         /// <summary>
+        /// 获取或设置 角色信息Id
+        /// </summary>
+        public TRoleKey RoleId { get; set; }
+        /// <summary>
+        /// 获取或设置 功能信息Id
+        /// </summary>
+        public TFunctionKey FunctionId { get; set; }
+        /// <summary>
         /// 获取或设置 功能信息
         /// </summary>
         public virtual TFunction Function { get; set; }

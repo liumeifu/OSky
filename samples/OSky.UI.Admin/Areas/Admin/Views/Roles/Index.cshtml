@@ -30,7 +30,12 @@
 
                 $.OSky.layer.msg.info("设置角色的功能权限");
             }
-            //toolbarData.push("-");
+            //功能权限
+            function functionUser() {
+
+                $.OSky.layer.msg.info("设置角色的功能权限");
+            }
+            toolbarData.push({ text: "设置人员", iconCls: "pic_2", handler: functionUser });
             toolbarData.push({ text: "功能权限", iconCls: "pic_94", handler: functionPermission });
         };
 

@@ -24,7 +24,8 @@ using OSky.Web.Mvc.Extensions;
 using OSky.Web.Mvc.Logging;
 using OSky.Web.Mvc.Security;
 using OSky.Web.Mvc.UI;
-
+using OSky.UI.Admin.ViewModels;
+using Newtonsoft.Json;
 
 namespace OSky.UI.Admin.Areas.Admin.Controllers
 {
@@ -58,6 +59,40 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             }, request);
 
             return Json(page.ToGridData(), JsonRequestBehavior.AllowGet);
+        }
+
+        [AjaxOnly]
+        [Description("管理-角色-节点数据")]
+        public ActionResult NodeData()
+        {
+            var roots = IdentityContract.Organizations
+                .OrderBy(m => m.SortCode).Select(m => new OrganTree
+                {
+                    id = m.Id,
+                    pid = m.ParentId,
+                    text = m.Name,
+                    Type = 0
+                }).ToList();
+            var users = IdentityContract.Users.Where(c => c.IsLocked == false).Select(m => new OrganTree
+            {
+                id = m.Id,
+                pid = m.OrganizationId,
+                text = m.NickName,
+                Type = 1
+            }).ToList();
+            roots.AddRange(users);
+            return Content(JsonConvert.SerializeObject(roots), "application/json");
+
+        }
+
+        [HttpPost]
+        [AjaxOnly]
+        [Description("管理-角色-用户信息")]
+        public ActionResult GetUsersByRoleId(int RoleId)
+        {
+            var userIds= IdentityContract.UserRoleMaps.Where(m => m.RoleId == RoleId).ToList();
+            return Content(JsonConvert.SerializeObject(userIds), "application/json");
+
         }
 
         #endregion

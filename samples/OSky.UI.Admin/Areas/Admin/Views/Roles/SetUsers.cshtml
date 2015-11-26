@@ -26,7 +26,13 @@
                     return treeData;
                 },
                 onLoadSuccess: function (node, data) {
-                    //alert(data);
+                    $(this).find('span.tree-checkbox').css({"cursor": "not-allowed" }).unbind().click(function () {
+                        return false;
+                    });
+                    $.post("@Url.Action("GetUserRoleMaps")", {}, function (data) { });
+                },
+                onBeforeExpand: function (node) {
+                    
                 },
                 onClick: function (node) {
                     $(this).tree('toggle', node.target);

@@ -24,10 +24,6 @@ using OSky.Utility.Data;
 using OSky.Web.Mvc.Extensions;
 using OSky.Web.Mvc.Security;
 using OSky.Web.Mvc.UI;
-using System.Dynamic;
-using Newtonsoft.Json;
-using OSky.UI.Admin.ViewModels;
-
 
 namespace OSky.UI.Admin.Areas.Admin.Controllers
 {
@@ -57,31 +53,8 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
 
         #region Ajax功能
 
-        [AjaxOnly]
-        [Description("管理-用户-节点数据")]
-        public ActionResult NodeData()
-        {
-            var roots = IdentityContract.Organizations
-                .OrderBy(m => m.SortCode).Select(m => new OrganTree
-                {
-                    id = m.Id,
-                    pid = m.ParentId,
-                    text = m.Name,
-                    Type=0
-                }).ToList();
-            var users=IdentityContract.Users.Where(c=>c.IsLocked==false).Select(m => new OrganTree {
-                id = m.Id,
-                pid = m.OrganizationId,
-                text = m.NickName,
-                Type = 1
-            }).ToList();
-            roots.AddRange(users);
-            return Content(JsonConvert.SerializeObject(roots), "application/json");
-
-        }
-
         #region 获取数据
-
+      
         [AjaxOnly]
         [Description("管理-用户-列表数据")]
         public ActionResult GridData()
@@ -107,6 +80,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                 request);
             return Json(page.ToGridData(), JsonRequestBehavior.AllowGet);
         }
+
 
         #endregion
 

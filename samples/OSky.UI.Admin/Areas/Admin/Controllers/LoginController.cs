@@ -22,6 +22,7 @@ using System.Text;
 
 namespace OSky.UI.Admin.Areas.Admin.Controllers
 {
+    [Description("管理-登录")]
     public class LoginController : Controller
     {
         /// <summary>
@@ -102,6 +103,8 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         #endregion
 
         #endregion
+
+        #region 视图功能
         //
         // GET: /Admin/Login/
         [Description("管理-登录")]
@@ -111,6 +114,9 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                 return View(dto);
             return Login(dto);
         }
+
+        #endregion
+
         /// <summary>
         /// 基于Claims-based的认证 
         /// </summary>

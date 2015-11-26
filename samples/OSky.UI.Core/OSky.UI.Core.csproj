@@ -197,6 +197,7 @@
     <Compile Include="Services\IdentityService.Organization.cs" />
     <Compile Include="Services\IdentityService.Role.cs" />
     <Compile Include="Services\IdentityService.User.cs" />
+    <Compile Include="Services\IdentityService.UserRoleMap.cs" />
     <Compile Include="Services\LoggingService.cs" />
     <Compile Include="Services\LoggingService.DataLog.cs" />
     <Compile Include="Services\SecurityService.cs" />

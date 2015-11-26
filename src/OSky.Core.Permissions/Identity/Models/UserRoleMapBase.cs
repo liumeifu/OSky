@@ -45,6 +45,14 @@ namespace OSky.Core.Identity.Models
         }
 
         /// <summary>
+        /// 获取或设置 用户信息Id
+        /// </summary>
+        public TUserKey UserId { get; set; }
+        /// <summary>
+        /// 获取或设置 角色信息Id
+        /// </summary>
+        public TRoleKey RoleId { get; set; }
+        /// <summary>
         /// 获取或设置 生效时间
         /// </summary>
         public DateTime BeginTime

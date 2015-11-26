@@ -30,6 +30,14 @@ namespace OSky.Core.Security.Models
         where TUser : IUser<TUserKey>, IEntity<TUserKey>
     {
         /// <summary>
+        /// 获取或设置 用户信息Id
+        /// </summary>
+        public TUserKey UserId { get; set; }
+        /// <summary>
+        /// 获取或设置 功能信息Id
+        /// </summary>
+        public TFunctionKey FunctionId { get; set; }
+        /// <summary>
         /// 获取或设置 功能信息
         /// </summary>
         public virtual TFunction Function { get; set; }

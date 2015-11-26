@@ -31,6 +31,15 @@ namespace OSky.Core.Security.Models
         where TUser : UserBase<TUserKey>
     {
         /// <summary>
+        /// 获取或设置 用户信息Id
+        /// </summary>
+        public TUserKey UserId { get; set; }
+        /// <summary>
+        /// 获取或设置 实体信息Id
+        /// </summary>
+        public TEntityInfoKey EntityInfoId { get; set; }
+
+        /// <summary>
         /// 获取或设置 实体信息
         /// </summary>
         public virtual TEntityInfo EntityInfo { get; set; }
