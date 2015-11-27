@@ -29,5 +29,41 @@ namespace OSky.Core.Exceptions
             Claim claim = identity.Claims.FirstOrDefault(m => m.Type == type);
             return claim == null ? null : claim.Value;
         }
+
+        /// <summary>
+        /// 获取指定类型的Claim值的集合
+        /// </summary>
+        public static IEnumerable<string> GetClaimValue(this ClaimsIdentity identity, string type)
+        {
+            IEnumerable<string> claim = identity.Claims.Where(m => m.Type == type).Select(m => m.Value).ToList();
+            return claim;
+        }
+
+        /// <summary>
+        /// 基于Claims-based的认证 
+        /// </summary>
+        /// <param name="id">登录Id</param>
+        /// <param name="name">登录名</param>
+        /// <param name="roles">角色集合</param>
+        /// <param name="authenticationType">cookie类型</param>
+        /// <returns></returns>
+        public static ClaimsIdentity GetClaimsIdentity(string id, string name, string[] roles, string authenticationType)
+        {
+            var identity = new ClaimsIdentity(authenticationType);
+            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, id));
+            identity.AddClaim(new Claim(ClaimTypes.Name, name));
+            if (roles != null)
+                foreach (var item in roles)
+                {
+                    if (!string.IsNullOrEmpty(item))
+                    {
+                        identity.AddClaim(new Claim(ClaimTypes.Role, item));
+                    }
+                }
+            identity.AddClaim(new Claim("http://schemas.microsoft.com/accesscontrolservice/2015/11/claims/identityprovider", "ASP.NET Identity"));
+           
+            return identity;
+        }
+
     }
 }
