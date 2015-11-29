@@ -79,10 +79,19 @@
                 $.OSky.layer.msg.tip("请选择要编辑的行。");
                 return;
             }
-            $.OSky.layer.msg.open(2, "/Admin/Users/SetRole?Id=" + row.Id, true,
+            $.OSky.layer.msg.open(2, "/Admin/Users/SetRoles?Id=" + row.Id, true,
                 function (index, layero) {
-
-                });
+                    var ifrgrid = layer.getChildFrame('grid-setRoles', index);
+                    var rows = grid.datagrid("getChecked");
+                    if (!rows) {
+                        $.OSky.layer.msg.tip("请选择角色的行。");
+                        return;
+                    }
+                    var items = $.Enumerable.From(rows).Select(function (m) { return { RoleId: m.Id, UserId: row.Id }; }).ToArray();
+                    $.post("@Url.Action("SetRolesToUser")", { dtos: items }, function (data) {
+                        ajaxResultHandler(data);
+                    });
+                }, null, "设置角色","900px","620px");
         }
 
         toolbarData.push({ text: "设置角色", iconCls: "pic_198", handler: setRoles });

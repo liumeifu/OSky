@@ -19,6 +19,7 @@ using OSky.UI.Models.Identity;
 using System.Net;
 using Microsoft.Owin.Security;
 using System.Text;
+using OSky.Core.Exceptions;
 
 namespace OSky.UI.Admin.Areas.Admin.Controllers
 {
@@ -74,14 +75,9 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                         {
                             User user = result.Data as User;
                            
-                            //构造登录成功用户的Cookie属性值
-                            Dictionary<string, string> userCookieDic = new Dictionary<string, string>() { };
-                            userCookieDic.Add("userId", user.Id.ToString());
-                            userCookieDic.Add("userName", user.UserName);
-                            
                             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
                             AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = false },
-                                GetClaimsIdentity(user.Id.ToString(), user.UserName, null, userCookieDic));
+                                new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie).SetClaimsIdentity(user.Id.ToString(), user.UserName, null ));
                             return RedirectToAction("Index", "Home", new { });
                             
                         }
@@ -116,36 +112,6 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         }
 
         #endregion
-
-        /// <summary>
-        /// 基于Claims-based的认证 
-        /// </summary>
-        /// <param name="id">登录Id</param>
-        /// <param name="name">登录名</param>
-        /// <param name="roles">角色集合</param>
-        /// <param name="attr">键值对集合</param>
-        /// <returns></returns>
-        public ClaimsIdentity GetClaimsIdentity(string id,string name, string[] roles, Dictionary<string, string> attr)
-        {
-
-            var identity = new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie);
-            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, id));
-            identity.AddClaim(new Claim(ClaimTypes.Name, name));
-            if (roles!=null)
-                foreach (var item in roles)
-                {
-                    if (!string.IsNullOrEmpty(item))
-                    {
-                        identity.AddClaim(new Claim(ClaimTypes.Role, item));
-                    }
-                }
-            identity.AddClaim(new Claim("http://schemas.microsoft.com/accesscontrolservice/2015/11/claims/identityprovider", "ASP.NET Identity"));
-            foreach (var item in attr)
-            {
-                identity.AddClaim(new Claim(item.Key, item.Value));
-            }
-            return identity;
-        }
 
         public string GetModelErrors(ModelStateDictionary modelState)
         {

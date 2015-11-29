@@ -13,33 +13,41 @@
 @section customScript
 {
     <script type="text/javascript">
-        var selectTreeData = null;
-        columns = [[
-            { field: "Id", title: "编号", hidden: true },
-            { field: "Name", title: "角色名", width: 150, sortable: true, align: "center", editor: { type: "validatebox", options: { required: true, validType: "length[2,20]" } } },
-            { field: "IsAdmin", title: "是否管理", width: 80, align: "center", formatter: formatBoolean, editor: { type: "combobox", options: { required: true, editable: false, data: $.OSky.data.bool, valueField: "id", textField: "text" } } },
-            { field: "IsSystem", title: "系统角色", width: 80, align: "center", formatter: formatBoolean, editor: { type: "combobox", options: { required: true, editable: false, data: $.OSky.data.bool, valueField: "id", textField: "text" } } },
-            { field: "IsLocked", title: "已锁定", width: 80, align: "center", formatter: formatBoolean, editor: { type: "combobox", options: { required: true, editable: false, data: $.OSky.data.bool, valueField: "id", textField: "text" } } },
-            { field: "Remark", title: "角色描述", width: 300, align: "center", editor: { type: "validatebox", options: { validType: "length[1,50]" } } },
-            { field: "CreatedTime", title: "创建时间", width: 150, sortable: true, align: "center", formatter: function (value) { return $.OSky.tools.formatDate(value); } }
-        ]];
+    var selectTreeData = null;
+    columns = [[
+        { field: "Id", title: "编号", hidden: true },
+        { field: "Name", title: "角色名", width: 150, sortable: true, align: "center", editor: { type: "validatebox", options: { required: true, validType: "length[2,20]" } } },
+        { field: "IsAdmin", title: "是否管理", width: 80, align: "center", formatter: formatBoolean, editor: { type: "combobox", options: { required: true, editable: false, data: $.OSky.data.bool, valueField: "id", textField: "text" } } },
+        { field: "IsSystem", title: "系统角色", width: 80, align: "center", formatter: formatBoolean, editor: { type: "combobox", options: { required: true, editable: false, data: $.OSky.data.bool, valueField: "id", textField: "text" } } },
+        { field: "IsLocked", title: "已锁定", width: 80, align: "center", formatter: formatBoolean, editor: { type: "combobox", options: { required: true, editable: false, data: $.OSky.data.bool, valueField: "id", textField: "text" } } },
+        { field: "Remark", title: "角色描述", width: 300, align: "center", editor: { type: "validatebox", options: { validType: "length[1,50]" } } },
+        { field: "CreatedTime", title: "创建时间", width: 150, sortable: true, align: "center", formatter: function (value) { return $.OSky.tools.formatDate(value); } }
+    ]];
 
-        startfunction = function() {
-            //功能权限
-            function functionPermission() {
+    startfunction = function() {
+        //功能权限
+        function functionPermission() {
 
-                $.OSky.layer.msg.info("设置角色的功能权限");
+            $.OSky.layer.msg.info("设置角色的功能权限");
+        }
+        //设置人员
+        function functionUser() {
+            var row = grid.datagrid("getSelected");
+            if (!row) {
+                $.OSky.layer.msg.tip("请选择要编辑的行。");
+                return;
             }
-            //功能权限
-            function functionUser() {
-                var row = grid.datagrid("getSelected");
-                if (!row) {
-                    $.OSky.layer.msg.tip("请选择要编辑的行。");
-                    return;
-                }
-                $.OSky.layer.msg.open(2, "@Url.Action("SetUsers")?Id=" + row.Id, true,
+            $.OSky.layer.msg.open(2, "@Url.Action("SetUsers")?Id=" + row.Id, true,
                     function (index, layero) {
-                        var nodes = $('#tt').tree('getChecked');
+                        //var $tree = $(layero).find("iframe").contents().find("#tree-organization");
+                        var nodes = $(layero).find("iframe")[0].contentWindow.getCheckedNodes();
+                        if (nodes.length==0) {
+                            $.OSky.layer.msg.tip("您没有做任何更改。");
+                            return;
+                        }
+                        $.post("@Url.Action("SetUsersToRole")", { "dtos": nodes }, function (data) {
+                            ajaxResultHandler(data);
+                        });
                     });
             }
             toolbarData.push({ text: "设置人员", iconCls: "pic_2", handler: functionUser });

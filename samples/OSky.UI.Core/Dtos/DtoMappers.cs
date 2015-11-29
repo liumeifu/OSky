@@ -36,6 +36,7 @@ namespace OSky.UI.Dtos
             Mapper.CreateMap<EntityInfoDto, EntityInfo>();
             //WorkFlow
             Mapper.CreateMap<FlowFormDto, WorkFlowForm>();
+            Mapper.CreateMap<UserRoleMapDto, UserRoleMap>();
         }
     }
 }

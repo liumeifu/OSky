@@ -33,7 +33,7 @@ namespace OSky.Core.Exceptions
         /// <summary>
         /// 获取指定类型的Claim值的集合
         /// </summary>
-        public static IEnumerable<string> GetClaimValue(this ClaimsIdentity identity, string type)
+        public static IEnumerable<string> GetClaimValues(this ClaimsIdentity identity, string type)
         {
             IEnumerable<string> claim = identity.Claims.Where(m => m.Type == type).Select(m => m.Value).ToList();
             return claim;
@@ -42,14 +42,13 @@ namespace OSky.Core.Exceptions
         /// <summary>
         /// 基于Claims-based的认证 
         /// </summary>
+        /// <param name="identity">identity</param>
         /// <param name="id">登录Id</param>
         /// <param name="name">登录名</param>
         /// <param name="roles">角色集合</param>
-        /// <param name="authenticationType">cookie类型</param>
         /// <returns></returns>
-        public static ClaimsIdentity GetClaimsIdentity(string id, string name, string[] roles, string authenticationType)
+        public static ClaimsIdentity SetClaimsIdentity(this ClaimsIdentity identity,string id, string name, string[] roles)
         {
-            var identity = new ClaimsIdentity(authenticationType);
             identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, id));
             identity.AddClaim(new Claim(ClaimTypes.Name, name));
             if (roles != null)

@@ -162,6 +162,27 @@ namespace OSky.UI.Contracts
         /// </summary>
         IQueryable<UserRoleMap> UserRoleMaps { get; }
 
+        /// <summary>
+        /// 根据指定角色添加用户角色映射信息
+        /// </summary>
+        /// <param name="dtos">要添加的用户角色映射信息DTO信息</param>
+        /// <returns>业务操作结果</returns>
+        Task<OperationResult> AddUserRoleMapsByRole(params UserRoleMapDto[] dtos);
+
+        /// <summary>
+        /// 根据指定用户添加用户角色映射信息
+        /// </summary>
+        /// <param name="dtos">要添加的用户角色映射信息DTO信息</param>
+        /// <returns>业务操作结果</returns>
+        Task<OperationResult> AddUserRoleMapsByUser(params UserRoleMapDto[] dtos);
+
+         /// <summary>
+        /// 删除用户角色映射信息
+        /// </summary>
+        /// <param name="ids">要删除的用户角色映射编号</param>
+        /// <returns>业务操作结果</returns>
+        Task<OperationResult> DeleteUserRoleMaps(params int[] ids);
+
         #endregion
     }
 }

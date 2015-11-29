@@ -15,31 +15,60 @@
         treeFun();
     })
 
+    var checkedNotes;
     function treeFun() {
-        $Tree = $("#tree-organization");
+        var $Tree = $("#tree-organization");
         $Tree.tree({
             url: "@ViewBag.NodeDataUrl?Id=@RoleId",
-                lines: true,
-                animate: true,
-                checkbox: true,
-                loadFilter:function (data) {
-                    var treeData = new TreeHelper(data).dataTransferer();
-                    return treeData;
-                },
-                onLoadSuccess: function (node, data) {
-                    //$(this).find('span.tree-checkbox').css({"cursor": "not-allowed" }).unbind().click(function () {
-                    //    return false;
-                    //});
-                $.post("@Url.Action("GetUsersByRoleId")", {}, function (data) { });
+            lines: true,
+            animate: true,
+            checkbox: true,
+            loadFilter: function (data) {
+                var treeData = new TreeHelper(data).dataTransferer();
+                return treeData;
+            },
+            onLoadSuccess: function (node, data) {
+                $.each(data, function (i, item) {
+                    GetChildrenNote(item);
+                })
+
             },
             onBeforeExpand: function (node) {
 
             },
             onClick: function (node) {
                 $(this).tree('toggle', node.target);
+            },
+            onCheck: function (node, checked) {
+                node.Checked = checked;
+                checkedNotes = $(this).tree('getChecked');
             }
         });
 
     }
+
+    //递归节点算法
+    function GetChildrenNote(data) {
+        if (data.Type != "1") {
+            //$("#" + data.domId).find('span.tree-checkbox').css({ "cursor": "not-allowed" }).unbind().click(function () {
+            //    return false;
+            //});
+            if (data.children != null)   //判断是否存在子节点
+                for (var i = 0; i < data.children.length; i++)
+                    GetChildrenNote(data.children[i]);
+        }
+        data.checked = data.Checked;
+        if(data.checked==true)
+            $("#" + data.domId).find('span.tree-checkbox').attr("class","tree-checkbox tree-checkbox1");
+    }
+
+    //获取选中的节点
+    var getCheckedNodes=function (){
+        var rid=@RoleId;
+        var nodes = $.Enumerable.From(checkedNotes).Where(function (m) { return m.Type == 1 && m.Checked == true })
+            .Select(function (m) { return {RoleId:rid,UserId:m.id};}).ToArray();
+        return nodes;
+    }
+
 </script>
     }

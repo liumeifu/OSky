@@ -514,6 +514,7 @@
     <Content Include="Areas\Admin\Views\Delegate\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Login\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Roles\SetUsers.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\SetRoles.cshtml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

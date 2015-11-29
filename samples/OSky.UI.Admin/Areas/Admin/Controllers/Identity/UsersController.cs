@@ -24,6 +24,7 @@ using OSky.Utility.Data;
 using OSky.Web.Mvc.Extensions;
 using OSky.Web.Mvc.Security;
 using OSky.Web.Mvc.UI;
+using Newtonsoft.Json;
 
 namespace OSky.UI.Admin.Areas.Admin.Controllers
 {
@@ -44,7 +45,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         }
 
         [Description("管理-用户-设置角色")]
-        public ActionResult SetRole()
+        public ActionResult SetRoles()
         {
             return View();
         }
@@ -81,6 +82,14 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             return Json(page.ToGridData(), JsonRequestBehavior.AllowGet);
         }
 
+        
+        [AjaxOnly]
+        [Description("管理-用户-用户角色映射信息")]
+        public ActionResult GetRoleIdsByUserId(int? UserId)
+        {
+            var listIds =IdentityContract.UserRoleMaps.Where(m => m.UserId == UserId).Select(m => m.RoleId).ToList();
+            return Json(JsonConvert.SerializeObject(listIds));
+        }
 
         #endregion
 
@@ -117,6 +126,16 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             ids.CheckNotNull("ids");
             OperationResult result = await IdentityContract.DeleteUsers(ids);
             return Json(result.ToAjaxResult());
+        }
+
+        [HttpPost]
+        [AjaxOnly]
+        [Description("管理-用户-设置角色")]
+        public async Task<ActionResult> SetRolesToUser(UserRoleMapDto[] dtos)
+        {
+            var result = await IdentityContract.AddUserRoleMapsByUser(dtos);
+            return Json(result.ToAjaxResult());
+
         }
 
         #endregion

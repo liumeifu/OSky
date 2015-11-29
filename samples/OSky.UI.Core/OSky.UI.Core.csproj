@@ -93,6 +93,7 @@
     <Compile Include="Dtos\Identity\OrganizationDto.cs" />
     <Compile Include="Dtos\Identity\RoleDto.cs" />
     <Compile Include="Dtos\Identity\UserDto.cs" />
+    <Compile Include="Dtos\Identity\UserRoleMapDto.cs" />
     <Compile Include="Dtos\Security\EntityInfoDto.cs" />
     <Compile Include="Dtos\Security\EntityRoleMapDto.cs" />
     <Compile Include="Dtos\Security\EntityUserMapDto.cs" />

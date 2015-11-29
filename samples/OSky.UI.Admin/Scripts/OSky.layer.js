@@ -41,9 +41,9 @@ document.write('<script src="/Scripts/layer-2.0/extend/layer.ext.js"></script>')
                 maxmin: true,                   //最大最小化(类型：Boolean，默认：false)
                 btn: btn == true ? ['确定', '取消'] : null,       //按钮（类型：String/Array，默认：'确认'）
                 yes: function (index, layero) {                   //或者使用btn1
-                    layer.close(index);                           //关闭弹出层必须进行手工关闭
                     if (onYes && (typeof onYes) == "function")
                         onYes(index, layero);                     //按钮【按钮一】的回调
+                    layer.close(index);                           //关闭弹出层必须进行手工关闭
                     
                 },
                 cancel: function (index) {                        //或者使用btn2
@@ -61,9 +61,9 @@ document.write('<script src="/Scripts/layer-2.0/extend/layer.ext.js"></script>')
                 maxmin: true,                   //最大最小化(类型：Boolean，默认：false)
                 btn: btn == true ? ['确定', '取消'] : null,       //按钮（类型：String/Array，默认：'确认'）
                 yes: function (index, layero) {                   //或者使用btn1
-                    layer.close(index);                           //关闭弹出层必须进行手工关闭
                     if (onYes && (typeof onYes) == "function")
                         onYes(index, layero);                     //按钮【按钮一】的回调
+                    layer.close(index);                           //关闭弹出层必须进行手工关闭
                    
                 },
                 cancel: function (index) {                        //或者使用btn2
@@ -75,7 +75,6 @@ document.write('<script src="/Scripts/layer-2.0/extend/layer.ext.js"></script>')
         },
         confirm: function (content, onOk, onCancel) {
             layer.confirm(content, { icon: 3 }, function (index) {
-                layer.close(index);
                 if (onOk && (typeof onOk) == "function") {
                     onOk();
                     return;
@@ -83,6 +82,7 @@ document.write('<script src="/Scripts/layer-2.0/extend/layer.ext.js"></script>')
                 if (onCancel && (typeof onCancel) == "function") {
                     onCancel();
                 }
+                layer.close(index);
             });
         },
         prompt: function (title1, title2, onFun) { //prompt层onFun(opt) opt{ pass: pass, context: text }

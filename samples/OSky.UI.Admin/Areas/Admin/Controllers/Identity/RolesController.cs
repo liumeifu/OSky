@@ -26,6 +26,7 @@ using OSky.Web.Mvc.Security;
 using OSky.Web.Mvc.UI;
 using OSky.UI.Admin.ViewModels;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace OSky.UI.Admin.Areas.Admin.Controllers
 {
@@ -71,28 +72,37 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                     id = m.Id,
                     pid = m.ParentId,
                     text = m.Name,
-                    Type = 0
+                    Type = 0,
+                    Checked = false
                 }).ToList();
-            var users = IdentityContract.Users.Where(c => c.IsLocked == false).Select(m => new OrganTree
-            {
-                id = m.Id,
-                pid = m.OrganizationId,
-                text = m.NickName,
-                Type = 1
-            }).ToList();
-            
+            //获取 当前可用的用户信息及指定角色的用户
+            var users = (from us in IdentityContract.Users.Where(c => c.IsLocked == false).Select(m => new OrganTree
+             {
+                 id = m.Id,
+                 pid = m.OrganizationId,
+                 text = m.NickName,
+                 Type = 1,
+                 Checked = false
+             })
+                         join urm in IdentityContract.UserRoleMaps.Where(m => m.RoleId == Id).Select(m => new OrganTree
+                         {
+                             id = m.UserId,
+                             pid = 0,
+                             text = "",
+                             Type = 1,
+                             Checked = true
+                         }) on us.id equals urm.id into temp
+                         from t in temp.DefaultIfEmpty()
+                         select new OrganTree
+                         {
+                             id = us.id,
+                             pid = us.pid,
+                             text = us.text,
+                             Type = 1,
+                             Checked = t.Checked == true ? true : false
+                         }).ToList();
             roots.AddRange(users);
             return Content(JsonConvert.SerializeObject(roots), "application/json");
-
-        }
-
-        [HttpPost]
-        [AjaxOnly]
-        [Description("管理-角色-用户信息")]
-        public ActionResult GetUsersByRoleId(int Id)
-        {
-            var userIds = IdentityContract.UserRoleMaps.Where(m => m.RoleId == Id).Select(m=>m.UserId).ToList();
-            return Content(JsonConvert.SerializeObject(userIds), "application/json");
 
         }
 
@@ -128,6 +138,16 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             ids.CheckNotNull("ids" );
             OperationResult result = IdentityContract.DeleteRoles(ids);
             return Json(result.ToAjaxResult());
+        }
+
+        [HttpPost]
+        [AjaxOnly]
+        [Description("管理-角色-设置用户")]
+        public async Task<ActionResult> SetUsersToRole(UserRoleMapDto[] dtos)
+        {
+            var result = await IdentityContract.AddUserRoleMapsByRole(dtos);
+            return Json(result.ToAjaxResult());
+
         }
 
         #endregion
