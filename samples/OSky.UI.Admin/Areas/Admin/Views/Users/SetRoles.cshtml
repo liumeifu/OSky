@@ -4,19 +4,15 @@
 
     ViewBag.GridId = "setRoles";
     ViewBag.ToolbarItem = "";
-    ViewBag.GridDataUrl = Url.Action("GridData","Roles");
-    var UserId = Request["Id"];
+    var UserId = Request["UserId"];
+    ViewBag.GridDataUrl = Url.Action("GetRoles") + "?UserId=" + UserId;
+ 
 }
 @section customScript
 {
     <script type="text/javascript">
-        $(function () {
-            $.post("@Url.Action("GetRoleIdsByUserId")", { UserId: @UserId }, function (d) {
-                alert(d.join());
-            });
-        })
        
-        pageSize = 50;
+    pageSize = 100;
 
     columns = [[
         { field: "Id", title: "编号", hidden: true },
@@ -29,6 +25,29 @@
         { field: "CreatedTime", title: "创建时间", width: 150, sortable: true, align: "center", formatter: function (value) { return $.OSky.tools.formatDate(value); } }
     ]];
 
+    LoadSuccess = function (data) {
+        if(data){
+            $.each(data.rows, function(index, item){
+                    if(item.Checked){
+                        $("#grid-setRoles").datagrid('checkRow', index);
+                        }
+                });
+        }
+    }
 
+    var checkedNotes;
+    onCheck = function (rowIndex, rowData) {
+        checkedNotes = grid.datagrid("getChecked");
+    };
+    onUncheck = function (rowIndex, rowData) {
+        checkedNotes = grid.datagrid("getChecked");
+    };
+
+    //获取选中的节点
+    var getCheckedNodes=function (){
+        var uid=@UserId;
+        var nodes = $.Enumerable.From(checkedNotes).Select(function (m) { return { RoleId: m.Id, UserId: uid }; }).ToArray();
+        return nodes;
+    }
     </script>
 }

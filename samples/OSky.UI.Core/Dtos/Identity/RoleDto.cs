@@ -47,5 +47,10 @@ namespace OSky.UI.Dtos.Identity
         /// </summary>
         public bool IsLocked { get; set; }
 
+        /// <summary>
+        /// 获取或设置 是否选中
+        /// </summary>
+        public bool Checked { get; set; }
+
     }
 }

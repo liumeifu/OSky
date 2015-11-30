@@ -25,6 +25,8 @@ using OSky.Web.Mvc.Extensions;
 using OSky.Web.Mvc.Security;
 using OSky.Web.Mvc.UI;
 using Newtonsoft.Json;
+using OSky.Utility.Extensions;
+using OSky.Web.Mvc.UI;
 
 namespace OSky.UI.Admin.Areas.Admin.Controllers
 {
@@ -84,11 +86,41 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
 
         
         [AjaxOnly]
-        [Description("管理-用户-用户角色映射信息")]
-        public ActionResult GetRoleIdsByUserId(int? UserId)
+        [Description("管理-用户-用户角色信息")]
+        public ActionResult GetRoles(int? UserId)
         {
-            var listIds =IdentityContract.UserRoleMaps.Where(m => m.UserId == UserId).Select(m => m.RoleId).ToList();
-            return Json(JsonConvert.SerializeObject(listIds));
+            var roles = (from r in IdentityContract.Roles.Where(c => c.IsLocked == false).Select(m => new RoleDto
+            {
+                Id=m.Id,
+                Name=m.Name,
+                Remark=m.Remark,
+                IsAdmin=m.IsAdmin,
+                IsSystem=m.IsSystem,
+                IsLocked=m.IsLocked,
+                Checked = false
+            })
+                         join urp in IdentityContract.UserRoleMaps.Where(m => m.UserId == UserId).Select(m => new RoleDto
+                         {
+                             Id = m.RoleId,
+                             Name = "",
+                             Remark = "",
+                             IsAdmin = false,
+                             IsSystem = false,
+                             IsLocked = false,
+                             Checked = true
+                         }) on r.Id equals urp.Id into temp
+                         from t in temp.DefaultIfEmpty()
+                         select new RoleDto
+                         {
+                             Id = r.Id,
+                             Name = r.Name,
+                             Remark = r.Remark,
+                             IsAdmin = r.IsAdmin,
+                             IsSystem = r.IsSystem,
+                             IsLocked = r.IsLocked,
+                             Checked = t.Checked == true ? true : false
+                         }).ToList();
+            return Json(new GridData<RoleDto>(roles,roles.Count()), JsonRequestBehavior.AllowGet);
         }
 
         #endregion

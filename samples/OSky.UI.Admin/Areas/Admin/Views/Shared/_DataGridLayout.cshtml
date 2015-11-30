@@ -23,6 +23,12 @@
         var addObject = function () {
             return {};
         };
+        var LoadSuccess = function (data) {
+
+        };
+        var onCheck = function (rowIndex, rowData) { };
+        var onUncheck = function (rowIndex, rowData) { };
+
         var replaceSearchField = function (field) {
             return field;
         };
@@ -196,8 +202,11 @@
                 onBeforeLoad: beforeLoad,
                 loadFilter: loadFilter,
                 onLoadError: loadError,
+                onLoadSuccess:LoadSuccess,
                 onDblClickRow: beginEditRow,
                 onHeaderContextMenu: headerContextMenu,
+                onCheck: onCheck,
+                onUncheck: onUncheck,
                 showFooter: true,
             });
             if (enableFilterData) {
