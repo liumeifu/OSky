@@ -113,13 +113,13 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             return RedirectToAction("OperateLogs");
         }
 
-        [Description("管理-操作日志-列表")]
+        [Description("管理-操作日志-访问")]
         public ActionResult OperateLogs()
         {
             return View();
         }
 
-        [Description("管理-系统日志-列表")]
+        [Description("管理-系统日志-访问")]
         public ActionResult SystemLogs()
         {
             return Content("数据日志");

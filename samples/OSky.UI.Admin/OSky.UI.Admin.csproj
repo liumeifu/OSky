@@ -571,7 +571,6 @@
     <Content Include="Scripts\layer-2.0\skin\layer.css" />
     <Content Include="Scripts\layer-2.0\skin\layer.ext.css" />
     <Content Include="Scripts\locale\easyui-lang-zh_CN.js" />
-    <Content Include="Scripts\OSky.data.demo.js" />
     <Content Include="Scripts\OSky.data.js" />
     <Content Include="Scripts\OSky.layer.js" />
     <Content Include="Scripts\OSky.global.js" />

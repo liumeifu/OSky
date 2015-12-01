@@ -116,6 +116,7 @@ namespace OSky.Web.Mvc.Initialize
                 IsAjax = method.HasAttribute<AjaxOnlyAttribute>(),
                 IsChild = method.HasAttribute<ChildActionOnlyAttribute>()
             };
+            function.Url = function.Action != null ? "/" + function.Controller + "/" + function.Action + "/" : null;
             return function;
         }
 

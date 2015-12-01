@@ -28,4 +28,25 @@ namespace OSky.Core.Security
         /// </summary>
         RoleLimit = 2
     }
+
+    /// <summary>
+    /// 表示功能类型的枚举(1 菜单、2 按钮、0 其它)
+    /// </summary>
+    public enum MenuType
+    {
+        /// <summary>
+        /// 其它类型
+        /// </summary>
+        Other = 0,
+
+        /// <summary>
+        /// 菜单类型
+        /// </summary>
+        Menu = 1,
+
+        /// <summary>
+        /// 按钮类型
+        /// </summary>
+        Button = 2
+    }
 }

@@ -90,7 +90,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
 
         #region Overrides of AdminBaseController
 
-        [Description("管理-实体数据-列表")]
+        [Description("管理-实体数据-访问")]
         public ActionResult Index()
         {
             return View();

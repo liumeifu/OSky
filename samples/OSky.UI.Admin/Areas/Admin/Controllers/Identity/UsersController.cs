@@ -46,7 +46,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             return View();
         }
 
-        [Description("管理-用户-设置角色")]
+        [Description("管理-用户-设置角色访问")]
         public ActionResult SetRoles()
         {
             return View();
@@ -86,7 +86,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
 
         
         [AjaxOnly]
-        [Description("管理-用户-用户角色信息")]
+        [Description("管理-用户-用户角色列表")]
         public ActionResult GetRoles(int? UserId)
         {
             var roles = (from r in IdentityContract.Roles.Where(c => c.IsLocked == false).Select(m => new RoleDto

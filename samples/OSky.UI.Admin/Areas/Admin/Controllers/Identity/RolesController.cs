@@ -156,13 +156,13 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
 
         #region 视力功能
 
-        [Description("管理-角色-列表")]
+        [Description("管理-角色-访问")]
         public ActionResult Index()
         {
             return View();
         }
 
-        [Description("管理-角色-设置人员")]
+        [Description("管理-角色-设置人员访问")]
         public ActionResult SetUsers()
         {
             return View();

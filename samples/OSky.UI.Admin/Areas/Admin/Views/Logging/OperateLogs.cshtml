@@ -58,7 +58,7 @@
                         { field: "Name", title: "数据名称", width: 200 },
                         { field: "EntityName", title: "数据类型", width: 300 },
                         { field: "EntityKey", title: "数据标识", width: 150 },
-                        { field: "OperateType", title: "操作类型", width: 80, align:"center", formatter: function (value) { return $.OSky.tools.data.valueToText(value, $.OSky.data.demo.operateTypes); } }
+                        { field: "OperateType", title: "操作类型", width: 80, align:"center", formatter: function (value) { return $.OSky.tools.data.valueToText(value, $.OSky.data.operateTypes); } }
                     ]
                 ],
                 url: "@ViewBag.SubGridDataUrl/" + id,

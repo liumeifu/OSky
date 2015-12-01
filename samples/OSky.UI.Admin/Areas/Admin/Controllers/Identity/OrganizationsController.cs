@@ -38,13 +38,13 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
 
         #region 视力功能
 
-        [Description("管理-组织机构-列表视图")]
+        [Description("管理-组织机构-访问")]
         public ActionResult Index()
         {
             return View();
         }
 
-        [Description("管理-组织机构-视图数据")]
+        [Description("管理-组织机构-编辑访问")]
         public ActionResult Edit(int id)
         {
             var dto = IdentityContract.Organizations.Where(c => c.Id == id).Select(m =>

@@ -77,7 +77,10 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                     m.IsChild,
                     m.IsLocked,
                     m.IsTypeChanged,
-                    m.IsCustom
+                    m.IsCustom,
+                    m.MenuName,
+                    m.Type,
+                    m.IconCls
                 });
             GridData<object> gridData = new GridData<object>() { Total = page.Total };
             gridData.Rows = page.Data.Select(m => new
@@ -99,7 +102,10 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                 m.IsChild,
                 m.IsLocked,
                 m.IsTypeChanged,
-                m.IsCustom
+                m.IsCustom,
+                m.MenuName,
+                m.Type,
+                m.IconCls
             }).ToArray();
             return Json(gridData, JsonRequestBehavior.AllowGet);
         }
@@ -144,7 +150,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
 
         #region 视图功能
 
-        [Description("管理-功能-列表")]
+        [Description("管理-功能-访问")]
         public ActionResult Index()
         {
             return View();

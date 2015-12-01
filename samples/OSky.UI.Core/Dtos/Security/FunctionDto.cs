@@ -103,5 +103,19 @@ namespace OSky.UI.Dtos.Security
         /// </summary>
         public bool IsLocked { get; set; }
 
+        /// <summary>
+        /// 获取 菜单名称
+        /// </summary>
+        public string MenuName { get; set; }
+
+        /// <summary>
+        /// 获取 功能类型
+        /// </summary>
+        public MenuType Type { get; set; }
+
+        /// <summary>
+        /// 获取 图片地址
+        /// </summary>
+        public string IconCls { get; set; }
     }
 }

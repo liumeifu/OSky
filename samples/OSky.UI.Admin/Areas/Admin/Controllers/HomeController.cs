@@ -30,7 +30,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         #region 获取数据
 
         [AjaxOnly]
-        [Description("管理-菜单数据")]
+        [Description("管理-后台-菜单数据")]
         public ActionResult GetMenuData()
         {
             List<TreeNode> nodes = new List<TreeNode>()
@@ -99,14 +99,14 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
 
         #endregion
 
-        [Description("管理-首页")]
+        [Description("管理-后台-访问")]
         public ActionResult Index()
         {
             Logger.Debug("访问后台管理首页");
             return View();
         }
 
-        [Description("管理-欢迎页")]
+        [Description("管理-后台-欢迎页")]
         public ActionResult Welcome()
         {
             return View();

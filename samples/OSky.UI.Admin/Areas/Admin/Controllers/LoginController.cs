@@ -35,8 +35,8 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         #region Ajax功能
 
         #region 获取数据
-        
-        [Description("登录-验证码")]
+
+        [Description("管理-登录-验证码")]
         public ActionResult ValidateCode()
         {
             string strCoder = "";
@@ -103,7 +103,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         #region 视图功能
         //
         // GET: /Admin/Login/
-        [Description("管理-登录")]
+        [Description("管理-登录-访问")]
         public ActionResult Index(LoginDto dto)
         {
             if(dto.LoginName==null)

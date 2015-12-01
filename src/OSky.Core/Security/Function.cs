@@ -10,6 +10,7 @@ using System;
 using System.ComponentModel;
 
 using OSky.Utility.Data;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace OSky.Core.Security
@@ -28,5 +29,21 @@ namespace OSky.Core.Security
             Id = CombHelper.NewComb();
         }
 
+        /// <summary>
+        /// 获取 菜单名称
+        /// </summary>
+        [StringLength(100)]
+        public string MenuName { get; set; }
+
+        /// <summary>
+        /// 获取 功能类型
+        /// </summary>
+        public MenuType Type { get; set; }
+
+        /// <summary>
+        /// 获取 图片地址
+        /// </summary>
+        [StringLength(20)]
+        public string IconCls { get; set; }
     }
 }
