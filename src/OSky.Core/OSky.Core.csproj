@@ -97,6 +97,7 @@
     <Compile Include="Configs\LoggingEntryConfig.cs" />
     <Compile Include="Configs\OSkyConfig.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Context\ApplicationContext.cs" />
     <Compile Include="Context\Operator.cs" />
     <Compile Include="Context\OSkyContext.cs" />
     <Compile Include="Data\DataPage.cs" />

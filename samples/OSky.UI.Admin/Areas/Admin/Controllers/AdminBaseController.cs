@@ -18,6 +18,8 @@ using OSky.Utility.Filter;
 using OSky.Web.Mvc;
 using OSky.Web.Mvc.Logging;
 using OSky.Web.Mvc.UI;
+using OSky.Core.Context;
+using OSky.Web.Mvc.Extensions;
 
 
 namespace OSky.UI.Admin.Areas.Admin.Controllers
@@ -52,6 +54,19 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             return source.ToPage(predicate, request.PageCondition, selector);
         }
 
-        
+        /// <summary>
+        /// 获取 当前操作者信息类
+        /// </summary>
+        protected Operator Operator
+        { 
+            get
+            {
+                if (ApplicationContext.Current[ApplicationContext.OperatorKey] == null)
+                {
+                    ApplicationContext.Current[ApplicationContext.OperatorKey] = OperatorHelper.GetOperator(HttpContext);
+                }
+                return ApplicationContext.Current[ApplicationContext.OperatorKey] as Operator;
+            }
+        }
     }
 }

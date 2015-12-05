@@ -44,6 +44,26 @@
 
             ]
         ];
+
+        startfunction = function () {
+
+            function functionAddParent() {
+                $.OSky.layer.msg.open(2, "@Url.Action("SetUsers")?Id=" + row.Id, true,
+                    function (index, layero) {
+                        //var $tree = $(layero).find("iframe").contents().find("#tree-organization");
+                        var nodes = $(layero).find("iframe")[0].contentWindow.getCheckedNodes();
+                        if (nodes.length==0) {
+                            $.OSky.layer.msg.tip("您没有做任何更改。");
+                            return;
+                        }
+                        $.post("@Url.Action("SetUsersToRole")", { "dtos": nodes }, function (data) {
+                            ajaxResultHandler(data);
+                        });
+                    });
+            }
+        
+            toolbarData.push({ text: "设置父级", iconCls: "pic_266", handler: functionAddParent });
+        };
         multiSort = true;
         endfunction = function () {
             grid.datagrid({
@@ -67,3 +87,7 @@
         }
     </script>
 }
+
+@section footHtml{
+    
+    }

@@ -5,3 +5,23 @@
 #main-nav .tree-hit { margin-top: 4px; }
 #main-nav .tree-node { height: 35px; }
 #main-nav .tree-title { line-height: 35px; }
+
+/*表单*/
+.formTable table {
+	width: 100%;
+	border-collapse: collapse;
+}
+.formTable table th,
+.formTable table td {
+	font-size: 12px;
+	text-align: left;
+	padding: 5px 10px;
+	vertical-align: middle;
+	border: 1px solid #fff;
+}
+.formTable table th {
+	background-color: #eee;
+	text-align: right;
+	font-weight: normal;
+	width: 150px;
+}
