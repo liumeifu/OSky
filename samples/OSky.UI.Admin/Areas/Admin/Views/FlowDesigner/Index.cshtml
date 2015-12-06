@@ -180,6 +180,7 @@
                     if (data && typeof data == "object") {
                         $('#FlowType').val(data.FlowType);
                         $('#FlowName').val(data.FlowName);
+                        $('#FlowName').focus();
                         try {
                             model = graph.getModel();
                             model.clear();
@@ -425,7 +426,27 @@
             }
         }
 
-
+        //选择步骤处理者
+        function selectUser(IdsName, NaName) {
+            $.OSky.layer.msg.open(2, "@Url.Action("SelectUsers")?Ids=" + $(IdsName).val(), true,
+                   function (index, layero) {
+                       //var $tree = $(layero).find("iframe").contents().find("#tree-organization");
+                       var nodes = $(layero).find("iframe")[0].contentWindow.getCheckedNodes();
+                       if (nodes.length == 0) {
+                           $(IdsName).val("");
+                           applyHandler(document.getElementById("HandlerIds"));
+                           document.getElementById("HandlerNames").value = "";
+                           applyHandler(document.getElementById("HandlerNames"));
+                           return;
+                       }
+                       var ids = $.Enumerable.From(nodes).Select("$.Id").ToArray().join();
+                       var names = $.Enumerable.From(nodes).Select("$.Name").ToArray().join();
+                       document.getElementById("HandlerIds").value = ids;
+                       applyHandler(document.getElementById("HandlerIds"));
+                       $("#HandlerNames").textbox("setValue", names);
+                       applyHandler($("input[name='" + NaName + "']")[0]);
+                   });
+        }
     </script>
 
 }
@@ -439,7 +460,7 @@
             <option value="2">其他流程</option>
         </select> &nbsp;
         <b>流程名称：</b>
-        <input class="easyui-validatebox textbox" data-options="required:true,validType:'length[2,20]'" value="@Model.FlowName" type="text" id="FlowName" style="width: 200px;" />&nbsp;
+        <input class="easyui-validatebox textbox" data-options="required:true,validType:'length[2,20]'" type="text" id="FlowName" style="width: 200px;" />&nbsp;
         <input type="button" class="btn btn-danger" value="确 定" onclick="saveFlow()">
     </div>
 
@@ -555,20 +576,20 @@
                 <tr>
                     <td class="title">前端效验:</td>
                     <td>
-                        <textarea class="easyui-textbox" name="CustomMethod" id="CustomMethod" onchange="applyHandler(this)" style="height:80px"></textarea>
+                        <input class="easyui-textbox" data-options="multiline:true" name="CustomMethod" id="CustomMethod" onchange="applyHandler(this)" style="height:80px;width:190px;" />
                     </td>
                 </tr>
                 <tr>
                     <td class="title">Sql效验:</td>
                     <td>
-                        <textarea class="easyui-textbox" name="Sql" id="Sql" onchange="applyHandler(this)" style="height:80px"></textarea>
+                        <input class="easyui-textbox" data-options="multiline:true" name="Sql" id="Sql" onchange="applyHandler(this)" style="height:80px;width:190px;" />
                     </td>
                 </tr>
                 <tr>
                     <td class="title">默认处理人:</td>
                     <td>
                         <input type="hidden" name="HandlerIds" id="HandlerIds" />
-                        <textarea class="easyui-textbox" name="HandlerNames" id="HandlerNames" onchange="applyHandler(this)" style="height:80px" readonly="readonly"></textarea>
+                        <input class="easyui-textbox" data-options="multiline:true" name="HandlerNames" id="HandlerNames" onchange="applyHandler(this)" style="height:80px;width:190px;"  />
                         <input type="button" class="btn btn-primary" value="设置默认人" onclick="selectUser('HandlerIds', 'HandlerNames')">
                     </td>
                 </tr>
@@ -579,31 +600,3 @@
 
 </div>
 
-    @*<script type="text/javascript">
-
-            //选择步骤处理者
-            function selectUser(IdsName, NaName) {
-                ShowModal("", "/WorkFlow/Designer/OTree", null, "选择默认人",
-                    function LoadTree() {
-                        //zTree  begin
-                        //加载组织机构树
-                        $.fn.zTree.init($("#oTree"), setting);
-
-                        //滚动条属性设置
-                        $('#scroll-1').scrollbar({ width: 400, height: 250, });
-                        $('#scroll-2').scrollbar({ width: $('.ztree').innerWidth(), height: 250, });
-
-                    });
-
-            }
-
-
-            function Save() {
-                document.getElementById("HandlerIds").value = ids.join();
-                applyHandler(document.getElementById("HandlerIds"));
-                document.getElementById("HandlerNames").value = names.join();
-                applyHandler(document.getElementById("HandlerNames"));
-                $('#modal-form').modal('hide');
-            }
-
-        </script>*@

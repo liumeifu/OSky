@@ -9,6 +9,8 @@ using OSky.UI.Contracts;
 using OSky.Web.Mvc.Security;
 using OSky.UI.Dtos.Flow;
 using OSky.Utility.Data;
+using OSky.UI.Admin.ViewModels;
+using Newtonsoft.Json;
 
 namespace OSky.UI.Admin.Areas.Admin.Controllers
 {
@@ -18,6 +20,10 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         /// 获取或设置 工作流业务对象
         /// </summary>
         public IFlowContract FlowContract { get; set; }
+        /// <summary>
+        /// 获取或设置 身份认证业务对象
+        /// </summary>
+        public IIdentityContract IdentityContract { get; set; }
 
         #region Ajax功能
 
@@ -40,6 +46,35 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
 
             return Json(dto);
         }
+
+        [AjaxOnly]
+        [HttpPost]
+        [Description("工作流-流程设计-节点数据")]
+        public ActionResult NodeData()
+        {
+            var roots = IdentityContract.Organizations
+               .OrderBy(m => m.SortCode).Select(m => new OrganTree
+               {
+                   id = m.Id,
+                   pid = m.ParentId,
+                   text = m.Name,
+                   Type = 0,
+                   Checked = false
+               }).ToList();
+            //获取 当前可用的用户信息及指定角色的用户
+            var users = IdentityContract.Users.Where(c => c.IsLocked == false).Select(m => new OrganTree
+                {
+                    id = m.Id,
+                    pid = m.OrganizationId,
+                    text = m.NickName,
+                    Type = 1,
+                    Checked = false
+                }).ToList();
+            roots.AddRange(users);
+            return Content(JsonConvert.SerializeObject(roots), "application/json");
+
+        }
+
         #endregion
 
         #region 功能方法
@@ -74,6 +109,12 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         }
 
         #endregion
+
+        [Description("管理-流程-选择用户")]
+        public ActionResult SelectUsers()
+        {
+            return View();
+        }
 
         #endregion
     }

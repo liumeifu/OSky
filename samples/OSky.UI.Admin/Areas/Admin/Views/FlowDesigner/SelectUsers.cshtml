@@ -1,7 +1,7 @@
 ﻿@{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     ViewBag.NodeDataUrl = Url.Action("NodeData");
-    var RoleId = Request["Id"];
+    var ids = Request["Ids"];
 }
 
 <div class="easyui-panel" style="width: 100%; height: 430px; padding: 10px; ">
@@ -19,7 +19,7 @@
     function treeFun() {
         var $Tree = $("#tree-organization");
         $Tree.tree({
-            url: "@ViewBag.NodeDataUrl?Id=@RoleId",
+            url: "@ViewBag.NodeDataUrl",
             lines: true,
             animate: true,
             checkbox: true,
@@ -48,27 +48,27 @@
     }
 
     //递归节点算法
-        function GetSelectedChildrenNote(data) {
+    function GetSelectedChildrenNote(data) {
         if (data.Type != "1") {
-            //$("#" + data.domId).find('span.tree-checkbox').css({ "cursor": "not-allowed" }).unbind().click(function () {
-            //    return false;
-            //});
             if (data.children != null)   //判断是否存在子节点
                 for (var i = 0; i < data.children.length; i++)
                     GetSelectedChildrenNote(data.children[i]);
         }
-        data.checked = data.Checked;
+        var ids=@ids;
+        if((ids+",").indexOf(data.id+",")>-1){
+            data.checked=true;
+            data.Checked=true;
+        }
         if(data.checked==true)
             $("#" + data.domId).find('span.tree-checkbox').attr("class","tree-checkbox tree-checkbox1");
     }
 
     //获取选中的节点
     var getCheckedNodes=function (){
-        var rid=@RoleId;
         var nodes = $.Enumerable.From(checkedNotes).Where(function (m) { return m.Type == 1 && m.Checked == true })
-            .Select(function (m) { return {RoleId:rid,UserId:m.id};}).ToArray();
+            .Select(function (m) { return {Id:m.id,Name:m.text};}).ToArray();
         return nodes;
     }
 
-</script>
-    }
+    </script>
+}
