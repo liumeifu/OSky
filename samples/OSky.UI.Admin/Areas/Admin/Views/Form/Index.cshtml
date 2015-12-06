@@ -13,17 +13,16 @@
     <script type="text/javascript">
         columns = [[
             { field: "Id", title: "编号", hidden: true },
-            //{ field: "FlowDesignId", title: "流程设计编号", hidden: true },
             {
                 field: "FormName", title: "表单名称", width: 150, sortable: true, halign: "center", align: "center",
                 editor: { type: "validatebox", options: { required: true, validType: "length[1,50]" } }
             },
             {
-                field: "Type", title: "表单类型", width: 100, sortable: true, halign: "center", align: "center", formatter: formatBoolean,
+                field: "Type", title: "表单类型", width: 150, sortable: true, halign: "center", align: "center",
                 editor: { type: "combobox", options: { required: true, data: $.OSky.data.bool, valueField: "id", textField: "text" } }
             },
             {
-                field: "FilePath", title: "表单路径", width: 200, sortable: true, halign: "center", align: "center", formatter: formatBoolean,
+                field: "FilePath", title: "表单路径", width: 200, sortable: true, halign: "center", align: "center", 
                 editor: { type: "validatebox", options: { required: true, validType: "length[1,100]" } }
             },
             {
@@ -31,15 +30,15 @@
                 editor: { type: "validatebox", options: { required: true, validType: "length[1,100]" } }
             },
             {
-                field: "EnabledFlow", title: "流程与否", width: 80, sortable: true, halign: "center", align: "center",
+                field: "EnabledFlow", title: "流程与否", width: 80, sortable: true, halign: "center", align: "center", formatter: formatBoolean,
                 editor: { type: "combobox", options: { required: true, editable: false, data: $.OSky.data.bool, valueField: "id", textField: "text" } }
             },
             {
-                field: "Status", title: "状态信息", width: 80, halign: "center", align: "center", sortable: true, halign: "center", align: "center",
-                formatter: function (value) { return $.OSky.tools.formatDate(value); }
+                field: "Status", title: "状态信息", width: 80, halign: "center", align: "center", sortable: true, halign: "center", align: "center", formatter: formatStatus,
+                editor: { type: "combobox", options: { required: true, editable: false, data: $.OSky.data.status, valueField: "id", textField: "text" } }
             },
-            { field: "CreatorUserName", title: "创建人姓名", width: 80, sortable: true, halign: "center", align: "center" },
-            { field: "CreatedTime", title: "创建时间", width: 80, sortable: true, halign: "center", align: "center" }
+            { field: "CreatorUserName", title: "创建人姓名", width: 120, sortable: true, halign: "center", align: "center" },
+            { field: "CreatedTime", title: "创建时间", width: 150, sortable: true, halign: "center", align: "center", formatter: function (value) { return $.OSky.tools.formatDate(value); } }
         ]];
 
         startfunction = function () {
@@ -50,9 +49,23 @@
                     $.OSky.layer.msg.tip("请选择要编辑的行。");
                     return;
                 }
-                document.location.href = "/Flow/FlowDesigner/GridData?Id=" + row.FlowDesignId + "&FormId=" + row.Id;
+                document.location.href = "/Admin/FlowDesigner/Index?Id=" + row.FlowDesignId + "&FormId=" + row.Id;
             }
             toolbarData.push({ text: "设置流程", iconCls: "pic_346", handler: OptionFlow });
+
+
+           
+
         };
+        //格式化数据
+        function formatStatus(value) {
+            switch (value) {
+                case 0: return "启用";
+                case 1: return "禁用";
+                default:
+
+            }
+        }
+
     </script>
 }

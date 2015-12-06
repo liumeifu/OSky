@@ -343,6 +343,8 @@
         }
         //验证当前流程设计信息
         function validGraph() {
+            if (!$('#divForm').form('enableValidation').form('validate'))
+                return false;
             return true;
         }
         //保存流程信息
@@ -353,14 +355,14 @@
                     var encoder = new mxCodec();
                     var node = encoder.encode(graph.getModel());
                     var xml = encodeURIComponent(mxUtils.getPrettyXml(node));
-                    mxUtils.post('/FlowDesigner/Save/',
+                    mxUtils.post('/Admin/FlowDesigner/Save/',
                         'FlowType=' + $("#FlowType").val() + '&FlowName=' + $("#FlowName").val() + '&DesignInfo=' + xml + "&Id=" + $("#Id").val() + "&FormId=" + $("#FormId").val(),
                         function (req) {
                             var rtn = req.getText();
                             var obj = eval("(" + rtn + ")");
                             operationResult(obj, function (obj) {
                                 $("#Id").val(obj.Data);
-                                document.location.href = "/Flow/Form/Index";
+                                document.location.href = "/Admin/Form/Index";
                             });
                         },
                         false
@@ -427,7 +429,7 @@
     </script>
 
 }
-<div class="easyui-layout" data-options="fit:true">
+<div class="easyui-layout" data-options="fit:true" id="divForm">
     <input id="Id" value="@Model.Id" type="hidden" />
     <input id="FormId" value="@Model.FormId" type="hidden" />
     <div data-options="region:'north',title:''" style="padding: 15px 30px; height: 60px;" id="toolBar">

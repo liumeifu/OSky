@@ -83,6 +83,13 @@ namespace OSky.UI.Contracts
         /// <returns>业务操作结果</returns>
         OperationResult EditFlowForm(params FlowFormDto[] dtos);
 
+        /// <summary>
+        /// 删除工作流表单信息
+        /// </summary>
+        /// <param name="ids">工作流表单信息Id集合</param>
+        /// <returns>业务操作结果</returns>
+        OperationResult DeleteFlowForm(params Guid[] ids);
+
         #endregion
 
         #region 流程表单关联

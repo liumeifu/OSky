@@ -61,11 +61,11 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         { 
             get
             {
-                if (ApplicationContext.Current[ApplicationContext.OperatorKey] == null)
+                if (ApplicationContext.Current.Operator.UserId == null)
                 {
-                    ApplicationContext.Current[ApplicationContext.OperatorKey] = OperatorHelper.GetOperator(HttpContext);
+                    ApplicationContext.Current.Operator = OperatorHelper.GetOperator(HttpContext);
                 }
-                return ApplicationContext.Current[ApplicationContext.OperatorKey] as Operator;
+                return ApplicationContext.Current.Operator;
             }
         }
     }

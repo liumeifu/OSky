@@ -18,6 +18,10 @@ namespace OSky.UI.Dtos.Flow
         /// </summary>
         public Guid Id { get; set; }
         /// <summary>
+        ///  获取或设置 流程Id
+        /// </summary>
+        public Guid? FlowDesignId { get; set; }
+        /// <summary>
         /// 表单名称
         /// </summary>
         public string FormName { get; set; }
@@ -31,6 +35,11 @@ namespace OSky.UI.Dtos.Flow
         /// 创建人姓名
         /// </summary>
         public string CreatorUserName { get; set; }
+
+        /// <summary>
+        /// 获取设置 信息创建时间
+        /// </summary>
+        public DateTime CreatedTime { get; set; }
         /// <summary>
         /// 表单路径
         /// </summary>

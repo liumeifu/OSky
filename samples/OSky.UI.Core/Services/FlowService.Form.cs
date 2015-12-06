@@ -24,6 +24,7 @@ namespace OSky.UI.Services
         {
             get { return FlowFormRepository.Entities; }
         }
+
         /// <summary>
         /// 添加工作流表单信息
         /// </summary>
@@ -37,15 +38,9 @@ namespace OSky.UI.Services
                 {
                     throw new Exception("名称为“{0}”的表单信息已存在，不能重复添加。".FormatWith(dto.FormName));
                 }
-            }, 
-            (dto, entity) => { 
-                ClaimsIdentity identity = Thread.CurrentPrincipal.Identity as ClaimsIdentity;
-                if (identity != null && identity.IsAuthenticated)
-                {
-                    entity.CreatorUserName = identity.GetClaimValue(ClaimTypes.Name);
-                }
-                return entity;
-            });
+            }
+
+            );
         }
 
         /// <summary>
@@ -58,6 +53,22 @@ namespace OSky.UI.Services
             return FlowFormRepository.Update(dtos, null, null);
         }
 
+        /// <summary>
+        /// 删除工作流表单信息
+        /// </summary>
+        /// <param name="ids">工作流表单信息Id集合</param>
+        /// <returns>业务操作结果</returns>
+        public OperationResult DeleteFlowForm(params Guid[] ids)
+        {
+            return FlowFormRepository.Delete(ids,
+                (entity)=>
+                {
+                    if (FlowRelateFormRepository.CheckExists(m => m.FlowFormId == entity.Id))
+                    {
+                        throw new Exception("名称为“{0}”的表单流程已存在，不能删除。".FormatWith(entity.FormName));
+                    }
+                });
+        }
         #endregion
 
         #region 私有方法

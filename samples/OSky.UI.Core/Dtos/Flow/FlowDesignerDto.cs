@@ -30,6 +30,10 @@ namespace OSky.UI.Dtos.Flow
         /// </summary>
         public string DesignInfo { get; set; }
         /// <summary>
+        /// 获取或设置 创建者名称
+        /// </summary>
+        public string CreatorUserName { get; set; }
+        /// <summary>
         /// 表单Id
         /// </summary>
         public Guid FormId { get; set; }

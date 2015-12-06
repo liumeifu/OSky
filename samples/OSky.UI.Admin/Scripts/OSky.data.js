@@ -10,6 +10,7 @@
             return [{ id: false, value: false, text: txtFalse }, { id: true, value: true, text: txtTrue }];
         },
 
+        status: [{ id: "0", text: "启用" }, { id: "1", text: "禁用" }],
         operateTypes: [{ id: "0", text: "查询" }, { id: "10", text: "新建" }, { id: "20", text: "更新" }, { id: "30", text: "删除" }],
         functionTypes: [{ id: "0", text: "匿名访问" }, { id: "1", text: "登录访问" }, { id: "2", text: "角色访问" }],
         menuTypes: [{ id: "0", text: "其它" }, { id: "1", text: "菜单" }, { id: "2", text: "按钮" }],

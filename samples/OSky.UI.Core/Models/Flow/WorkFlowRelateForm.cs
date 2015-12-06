@@ -37,11 +37,6 @@ namespace OSky.UI.Models.Flow
         [Required, StringLength(50), Description("创建者Id")]
         public string CreatorUserId { get; set; }
         /// <summary>
-        /// 获取或设置 创建者名称
-        /// </summary>
-        [Required, StringLength(50), Description("创建者名称")]
-        public string CreatorUserName { get; set; }
-        /// <summary>
         /// 获取设置 信息创建时间
         /// </summary>
         [Description("信息创建时间")]
@@ -51,11 +46,6 @@ namespace OSky.UI.Models.Flow
         /// </summary>
         [StringLength(50), Description("最后更新者Id")]
         public string LastUpdatorUserId { get; set; }
-        /// <summary>
-        /// 获取或设置 最后更新者名称
-        /// </summary>
-        [StringLength(50), Description("最后更新者名称")]
-        public string LastUpdatorUserName { get; set; }
         /// <summary>
         /// 获取或设置 最后更新时间
         /// </summary>

@@ -8,6 +8,7 @@ using System.ComponentModel;
 using OSky.UI.Contracts;
 using OSky.Web.Mvc.Security;
 using OSky.UI.Dtos.Flow;
+using OSky.Utility.Data;
 
 namespace OSky.UI.Admin.Areas.Admin.Controllers
 {
@@ -48,12 +49,14 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         /// <param name="dto"></param>
         /// <returns></returns>
         [HttpPost]
+        [ValidateInput(false)]
         [Description("工作流-表单-新增")]
         public ActionResult Save(FlowDesignerDto dto)
         {
             if (dto.Id==Guid.Empty)
             {
-                dto.Id = Guid.NewGuid();
+                dto.Id = CombHelper.NewComb();
+                dto.CreatorUserName = Operator.Name;
             }
             return Json(FlowContract.Save(dto));
         }
@@ -65,9 +68,9 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         #region Overrides of AdminBaseController
 
         [Description("管理-流程-列表")]
-        public ActionResult Index()
+        public ActionResult Index(FlowDesignerDto dto)
         {
-            return View("Index", new FlowDesignerDto());
+            return View("Index", dto);
         }
 
         #endregion

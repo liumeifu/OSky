@@ -21,9 +21,9 @@ namespace OSky.UI.Models.Flow
         /// </summary>
         public WorkFlowDesign()
         {
-            //Steps = new List<WorkFlowStep>();
-            //Lines = new List<WorkFlowLine>();
-            //Delegations = new List<WorkFlowDelegation>();
+            Steps = new List<WorkFlowStep>();
+            Lines = new List<WorkFlowLine>();
+            Delegations = new List<WorkFlowDelegation>();
         }
         /// <summary>
         /// 流程类别

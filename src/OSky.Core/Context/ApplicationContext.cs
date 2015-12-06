@@ -9,7 +9,7 @@ using System.Runtime.Remoting.Messaging;
 namespace OSky.Core.Context
 {
     /// <summary>
-    /// 应用程序数据管理 基于[CallContext]上下文 支持多线程之间数据交换
+    /// 应用程序数据管理 基于[CallContext]上下文 支持多线程之间数据交换，随线程一起自动销毁
     /// </summary>
     public class ApplicationContext : Dictionary<string, object>, ILogicalThreadAffinative
     {
@@ -29,6 +29,15 @@ namespace OSky.Core.Context
                 }
                 return CallContext.GetData(ContextKey) as ApplicationContext;
             }
+            //set
+            //{
+            //    if (value == null)
+            //    {
+            //        CallContext.FreeNamedDataSlot(ContextKey);
+            //        return;
+            //    }
+            //    CallContext.SetData(ContextKey, value);
+            //}
         }
 
         /// <summary>
@@ -43,6 +52,10 @@ namespace OSky.Core.Context
                     this[OperatorKey] = new Operator();
                 }
                 return this[OperatorKey] as Operator;
+            }
+            set
+            {
+                this[OperatorKey] = value;
             }
         }
 

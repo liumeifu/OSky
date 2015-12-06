@@ -40,17 +40,16 @@ namespace OSky.UI.Services
             else
             {
                 flow = new WorkFlowDesign();
-                flow.Steps = new List<WorkFlowStep>();
-                flow.Lines = new List<WorkFlowLine>();
+                flow.CreatorUserName = dto.CreatorUserName;
             }
             XmlDocument doc = mxUtils.ParseXml(dto.DesignInfo.Trim());
             flow.Id = dto.Id;
             flow.FlowName = dto.FlowName;
             flow.FlowType = dto.FlowType;
             //添加流程步骤
-            AddSteps(doc, dto, flow);
+            AddSteps(doc, dto,ref flow);
             //添加流程线
-            AddLines(doc, dto, flow);
+            AddLines(doc, dto,ref flow);
 
             flow.DesignInfo = doc.InnerXml;
 
@@ -81,23 +80,20 @@ namespace OSky.UI.Services
         /// <param name="doc"></param>
         /// <param name="dto"></param>
         /// <param name="flow"></param>
-        private void AddSteps(XmlDocument doc, FlowDesignerDto dto, WorkFlowDesign flow)
+        private void AddSteps(XmlDocument doc, FlowDesignerDto dto,ref WorkFlowDesign flow)
         {
             XmlNodeList steps = doc.DocumentElement.GetElementsByTagName("WorkFlowStep");
             flow.Steps.Clear();
-            FlowDesignRepository.Delete(c => c.Id == dto.Id);
+            FlowStepRepository.Delete(c => c.Id == dto.Id);
             for (int i = 0; i < steps.Count; i++)
             {
                 XmlElement step = (XmlElement)steps.Item(i);
-                WorkFlowStep flowStep;
-                var f = flow.Steps.Any(c => c.Id ==Guid.Parse(step.GetAttribute("Id")));
-                if (!f)
+                WorkFlowStep flowStep = new WorkFlowStep();
+                var id = step.GetAttribute("Id");
+                if (string.IsNullOrWhiteSpace(id))
                 {
-                    flowStep = new WorkFlowStep();
-                    step.SetAttribute("Id", Guid.NewGuid().ToString());
+                    step.SetAttribute("Id", CombHelper.NewComb().ToString());
                 }
-                else
-                    flowStep = flow.Steps.Single(c => c.Id == Guid.Parse(step.GetAttribute("Id")));
 
                 flowStep.Id = Guid.Parse(step.GetAttribute("Id"));
                 flowStep.FlowDesignId = dto.Id;
@@ -113,10 +109,8 @@ namespace OSky.UI.Services
                 flowStep.IsArchives = step.GetAttribute("IsArchives") != "" ? int.Parse(step.GetAttribute("IsArchives")) == 1 : false;
                 flowStep.StepDescription = step.GetAttribute("StepDescription");
 
-                if (!f)
-                {
-                    flow.Steps.Add(flowStep);
-                }
+                flow.Steps.Add(flowStep);
+                
             }
         }
         /// <summary>
@@ -125,23 +119,20 @@ namespace OSky.UI.Services
         /// <param name="doc"></param>
         /// <param name="dto"></param>
         /// <param name="flow"></param>
-        private void AddLines(XmlDocument doc, FlowDesignerDto dto, WorkFlowDesign flow)
+        private void AddLines(XmlDocument doc, FlowDesignerDto dto, ref WorkFlowDesign flow)
         {
             XmlNodeList lines = doc.DocumentElement.GetElementsByTagName("WorkFlowLine");
             flow.Lines.Clear();
-            FlowDesignRepository.Delete(c => c.Id == dto.Id);
+            FlowLineRepository.Delete(c => c.Id == dto.Id);
             for (int i = 0; i < lines.Count; i++)
             {
                 XmlElement line = (XmlElement)lines.Item(i);
-                WorkFlowLine flowLine;
-                var f = flow.Lines.Any(c => c.Id == Guid.Parse(line.GetAttribute("Id")));
-                if (!f)
+                WorkFlowLine flowLine = new WorkFlowLine();
+                var id= line.GetAttribute("Id");
+                if (string.IsNullOrWhiteSpace(id))
                 {
-                    flowLine = new WorkFlowLine();
                     line.SetAttribute("Id", Guid.NewGuid().ToString());
                 }
-                else
-                    flowLine = flow.Lines.Single(c => c.Id == Guid.Parse(line.GetAttribute("Id")));
 
                 flowLine.Id = Guid.Parse(line.GetAttribute("Id"));
                 flowLine.FlowDesignId = dto.Id;
@@ -149,10 +140,11 @@ namespace OSky.UI.Services
                 if (listCell.Count == 1)
                 {
                     flowLine.FromStepId = Int16.Parse(((XmlElement)listCell.Item(0)).GetAttribute("source"));
-                    flowLine.FromStepName = flow.Steps.Single(c => c.FlowDesignId == flow.Id && c.StepId == flowLine.FromStepId).StepName;
+                    var fid = flow.Id;
+                    flowLine.FromStepName = flow.Steps.ToList().Find(c => c.FlowDesignId == fid && c.StepId == flowLine.FromStepId).StepName;
 
                     flowLine.ToStepId = Int16.Parse(((XmlElement)listCell.Item(0)).GetAttribute("target"));
-                    flowLine.ToStepName = flow.Steps.Single(c => c.FlowDesignId == flow.Id && c.StepId == flowLine.ToStepId).StepName;
+                    flowLine.ToStepName = flow.Steps.ToList().Find(c => c.FlowDesignId == fid && c.StepId == flowLine.ToStepId).StepName;
                 }
 
                 flowLine.CustomMethod = line.GetAttribute("CustomMethod");
@@ -160,10 +152,7 @@ namespace OSky.UI.Services
                 flowLine.HandlerIds = line.GetAttribute("HandlerIds");
                 flowLine.HandlerNames = line.GetAttribute("HandlerNames");
 
-                if (!f)
-                {
-                    flow.Lines.Add(flowLine);
-                }
+                flow.Lines.Add(flowLine);
 
             }
         }

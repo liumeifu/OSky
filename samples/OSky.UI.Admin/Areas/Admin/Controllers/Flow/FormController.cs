@@ -36,25 +36,38 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         public ActionResult GridData(string formName)
         {
             GridRequest request = new GridRequest(Request);
-            if (!formName.IsNullOrEmpty())
+            var query = (from form in FlowContract.FlowForms
+                         join r in FlowContract.FlowRelateForms on form.Id equals r.FlowFormId into fr
+                         from r in fr.DefaultIfEmpty()
+                         select new FlowFormDto
+                        {
+                            Id=form.Id,
+                            FormName=form.FormName,
+                            Type=form.Type,
+                            CreatorUserName=form.CreatorUserName,
+                            CreatedTime=form.CreatedTime,
+                            FilePath=form.FilePath,
+                            ActionPath=form.ActionPath,
+                            EnabledFlow=form.EnabledFlow,
+                            Status=form.Status,
+                            FlowDesignId=r.FlowDesignId
+                        })
+                        .WhereIf(c=>c.FormName==formName,!formName.IsNullOrEmpty());
+            var total = query.Count();
+            if (request.PageCondition.SortConditions.Length > 0  )
             {
-                request.FilterGroup.Rules.Add(new FilterRule("WorkFlowForm.FormName", formName));
+                foreach (var item in request.PageCondition.SortConditions)
+                {
+                    query = query.OrderBy(item.SortField, item.ListSortDirection);
+                }
             }
-            var page = GetPageResult(FlowContract.FlowForms, m => new
-            {
-                m.Id,
-                //FlowDesignId = m.FlowRelateForm.FlowDesignId,
-                m.FormName,
-                m.Type,
-                m.CreatorUserName,
-                m.CreatedTime,
-                m.FilePath,
-                m.ActionPath,
-                m.EnabledFlow,
-                m.Status
-            }, request);
+            else
+                query=query.OrderBy("CreatedTime", ListSortDirection.Descending);
 
-            return Json(page.ToGridData(), JsonRequestBehavior.AllowGet);
+            var list = query.Skip((request.PageCondition.PageIndex - 1) * request.PageCondition.PageSize).Take(request.PageCondition.PageSize).ToList();
+            var data = new GridData<FlowFormDto>(list, total);
+
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
@@ -66,6 +79,10 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         public ActionResult Add(FlowFormDto[] dtos)
         {
             dtos.CheckNotNull("dtos");
+            foreach (var item in dtos)
+            {
+                item.CreatorUserName = Operator.Name;
+            }
             OperationResult result = FlowContract.AddFlowForm(dtos);
             return Json(result.ToAjaxResult());
         }
@@ -80,15 +97,15 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             return Json(result.ToAjaxResult());
         }
 
-        //[HttpPost]
-        //[AjaxOnly]
-        //[Description("工作流-表单-删除")]
-        //public ActionResult Delete(int[] ids)
-        //{
-        //    ids.CheckNotNull("ids");
-        //    OperationResult result = FlowContract.DeleteRoles(ids);
-        //    return Json(result.ToAjaxResult());
-        //}
+        [HttpPost]
+        [AjaxOnly]
+        [Description("工作流-表单-删除")]
+        public ActionResult Delete(Guid[] ids)
+        {
+            ids.CheckNotNull("ids");
+            OperationResult result = FlowContract.DeleteFlowForm(ids);
+            return Json(result.ToAjaxResult());
+        }
 
         #endregion
 
