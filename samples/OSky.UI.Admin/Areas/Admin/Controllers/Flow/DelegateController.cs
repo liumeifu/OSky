@@ -12,6 +12,7 @@ using OSky.Web.Mvc.UI;
 using OSky.Utility.Data;
 using OSky.UI.Dtos.Flow;
 using OSky.Core.Data.Entity;
+using OSky.Utility.Filter;
 
 namespace OSky.UI.Admin.Areas.Admin.Controllers
 {
@@ -33,6 +34,8 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         {
             GridRequest request = new GridRequest(Request);
             request.AddDefaultSortCondition(new SortCondition("CreatedTime", ListSortDirection.Descending));
+            request.FilterGroup.Rules.Add(new FilterRule("CreatorUserId", Operator.UserId));
+            request.FilterGroup.Operate = FilterOperate.And;
             var page = GetPageResult(FlowContract.FlowDelegations,
                 m => new
                 {
@@ -92,7 +95,6 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         #endregion
 
         #endregion
-
 
         #region 视图功能
 

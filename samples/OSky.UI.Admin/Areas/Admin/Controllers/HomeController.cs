@@ -54,23 +54,24 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                     IconCls = "pic_100",
                     Children = new List<TreeNode>()
                     {
+                        new TreeNode() { Text = "表单管理", IconCls = "pic_461", Url = Url.Action("Index", "Form") },
+                        new TreeNode() { Text = "流程管理", IconCls = "pic_346", Url = Url.Action("Index", "Flow") },
+                        new TreeNode() { Text = "事项查询", IconCls = "pic_17", Url = Url.Action("Index", "Matter") },
                         new TreeNode() { Text = "操作日志", IconCls = "pic_125", Url = Url.Action("OperateLogs", "Logging") },
                         new TreeNode() { Text = "系统日志", IconCls = "pic_100", Url = Url.Action("SystemLogs", "Logging") }
                     }
                 },
                 new TreeNode()
                 {
-                    Text = "工作流管理",
+                    Text = "个人中心",
                     IconCls = "pic_2",
                     Children = new List<TreeNode>()
                     {
-                        new TreeNode() { Text = "表单管理", IconCls = "pic_461", Url = Url.Action("Index", "Form") },
-                        new TreeNode() { Text = "流程管理", IconCls = "pic_346", Url = Url.Action("Index", "Flow") },
-                        new TreeNode() { Text = "事项管理", IconCls = "pic_17", Url = Url.Action("Index", "Matter") },
+                        new TreeNode() { Text = "我的事项", IconCls = "pic_461", Url = Url.Action("Index", "Form") },
                         new TreeNode() { Text = "委托管理", IconCls = "pic_199", Url = Url.Action("Index", "Delegate") },
                         new TreeNode() { Text = "待办事宜", IconCls = "pic_123", Url = Url.Action("Index", "Schedule") },
                         new TreeNode() { Text = "已办事宜", IconCls = "pic_117", Url = Url.Action("Index", "Finish") },
-                        new TreeNode() { Text = "档案管理", IconCls = "pic_33", Url = Url.Action("Index", "Archives") }
+                        new TreeNode() { Text = "档案查询", IconCls = "pic_33", Url = Url.Action("Index", "Archives") }
                     }
                 }
             };
