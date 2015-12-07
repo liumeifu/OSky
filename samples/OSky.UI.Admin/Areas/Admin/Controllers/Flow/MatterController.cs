@@ -13,6 +13,7 @@ using OSky.Web.Mvc.Extensions;
 
 namespace OSky.UI.Admin.Areas.Admin.Controllers
 {
+    [Description("工作流-事项管理")]
     public class MatterController : AdminBaseController
     {
         /// <summary>
@@ -26,7 +27,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
 
         [AjaxOnly]
         [HttpPost]
-        [Description("工作流-事项管理-视图数据")]
+        [Description("工作流-事项管理-列表数据")]
         public ActionResult GridData()
         {
             GridRequest request = new GridRequest(Request);

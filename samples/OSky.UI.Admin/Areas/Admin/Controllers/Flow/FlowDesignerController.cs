@@ -85,7 +85,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateInput(false)]
-        [Description("工作流-表单-新增")]
+        [Description("工作流-表单-更新")]
         public ActionResult Save(FlowDesignerDto dto)
         {
             if (dto.Id==Guid.Empty)

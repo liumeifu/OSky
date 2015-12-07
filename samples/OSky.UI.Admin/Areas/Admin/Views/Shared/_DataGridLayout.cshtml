@@ -35,12 +35,12 @@
     </script>
     @RenderSection("paramInit", false)
     <script type="text/javascript">
-
         //获取正在编辑行的索引Index
-        function getEditRowIndex(target) {
-            var tr = $(target).closest("tr.datagrid-row");
-            return parseInt(tr.attr("datagrid-row-index"));
-        };
+        //function getEditRowIndex(target) {
+        //    var tr = $(target).closest("tr.datagrid-row");
+        //    return parseInt(tr.attr("datagrid-row-index"));
+        //};
+        var GridCurrentRowIndex;  //获取正在编辑行的索引Index
 
         function formatBoolean(value) {
             var icon = value ? 'checkmark' : 'checknomark';
@@ -54,6 +54,7 @@
             }
             grid.datagrid("appendRow", addObject() || {});
             editIndex = grid.datagrid("getRows").length - 1;
+            GridCurrentRowIndex = editIndex;
             grid.datagrid("selectRow", editIndex)
                 .datagrid("beginEdit", editIndex);
         };
@@ -65,6 +66,7 @@
                 return;
             }
             var index = grid.datagrid("getRowIndex", row);
+            GridCurrentRowIndex = index;
             beginEditRow(index);
         };
 
@@ -73,7 +75,7 @@
             {
                 @Html.Raw("return;")
             }
-
+            GridCurrentRowIndex = index;
             if (endEditing()) {
                 grid.datagrid("selectRow", index)
                     .datagrid("beginEdit", index);

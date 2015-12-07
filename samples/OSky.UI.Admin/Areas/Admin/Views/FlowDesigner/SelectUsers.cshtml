@@ -54,12 +54,12 @@
                 for (var i = 0; i < data.children.length; i++)
                     GetSelectedChildrenNote(data.children[i]);
         }
-        var ids=@ids;
-        if((ids+",").indexOf(data.id+",")>-1){
+        var ids='@ids';
+        if (data.Type == "1" && (ids + ",").indexOf(data.id + ",") > -1) {
             data.checked=true;
             data.Checked=true;
         }
-        if(data.checked==true)
+        if (data.checked == true)
             $("#" + data.domId).find('span.tree-checkbox').attr("class","tree-checkbox tree-checkbox1");
     }
 

@@ -107,11 +107,18 @@ namespace OSky.UI.Contracts
         IQueryable<WorkFlowDelegation> FlowDelegations { get; }
 
         /// <summary>
-        /// 保存 流程委托数据
+        /// 添加 流程委托数据
         /// </summary>
-        /// <param name="dto">要添加的流程委托Dto</param>
+        /// <param name="dtos">要添加的流程委托Dto</param>
         /// <returns>业务操作结果</returns>
-        OperationResult SaveDelegation(FlowDelegateDto dto);
+        OperationResult AddDelegation(params FlowDelegateDto[] dtos);
+
+        /// <summary>
+        /// 更新 流程委托数据
+        /// </summary>
+        /// <param name="dtos">包含更新的流程委托dto</param>
+        /// <returns>业务操作结果</returns>
+        OperationResult EditDelegation(params FlowDelegateDto[] dtos);
 
         #endregion
 

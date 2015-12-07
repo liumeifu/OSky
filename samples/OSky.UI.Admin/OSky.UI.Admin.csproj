@@ -511,11 +511,11 @@
     <Content Include="Areas\Admin\Views\FlowDesigner\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Matter\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Delegate\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Delegate\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Login\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Roles\SetUsers.cshtml" />
     <Content Include="Areas\Admin\Views\Users\SetRoles.cshtml" />
     <Content Include="Areas\Admin\Views\FlowDesigner\SelectUsers.cshtml" />
+    <Content Include="Areas\Admin\Views\Flow\Index.cshtml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -584,6 +584,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Compile Include="Areas\Admin\Controllers\Flow\DelegateController.cs" />
+    <Compile Include="Areas\Admin\Controllers\Flow\FlowController.cs" />
     <Compile Include="Areas\Admin\Controllers\Flow\FlowDesignerController.cs" />
     <Compile Include="Areas\Admin\Controllers\Flow\FormController.cs" />
     <Compile Include="Areas\Admin\Controllers\Flow\MatterController.cs" />

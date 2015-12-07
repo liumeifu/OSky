@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "流程列表";
+    Layout = "~/Areas/Admin/Views/Shared/_DataGridLayout.cshtml";
+
+    ViewBag.GridId = "flowForm";
+    ViewBag.GridDataUrl = Url.Action("GridData");
+    ViewBag.ToolbarItem = "search";
+}
+@section customScript
+{
+    <script type="text/javascript">
+        columns = [[
+            { field: "Id", title: "编号", hidden: true },
+            {
+                field: "FlowType", title: "流程类型", width: 150, sortable: true, halign: "center", align: "center",
+                editor: { type: "validatebox", options: { required: true, validType: "length[1,50]" } }
+            },
+            {
+                field: "FlowName", title: "流程名称", width: 150, sortable: true, halign: "center", align: "center",
+                editor: { type: "combobox", options: { required: true, data: $.OSky.data.bool, valueField: "id", textField: "text" } }
+            },
+            { field: "CreatorUserName", title: "创建人", width: 120, sortable: true, halign: "center", align: "center" },
+            { field: "CreatedTime", title: "创建时间", width: 150, sortable: true, halign: "center", align: "center", formatter: function (value) { return $.OSky.tools.formatDate(value); } },
+            {
+                field: "Status", title: "状态", width: 80, halign: "center", align: "center", sortable: true, halign: "center", align: "center", formatter: formatStatus,
+                editor: { type: "combobox", options: { required: true, editable: false, data: $.OSky.data.status, valueField: "id", textField: "text" } }
+            }
+        ]];
+
+        //格式化数据
+        function formatStatus(value) {
+            switch (value) {
+                case 0: return "启用";
+                case 1: return "禁用";
+                default:
+
+            }
+        }
+
+    </script>
+}

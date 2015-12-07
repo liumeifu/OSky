@@ -38,9 +38,7 @@ namespace OSky.UI.Services
                 {
                     throw new Exception("名称为“{0}”的表单信息已存在，不能重复添加。".FormatWith(dto.FormName));
                 }
-            }
-
-            );
+            });
         }
 
         /// <summary>

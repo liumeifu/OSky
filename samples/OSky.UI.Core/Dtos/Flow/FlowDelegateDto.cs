@@ -22,9 +22,17 @@ namespace OSky.UI.Dtos.Flow
         /// </summary>
         public Guid FlowDesignId { get; set; }
         /// <summary>
+        /// 流程名称
+        /// </summary>
+        public string FlowName { get; set; }
+        /// <summary>
         /// 委托人Id
         /// </summary>
         public string CreatorUserId { get; set; }
+        /// <summary>
+        /// 委托人
+        /// </summary>
+        public string CreatorUserName { get; set; }
         /// <summary>
         /// 受托人Id
         /// </summary>

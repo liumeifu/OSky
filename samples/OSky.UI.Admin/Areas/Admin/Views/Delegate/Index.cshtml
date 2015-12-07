@@ -1,67 +1,87 @@
 ﻿@{
-    ViewBag.Title = "表单信息列表";
+    ViewBag.Title = "委托列表";
     Layout = "~/Areas/Admin/Views/Shared/_DataGridLayout.cshtml";
 
-    ViewBag.GridId = "flowForm";
+    ViewBag.GridId = "flowDelegate";
     ViewBag.GridDataUrl = Url.Action("GridData");
     ViewBag.AddUrl = Url.Action("Add");
     ViewBag.EditUrl = Url.Action("Edit");
     ViewBag.DeleteUrl = Url.Action("Delete");
 }
-@section customScript
-{
+@section customScript{
+
+    <script src="~/Scripts/plugins/OSky.easyui.tree.js"></script>
     <script type="text/javascript">
         columns = [[
             { field: "Id", title: "编号", hidden: true },
+            { field: "FlowDesignId", title: "流程Id", hidden: true, editor: { type: "validatebox" } },
+            { field: "TrusteeId", title: "受托人Id", hidden: true, editor: { type: "validatebox" } },
             {
                 field: "FlowName", title: "流程名称", width: 150, sortable: true, halign: "center", align: "center",
-                editor: { type: "validatebox", options: { required: true, validType: "length[1,50]" } }
+                editor: {
+                    type: "combobox", options: {
+                        required: true, editable: false, valueField: "Id", textField: 'FlowName',
+                        url: "@Url.Action("ComboData")", queryParams: {},
+                        onSelect: function (row) {
+                            var ed = grid.datagrid('getEditor', { index: GridCurrentRowIndex, field: 'FlowDesignId' });
+                            $(ed.target).val(row.Id);
+                            $(this).combobox('setValue', row.FlowName);
+                        }
+                    }
+                }
             },
             {
-                field: "CreatorUserName", title: "委托人", width: 100, sortable: true, halign: "center", align: "center", formatter: formatBoolean,
-                editor: { type: "combobox", options: { required: true, data: $.OSky.data.bool, valueField: "id", textField: "text" } }
+                field: "CreatorUserName", title: "委托人", width: 150, sortable: true, halign: "center", align: "center", 
             },
             {
-                field: "TrusteeName", title: "受托人", width: 200, sortable: true, halign: "center", align: "center", formatter: formatBoolean,
-                editor: { type: "validatebox", options: { required: true, validType: "length[1,100]" } }
+                field: "TrusteeName", title: "受托人", width: 150, sortable: true, halign: "center", align: "center", 
+                editor: {
+                    type: "combotree",
+                    options: {
+                        required: true, editable: false, lines: true,animate: true,
+                        url: "@Url.Action("NodeData", "FlowDesigner")",
+                        loadFilter: function (data) {
+                            var treeData = new TreeHelper(data).dataTransferer();
+                            return treeData;
+                        },
+                        onClick: function (node) {
+                            $(this).tree('toggle', node.target);
+                            var ed = grid.datagrid('getEditor', { index: GridCurrentRowIndex, field: 'TrusteeName' });
+                            if (node.Type != "1") {
+                                $(ed.target).combotree('setValue', "");
+                                $(ed.target).combotree('showPanel');
+                            }
+                            else {
+                                var ted = grid.datagrid('getEditor', { index: GridCurrentRowIndex, field: 'TrusteeId' });
+                                $(ted.target).val(node.id);
+                                $(ed.target).combotree('setValue', node.text);
+                            }
+                        }
+                    }
+                }
             },
             {
-                field: "StartTime", title: "委托起始时间", width: 200, sortable: true, halign: "center", align: "center",
-                editor: { type: "validatebox", options: { required: true, validType: "length[1,100]" } }
+                field: "StartTime", title: "委托起始时间", width: 150, sortable: true, halign: "center", align: "center", formatter: function (value) { return $.OSky.tools.formatDate(value); },
+                editor: { type: "datebox", options: { required: true, editable: false, validType: "length[1,100]" } }
             },
             {
-                field: "EndTime", title: "委托结束时间", width: 80, sortable: true, halign: "center", align: "center",
-                editor: { type: "combobox", options: { required: true, data: $.OSky.data.bool, valueField: "id", textField: "text" } }
+                field: "EndTime", title: "委托结束时间", width: 150, sortable: true, halign: "center", align: "center", formatter: function (value) { return $.OSky.tools.formatDate(value); },
+                editor: { type: "datebox", options: { required: true, editable: false, validType: "length[1,100]" } }
             },
             {
-                field: "Status", title: "状态", width: 80, halign: "center", align: "center", sortable: true, halign: "center", align: "center",
-                formatter: function (value) { return $.OSky.tools.formatDate(value); }
+                field: "Status", title: "状态信息", width: 80, halign: "center", align: "center", sortable: true, halign: "center", align: "center", formatter: formatStatus,
+                editor: { type: "combobox", options: { required: true, editable: false, data: $.OSky.data.status, valueField: "id", textField: "text" } }
             }
         ]];
 
-        startfunction = function () {
-            
-            function Add() {
-                var row = grid.datagrid("getSelected");
-                if (!row) {
-                    $.OSky.layer.msg.tip("请选择要编辑的行。");
-                    return;
-                }
-                $.OSky.layer.msg.open(2, "/Flow/Delegate/Edit?Id=" + row.Id, true,
-                    function (index, layero) {
-                        $('#form1').form('submit', {
-                            url: "@Url.Action("Save")",
-                            onSubmit: function () {
-                                return $(this).form('validate');
-                            },
-                            success: function (d) {
-                                var data = eval('(' + d + ')');
-                                ajaxResultHandler(data);
-                            }
-                        });
-                    });
+        //格式化数据
+        function formatStatus(value) {
+            switch (value) {
+                case 0: return "启用";
+                case 1: return "禁用";
+                default:
+
             }
-            toolbarData.push({ text: "新增", iconCls: "icon-add", handler: Add });
-        };
+        }
     </script>
 }

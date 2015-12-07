@@ -15,6 +15,7 @@ using OSky.Core.Data.Entity;
 
 namespace OSky.UI.Admin.Areas.Admin.Controllers
 {
+    [Description("工作流-委托管理")]
     public class DelegateController : AdminBaseController
     {
         /// <summary>
@@ -37,6 +38,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                 {
                     m.Id,
                     m.FlowDesignId,
+                    m.TrusteeId,
                     FlowName=m.FlowDesign.FlowName,
                     m.CreatorUserName,
                     m.CreatedTime,
@@ -48,31 +50,51 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                 request);
             return Json(page.ToGridData(), JsonRequestBehavior.AllowGet);
         }
+
+        [AjaxOnly]
+        [HttpPost]
+        [Description("工作流-委托管理-流程数据")]
+        public ActionResult ComboData()
+        {
+            var list = FlowContract.FlowDesigns.Where(c=>c.Status==0).Select(m => new { m.Id, m.FlowName }).ToList();
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region 功能方法
         [HttpPost]
-        [Description("工作流-委托-更新")]
-        public ActionResult Save(FlowDelegateDto dto)
+        [Description("工作流-委托-添加")]
+        public ActionResult Add(FlowDelegateDto[] dtos)
         {
-            return Json(FlowContract.SaveDelegation(dto).ToAjaxResult());
+            foreach (var dto in dtos)
+            {
+                if (dto.Id == Guid.Empty)
+                    dto.Id = CombHelper.NewComb();
+                dto.CreatorUserName = Operator.Name;
+            }
+            OperationResult result = FlowContract.AddDelegation(dtos);
+            return Json(result.ToAjaxResult());
         }
+
+        [HttpPost]
+        [Description("工作流-委托-修改")]
+        public ActionResult Edit(FlowDelegateDto[] dtos)
+        {
+            foreach (var dto in dtos)
+            {
+                dto.CreatorUserId = Operator.UserId;
+                dto.CreatorUserName = Operator.Name;
+            }
+            OperationResult result = FlowContract.EditDelegation(dtos);
+            return Json(result.ToAjaxResult());
+        }
+
         #endregion
 
         #endregion
 
 
         #region 视图功能
-
-        [Description("管理-委托-编辑")]
-        public ActionResult Edit(Guid Id)
-        {
-            var dto = new FlowDelegateDto();
-            var model = FlowContract.FlowDelegations.FirstOrDefault(c => c.Id == Id);
-            if (model != null)
-                dto = model.MapTo<FlowDelegateDto>();
-            return View("Edit", dto);
-        }
 
         #region Overrides of AdminBaseController
 
