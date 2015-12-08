@@ -1,0 +1,54 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<body style=" background:#ffffff !important;">
+    <form id="context-form" style=" margin-top:10px;">
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <div class=" dashbard-1 form-horizontal ">
+            <div class="bills-table" style="height:400px;">
+                <div class="bills-head">请&nbsp;&nbsp; 假&nbsp;&nbsp;条</div>
+                <div class=" main-content-left">
+                    <div class="td-left">
+                        <label class="form-label pull-left"><label class="cred">*</label>申请人：</label>
+                        <input class="form-control  pull-left m-control" name="UserSurname" type="text" placeholder="" disabled="disabled" value="@Model.UserSurname">
+                    </div>
+                </div>
+                <div class=" main-content-right">
+                    <div class="td-right">
+                        <label class="form-label pull-left"><label><label class="cred">*</label>请假类型：</label></label>
+                        <select id="LeaveTypeId" name="LeaveTypeId" class="form-control pull-left" style=" width:42%;">
+                            @if (@Model.Id != Guid.Empty)
+                            {
+                                <option value="@Model.LeaveTypeId">@Model.LeaveTypeName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="main-content-left">
+                    <div class="td-left input-daterange input-append date">
+                        <label class="form-label pull-left"><label><label class="cred">*</label>开始时间：</label></label>
+                        <input id="starttime" class="form-control pull-left m-control" name="LeaveBeginTime" type="text" placeholder="" value="@Model.LeaveBeginTime.ToString("yyyy-MM-dd hh:mm")">
+                    </div>
+                </div>
+                <div class="main-content-right">
+                    <div class="td-right input-daterange input-append date">
+                        <label class="form-label pull-left"><label><label class="cred">*</label>结束时间：</label></label>
+                        <input id="endtime" class="form-control pull-left m-control " name="LeaveEndTime" type="text" placeholder="" value="@Model.LeaveBeginTime.ToString("yyyy-MM-dd hh:mm")">
+                    </div>
+                </div>
+                <div class="bills-footer">
+                    <div style="float:left;margin-top:10px; width:100%;padding-right:50%;">
+                        <label class="form-label pull-left"><label>请假原因：</label></label>
+                        <div style="width:70%; float:left;">
+                            <textarea name="Reason" cols="50" rows="3" class="form-control pull-left">@Model.Reason</textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+</body>
+

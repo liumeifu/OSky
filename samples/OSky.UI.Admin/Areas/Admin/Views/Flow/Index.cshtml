@@ -22,7 +22,7 @@
             { field: "CreatorUserName", title: "创建人", width: 120, sortable: true, halign: "center", align: "center" },
             { field: "CreatedTime", title: "创建时间", width: 150, sortable: true, halign: "center", align: "center", formatter: function (value) { return $.OSky.tools.formatDate(value); } },
             {
-                field: "Status", title: "状态", width: 80, halign: "center", align: "center", sortable: true, halign: "center", align: "center", formatter: formatStatus,
+                field: "Status", title: "状态", width: 80, halign: "center", align: "center", sortable: true, formatter: formatStatus,
                 editor: { type: "combobox", options: { required: true, editable: false, data: $.OSky.data.status, valueField: "id", textField: "text" } }
             }
         ]];

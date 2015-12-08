@@ -54,7 +54,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                     IconCls = "pic_100",
                     Children = new List<TreeNode>()
                     {
-                        new TreeNode() { Text = "表单管理", IconCls = "pic_461", Url = Url.Action("Index", "Form") },
+                        new TreeNode() { Text = "表单管理", IconCls = "pic_461", Url = Url.Action("Index", "FormManage") },
                         new TreeNode() { Text = "流程管理", IconCls = "pic_346", Url = Url.Action("Index", "Flow") },
                         new TreeNode() { Text = "事项查询", IconCls = "pic_17", Url = Url.Action("Index", "Matter") },
                         new TreeNode() { Text = "操作日志", IconCls = "pic_125", Url = Url.Action("OperateLogs", "Logging") },

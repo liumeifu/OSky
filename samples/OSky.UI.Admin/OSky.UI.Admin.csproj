@@ -499,7 +499,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Areas\Admin\Views\Organizations\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Form\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\FormManage\Index.cshtml" />
     <Content Include="Scripts\Flow\css\vssver2.scc" />
     <Content Include="Scripts\Flow\images\vssver2.scc" />
     <Content Include="Scripts\Flow\resources\editor.properties" />
@@ -516,6 +516,10 @@
     <Content Include="Areas\Admin\Views\Users\SetRoles.cshtml" />
     <Content Include="Areas\Admin\Views\FlowDesigner\SelectUsers.cshtml" />
     <Content Include="Areas\Admin\Views\Flow\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Schedule\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Schedule\FlowHandle.cshtml" />
+    <Content Include="Areas\Admin\Views\Schedule\ExecuteBar.cshtml" />
+    <Content Include="Areas\Admin\Views\Form\LeaveForm.cshtml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -586,8 +590,10 @@
     <Compile Include="Areas\Admin\Controllers\Flow\DelegateController.cs" />
     <Compile Include="Areas\Admin\Controllers\Flow\FlowController.cs" />
     <Compile Include="Areas\Admin\Controllers\Flow\FlowDesignerController.cs" />
-    <Compile Include="Areas\Admin\Controllers\Flow\FormController.cs" />
+    <Compile Include="Areas\Admin\Controllers\Flow\FormManageController.cs" />
     <Compile Include="Areas\Admin\Controllers\Flow\MatterController.cs" />
+    <Compile Include="Areas\Admin\Controllers\Flow\ScheduleController.cs" />
+    <Compile Include="Areas\Admin\Controllers\Form\FormController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Startup\Startup.SignalR.cs" />
     <Compile Include="Startup\Startup.WebApi.cs" />

@@ -177,6 +177,8 @@
     <Compile Include="Models\Identity\UserLogin.cs" />
     <Compile Include="Models\Identity\UserRoleMap.cs" />
     <Compile Include="Models\Infos\Atricle.cs" />
+    <Compile Include="Models\Infos\Dictionary.cs" />
+    <Compile Include="Models\Infos\Leave.cs" />
     <Compile Include="Models\Security\EntityRoleMap.cs" />
     <Compile Include="Models\Security\EntityUserMap.cs" />
     <Compile Include="Models\Security\FunctionRoleMap.cs" />

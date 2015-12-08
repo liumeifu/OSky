@@ -20,7 +20,7 @@ using OSky.UI.Dtos.Flow;
 namespace OSky.UI.Admin.Areas.Admin.Controllers
 {
     [Description("工作流-表单管理")]
-    public class FormController : AdminBaseController
+    public class FormManageController : AdminBaseController
     {
         /// <summary>
         /// 获取或设置 工作流业务对象

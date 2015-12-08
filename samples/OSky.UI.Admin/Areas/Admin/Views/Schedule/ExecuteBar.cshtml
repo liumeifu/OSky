@@ -1,0 +1,57 @@
+﻿@if (Model.TaskId != null)
+{
+    <div class="normal-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="tool-box clearfix" style=" height:40px;padding-top:10px;">
+                    <ul>
+                        @if (Model.OperateStatus.GroupTask)
+                        {
+                            <li><a href="#" class="tool-add" onclick="FlowExecute.OpenGroupTask()">审批过程</a></li>
+                        }
+                        @if (Model.OperateStatus.HasSave)
+                        {
+                            <li><a href="#" class="tool-add" onclick="FlowExecute.Save()">编辑</a></li>
+                        }
+                        @if (Model.OperateStatus.HasAudit)
+                        {
+                            <li><a href="#" class="tool-add" onclick="FlowExecute.Audit()">审核</a></li>
+                        }
+                        @if (Model.OperateStatus.HasAssign)
+                        {
+                            <li><a href="#" class="tool-add" onclick="FlowExecute.Sende()">发送</a></li>
+                        }
+                        @if (Model.OperateStatus.IsCompleted)
+                        {
+                            <li><a href="#" class="tool-add" onclick="FlowExecute.Complete()">完成</a></li>
+                        }
+                        @if (Model.OperateStatus.HasBack)
+                        {
+                            <li><a href="#" class="tool-add" onclick="FlowExecute.Back()">退回</a></li>
+                        }
+                        @if (Model.OperateStatus.HasCallBack)
+                        {
+                            <li><a href="#" class="tool-add" onclick="FlowExecute.CallBack()">撤销</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="normal-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="tool-box clearfix">
+                    <ul>
+                        @*<li><a href="#" class="tool-add" onclick="FlowExecute.Save()">保存</a></li>*@
+                        <li><a href="#" class="tool-add" onclick="FlowExecute.Accept()">提交</a></li>
+                        @*<li><a href="#" class="tool-add" onclick="FlowExecute.Refuse()">拒绝</a></li>*@
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}

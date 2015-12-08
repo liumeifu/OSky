@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "流程列表";
+    Layout = "~/Areas/Admin/Views/Shared/_DataGridLayout.cshtml";
+
+    ViewBag.GridId = "flowForm";
+    ViewBag.GridDataUrl = Url.Action("GridData");
+    ViewBag.ToolbarItem = "edit,save,cancel,search";
+}
+@section customScript
+{
+    <script type="text/javascript">
+        columns = [[
+            { field: "Id", title: "编号", hidden: true },
+            { field: "EntityId", title: "实体编号", hidden: true },
+            { field: "FlowItemId", title: "项目编号", hidden: true },
+            { field: "FlowDesignId", title: "流程编号", hidden: true },
+            { field: "EntityName", title: "事项名称", width: 150, sortable: true, halign: "center", align: "center" },
+            { field: "StepName", title: "步骤名称", width: 120, sortable: true, halign: "center", align: "center" },
+            { field: "SenderName", title: "发送人", width: 120, sortable: true, halign: "center", align: "center" },
+            { field: "CreatedTime", title: "发送时间", width: 150, sortable: true, halign: "center", align: "center", formatter: function (value) { return $.OSky.tools.formatDate(value); } },
+            { field: "Status", title: "状态", width: 100, halign: "center", align: "center", sortable: true, formatter: formatStatus},
+            { field: "StepDay", title: "时限(天)", width: 80, sortable: true, halign: "center", align: "center" },
+            {
+                field: "DelayDay", title: "延期(天)", width: 80, sortable: true, halign: "center", align: "center",
+                editor: { required: true, type: "numberbox", options: { precision: 0 } }
+            },
+            {
+                field: "DelayReason", title: "延期事由", width: 250, halign: "center", align: "center",
+                editor: { type: "validatebox", options: { required: true, validType: "length[1,200]" } }
+            }
+        ]];
+
+        startfunction = function () {
+            //设置流程
+            function OptionFlow() {
+                var row = grid.datagrid("getSelected");
+                if (!row) {
+                    $.OSky.layer.msg.tip("请选择要编辑的行。");
+                    return;
+                }
+                document.location.href = "/Admin/Schedule/FlowHandle?TaskId=" + row.Id + "&ItemId=" + row.FlowItemId + "&FlowId=" + row.FlowDesignId + "&EntityId=" + row.EntityId;
+            }
+            toolbarData.push({ text: "办理", iconCls: "pic_346", handler: OptionFlow });
+
+
+        };
+
+        //格式化数据
+        function formatStatus(value) {
+            switch (value) {
+                case 0: return "启用";
+                case 1: return "禁用";
+                default:
+
+            }
+        }
+
+    </script>
+}

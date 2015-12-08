@@ -61,6 +61,14 @@ namespace OSky.UI.Contracts
         /// </summary>
         IQueryable<WorkFlowTask> FlowTasks { get; }
 
+        /// <summary>
+        /// 获取 根据指定任务和用户的当前任务操作的状态dto
+        /// </summary>
+        /// <param name="dto">当前任务操作的状态dto</param>
+        /// <param name="userId">当前用户Id</param>
+        /// <returns>当前任务操作的状态dto</returns>
+        FlowProjectDto GetFlowOperateStatus(FlowProjectDto dto, Guid userId);
+
         #endregion
 
         #region 流程表单

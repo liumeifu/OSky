@@ -1,0 +1,171 @@
+﻿@model OSky.UI.Dtos.Flow.FlowProjectDto 
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div style="display:none">
+    <input name="ItemId" value="@Model.ItemId">
+    <input name="FlowId" value="@Model.FlowId">
+    <input name="TaskId" value="@Model.TaskId">
+    <input name="EntityId" value="@Model.EntityId">
+</div>
+
+  <!--操作 -->
+@Html.Partial("ExecuteBar")
+
+<!--表单 -->
+<iframe id="ifrForm" width="96.5%" height="700px;" style=" margin-left:2%;" frameborder="0" marginheight="0" marginwidth="0" src="@Url.Action(Model.FileUrl, new { id = Model.EntityId })"></iframe>
+
+@section footer{
+<script type="text/javascript">
+
+    //流程操作
+    $(function () {
+        //浏览
+        FlowExecute.Open();
+    })
+
+    var FlowExecute = {
+        Open: function () {
+            $.post('/WorkFlow/Schedule/Scan',
+                { TaskId: '@Model.TaskId' },
+                function (data) {
+
+                }, "json");
+        },
+        Save: function () {
+            doSubmit(false);
+        },
+        Accept: function () {
+            doSubmit(true);
+        },
+        Audit: function () {
+            window.location.href = '@Url.Action("ExecuteAudit", "Schedule", new { area = "WorkFlow" })?' + "TaskId=@Model.TaskId&FlowId=@Model.FlowId&EntityId=@Model.EntityId";
+        },
+        Sende: function () {
+            ShowModal("/WorkFlow/Schedule/Execute", "/WorkFlow/Schedule/ExecuteForm", { TaskId: '@Model.TaskId', FlowId: '@Model.FlowId', EntityId: '@Model.EntityId' }, "发送下一步",
+                    function LoadTree() {
+
+                        //加载组织机构树
+                        $.fn.zTree.init($("#oTree"), setting);
+
+                        //滚动条属性设置
+                        $('#scroll-1').scrollbar({ width: 400, height: 250, });
+                        $('#scroll-2').scrollbar({ width: $('.ztree').innerWidth(), height: 250, });
+
+                    });
+        },
+        Complete: function () {
+            $.ajax({
+                url: '@Url.Action("Completed", "Schedule", new { area = "WorkFlow" })',
+                data: { FlowId: '@Model.FlowId', TaskId: '@Model.TaskId' },
+                type: "post",
+                dataType: "json",
+                success: function (rdata) {
+                    if (rdata.ResultType == 3) {
+                        //toastr弹窗
+                        toastr.success("保存成功", "");
+                        //重新载入列表
+                        document.location.href = '@Url.Action("Index", "Schedule", new { area = "WorkFlow" })';
+                    } else {
+                        alert(rdata.Message);
+                    }
+                }
+            });
+        },
+        Back: function () {
+            ShowModal("/WorkFlow/Schedule/Backed", "/WorkFlow/Schedule/FlowBack", { FlowId: '@Model.FlowId', TaskId: '@Model.TaskId' }, "退回处理");
+        },
+        CallBack: function () {
+            $.post('/WorkFlow/Schedule/CallBack',
+                    { TaskId: '@Model.TaskId' },
+                    function (data) {
+                        if (rdata.ResultType == 3) {
+                            alert(rdata.Message);
+                        } else {
+                            alert(rdata.Message);
+                        }
+                    }, "json");
+        },
+        OpenGroupTask: function () {
+            ShowModal("", "/WorkFlow/Schedule/ApprovalList", { itemId: '@Model.EntityId' }, "审批过程");
+        }
+    }
+
+    //保存数据
+    function doSubmit(isAcc) {
+        var $form = $(window.frames["ifrForm"].contentDocument).find("#context-form");
+        if ($form.valid()) {
+            //表单内容
+            var fileds = $form.serializeArray();
+            var param = utils.serializeJson(fileds);
+            $.ajax({
+                type: "POST",
+                url: "@Model.ActionUrl",
+                data: JSON.stringify(param),
+                datatype: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    if (data.ResultType == 3) {
+                        if (isAcc)//是否提交受理
+                            DoAccept(data.Data.EntityId, '@Model.FlowId', data.Data.Title);
+                        else
+                            alert(data.Message);
+                    }
+                    else
+                        alert(data.Message);
+                }
+            });
+
+        }
+
+    }
+    //受理
+    function DoAccept(entityId, flowId, title) {
+        $.ajax({
+            type: "post",
+            url: '@Url.Action("StartFlow", "Schedule")',
+            data: { EntityId: entityId, FlowId: flowId, Title: title },
+            dataType: "json",
+            success: function (data) {
+                if (data.ResultType == 3) {
+                    window.location.href = "/WorkFlow/Schedule/Index";
+                } else {
+                    alert(data.Message);
+                }
+            }
+        });
+    }
+    //发送下一步执行
+    function Save() {
+        if ($("#modal-content").valid())
+            Submit();
+    }
+    function Submit() {
+        var actionUrl = $("#modal-content").attr("action");
+        $.ajax({
+            type: "POST",
+            url: actionUrl,
+            data: $("#modal-content").serialize(),
+            datatype: "json",
+            success: function (data) {
+                //成功
+                if (data.ResultType == 3) {
+                    $('#modal-form').modal('hide');
+                    //toastr弹窗
+                    toastr.success("保存成功", "");
+                    //重新载入列表
+                    document.location.href = '@Url.Action("Index", "Schedule", new { area = "WorkFlow" })';
+                }
+                else {
+                    //出现错误
+                    toastr.options.timeOut = 4000;
+                    toastr.error("保存失败:" + data.Message, "", toastr.options);
+                }
+            }
+        });
+    }
+
+
+</script>
+    }
