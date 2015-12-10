@@ -58,6 +58,22 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
 
         #region 功能方法
 
+        [HttpPost]
+        [AjaxOnly]
+        [Description("工作流-任务-查看")]
+        public ActionResult Scan(Guid TaskId)
+        {
+            return Json(FlowContract.OpenTask(TaskId));
+        }
+
+        [HttpPost]
+        [AjaxOnly]
+        [Description("工作流-任务-受理")]
+        public ActionResult StartFlow(FlowExecuteDto dto)
+        {
+            return Json(dto);
+        }
+
         #endregion
 
         #endregion
@@ -76,7 +92,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
            var form = FlowContract.FlowRelateForms.Where(c => c.FlowDesignId == dto.FlowId).Select(m => new { m.FlowForm.FilePath,m.FlowForm.ActionPath }).SingleOrDefault();
            dto.FileUrl = form.FilePath;
            dto.ActionUrl = form.ActionPath;
-           return View(FlowContract.GetFlowOperateStatus(dto, Guid.Parse(Operator.UserId)));
+           return View(FlowContract.GetFlowOperateStatus(dto, Operator.UserId));
        }
 
 

@@ -21,8 +21,8 @@ namespace OSky.UI.Models.Flow
         /// </summary>
         public WorkFlowItem()
         {
-            //Tasks = new List<WorkFlowTask>();
-            //Archives = new List<WorkFlowArchives>();
+            Tasks = new List<WorkFlowTask>();
+            Archives = new List<WorkFlowArchive>();
         }
         /// <summary>
         /// 所属流程Id

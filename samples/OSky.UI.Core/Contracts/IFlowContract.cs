@@ -67,7 +67,14 @@ namespace OSky.UI.Contracts
         /// <param name="dto">当前任务操作的状态dto</param>
         /// <param name="userId">当前用户Id</param>
         /// <returns>当前任务操作的状态dto</returns>
-        FlowProjectDto GetFlowOperateStatus(FlowProjectDto dto, Guid userId);
+        FlowProjectDto GetFlowOperateStatus(FlowProjectDto dto, string userId);
+
+        /// <summary>
+        /// 执行 根据指定任务 标识已阅读
+        /// </summary>
+        /// <param name="taskId">流程任务Id</param>
+        /// <returns>业务操作结果</returns>
+        OperationResult OpenTask(Guid TaskId);
 
         #endregion
 

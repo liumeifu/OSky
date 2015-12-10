@@ -27,11 +27,7 @@
 
     var FlowExecute = {
         Open: function () {
-            $.post('/WorkFlow/Schedule/Scan',
-                { TaskId: '@Model.TaskId' },
-                function (data) {
-
-                }, "json");
+            $.post('@Url.Action("Scan")',{ TaskId: '@Model.TaskId' });
         },
         Save: function () {
             doSubmit(false);
