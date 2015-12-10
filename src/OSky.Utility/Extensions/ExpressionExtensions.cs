@@ -21,6 +21,9 @@ namespace OSky.Utility.Extensions
     /// </summary>
     public static class ExpressionExtensions
     {
+        public static Expression<Func<T, bool>> True<T>() { return f => true; }
+        public static Expression<Func<T, bool>> False<T>() { return f => false; }
+
         /// <summary>
         /// 以特定的条件运行组合两个Expression表达式
         /// </summary>
@@ -67,7 +70,6 @@ namespace OSky.Utility.Extensions
             second.CheckNotNull("second");
             return first.Compose(second, Expression.OrElse);
         }
-
 
         private class ParameterRebinder : ExpressionVisitor
         {

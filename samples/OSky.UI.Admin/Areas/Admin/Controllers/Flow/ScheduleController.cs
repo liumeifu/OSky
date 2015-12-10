@@ -10,6 +10,9 @@ using OSky.Web.Mvc.UI;
 using OSky.UI.Contracts;
 using OSky.Web.Mvc.Extensions;
 using OSky.UI.Dtos.Flow;
+using OSky.Utility.Extensions;
+using OSky.UI.Models.Flow;
+using OSky.Core.Data.Extensions;
 
 namespace OSky.UI.Admin.Areas.Admin.Controllers
 {
@@ -30,8 +33,9 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         public ActionResult GridData()
         {
             GridRequest request = new GridRequest(Request);
-            var page = GetPageResult(FlowContract.FlowTasks,
-                m => new
+            var predicate = ExpressionExtensions.True<WorkFlowTask>();
+            predicate = predicate.And(c => (c.Status == 1 || c.Status == 2) && c.ReceiverId == Operator.UserId);
+            var page = FlowContract.FlowTasks.ToPage(predicate, request.PageCondition, m => new
                 {
                     m.Id,
                     m.FlowItemId,
@@ -45,8 +49,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                     m.StepDay,
                     m.DelayDay,
                     m.DelayReason
-                },
-                request);
+                });
             return Json(page.ToGridData(), JsonRequestBehavior.AllowGet);
 
         }
