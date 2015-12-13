@@ -520,6 +520,8 @@
     <Content Include="Areas\Admin\Views\Schedule\FlowHandle.cshtml" />
     <Content Include="Areas\Admin\Views\Schedule\ExecuteBar.cshtml" />
     <Content Include="Areas\Admin\Views\Form\LeaveForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Dictionarys\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Dictionarys\Edit.cshtml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -595,6 +597,7 @@
     <Compile Include="Areas\Admin\Controllers\Flow\ScheduleController.cs" />
     <Compile Include="Areas\Admin\Controllers\Form\FormController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\Systems\DictionarysController.cs" />
     <Compile Include="Startup\Startup.SignalR.cs" />
     <Compile Include="Startup\Startup.WebApi.cs" />
     <Content Include="Views\Tests\Index.cshtml" />

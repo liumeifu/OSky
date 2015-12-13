@@ -1,0 +1,36 @@
+﻿@model OSky.UI.Dtos.Infos.DictionaryDto
+
+<form id="form1" method="post">
+    <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+    <input type="hidden" id="ParentId" name="ParentId" value="@Model.ParentId" />
+    <div class="formTable" style="align-content:center">
+        <table align="center">
+            <tr>
+                <th align="right"><label>父名:</label></th>
+                <td><input type="text" name="ParentName" value="@Model.ParentName" class="easyui-validatebox textbox" readonly="readonly" style="width: 228px; cursor: not-allowed; background: #DFDFDF;" /></td>
+            </tr>
+            <tr>
+                <th align="right"><label>名称:</label></th>
+                <td><input type="text" name="Name" value="@Model.Name" class="easyui-validatebox textbox" data-options="required:true,validType:'length[2,10]'" style="width:228px" /></td>
+            </tr>
+            <tr>
+                <th align="right"><label>值:</label></th>
+                <td><input type="text" name="Value" value="@Model.Value" class="easyui-validatebox textbox" data-options="required:true,validType:'length[1,10]'" style="width:228px" /></td>
+            </tr>
+            <tr>
+                <th align="right"><label>排序号:</label></th>
+                <td><input type="text" name="SortCode" value="@Model.SortCode" class="easyui-validatebox textbox" data-options="required:true,validType:'number'" style="width:228px" /></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input id="Add" type="button" class="btn btn-success" value="添加子级" onclick="Add_Click();">
+                    <input id="Edit" type="button" class="btn btn-warning" value="编 辑" onclick="Edit_Click();">
+                    <input id="Delete" type="button" class="btn btn-danger" value="删 除" onclick="Del_Click();">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+
+

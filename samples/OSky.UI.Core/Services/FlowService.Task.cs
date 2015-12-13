@@ -125,6 +125,34 @@ namespace OSky.UI.Services
         }
 
         /// <summary>
+        /// 执行 流转任务
+        /// </summary>
+        /// <param name="taskDto">当前任务Dto</param>
+        /// <returns>业务操作结果</returns>
+        public OperationResult Execute(FlowExecuteDto taskDto)
+        {
+            OperationResult result = new OperationResult(OperationResultType.NoChanged);
+            switch (taskDto.ExecuteType)
+            {
+                case ExecuteType.Submit:
+                    result = ExecuteSubmit(taskDto);
+                    break;
+                case ExecuteType.Back:
+                    result = ExecuteBack(taskDto);
+                    break;
+                case ExecuteType.CallBack:
+                    result = ExecuteCallBack(taskDto);
+                    break;
+                case ExecuteType.Completed:
+                    result = ExecuteCompleted(taskDto);
+                    break;
+                default:
+                    break;
+            }
+            return result;
+        }
+
+        /// <summary>
         /// 提交任务
         /// </summary>
         /// <param name="task">当前任务Dto</param>
@@ -201,6 +229,160 @@ namespace OSky.UI.Services
 
             return re;
         }
+
+        /// <summary>
+        /// 退回任务
+        /// </summary>
+        /// <param name="task">当前任务Dto</param>
+        /// <returns>业务操作结果</returns>
+        protected OperationResult ExecuteBack(FlowExecuteDto task)
+        {
+            OperationResult re = new OperationResult(OperationResultType.NoChanged, "退回未处理！");
+            var currentTask = FlowTaskRepository.Entities.Single(c => c.Id == task.TaskId);
+
+            if (currentTask != null)
+            {
+                if (currentTask.Status != 1 && currentTask.Status != 2)
+                {
+                    return new OperationResult(OperationResultType.ValidError, "任务已经处理，不能进行退回！");
+                }
+
+                if (currentTask.BackType == 0)
+                {
+                    return new OperationResult(OperationResultType.ValidError, "当前步骤为不可退回步骤！");
+                }
+
+                #region 退回处理
+                List<WorkFlowTask> backTasks = new List<WorkFlowTask>();
+
+                if (currentTask.BackType == 1)                                         //退回到上一步
+                {
+                    backTasks.AddRange(GetSiblingTask(currentTask.FlowItemId, currentTask.PrevStepId).ToList());
+                }
+                else if (currentTask.BackType == 2)                                        //退回到第一步
+                {
+                    var fistTack = FlowTaskRepository.Entities.Where(c => c.StepId == 2 && c.FlowItemId == currentTask.FlowItemId).OrderByDescending(c => c.CreatedTime).Single();
+                    backTasks.Add(fistTack);
+                }
+                else                                                                     //退回到指定步
+                {
+                    var backStep = FlowStepRepository.Entities.Where(c => c.FlowDesignId == task.FlowId && c.StepName == currentTask.SpecifiedBackStep).Select(c => new { c.StepId }).Single();
+                    if (backStep == null)
+                    {
+                        return new OperationResult(OperationResultType.ValidError, "当前流程步骤配置有误,不能退回！");
+                    }
+                    backTasks.AddRange(GetSiblingTask(currentTask.FlowItemId, backStep.StepId).ToList());
+                }
+
+                FlowTaskRepository.UnitOfWork.TransactionEnabled = true;  //事务处理
+                foreach (var item in backTasks)
+                {
+                    WorkFlowTask newTask = new WorkFlowTask();
+                    newTask.Id = CombHelper.NewComb();
+                    newTask.PrevId = item.PrevId;
+                    newTask.FlowItemId = item.FlowItemId;
+                    newTask.PrevStepId = item.PrevStepId;
+                    newTask.StepId = item.StepId;
+                    newTask.StepName = item.StepName;
+                    newTask.SenderId = task.SenderId;
+                    newTask.ReceiverId = item.ReceiverId;
+                    newTask.OpenedTime = null;
+                    newTask.CompletedTime = null;
+                    newTask.Comment = task.Comment;
+                    newTask.CountersignType = item.CountersignType;
+                    newTask.CountersignStrategy = item.CountersignStrategy;
+                    newTask.CountersignPer = item.CountersignPer;
+                    newTask.BackType = item.BackType;
+                    newTask.SpecifiedBackStep = item.SpecifiedBackStep;
+                    newTask.IsArchives = item.IsArchives;
+                    newTask.TaskNote = "退回任务";
+                    newTask.StepDay = item.StepDay;
+                    newTask.DelayDay = 0;
+                    newTask.Status = 1;
+
+                    FlowTaskRepository.Insert(newTask);
+
+                }
+
+                CompletedTask(currentTask, 20, task.Comment);
+                CompletedOtherSiblingTask(currentTask, 40, "", "他人已退回");
+
+                FlowTaskRepository.UnitOfWork.SaveChanges();
+                re = new OperationResult(OperationResultType.Success, "退回成功！");
+
+                #endregion
+            }
+            else
+            {
+                re = new OperationResult(OperationResultType.ValidError, "您要退回的任务不存在！");
+            }
+            return re;
+        }
+
+        /// <summary>
+        /// 撤销提交
+        /// </summary>
+        /// <param name="task">当前任务Dto</param>
+        /// <returns>业务操作结果</returns>
+        protected OperationResult ExecuteCallBack(FlowExecuteDto task)
+        {
+            OperationResult result = IsCallBack(task.TaskId);
+            if (result.ResultType != OperationResultType.Success)
+                return new OperationResult(OperationResultType.ValidError, "任务在下级已经有处理，不能再撤销！");
+            FlowTaskRepository.UnitOfWork.TransactionEnabled = true;  //事务处理
+            var nextTask = (List<WorkFlowTask>)result.Data;
+            foreach (var item in nextTask)
+            {
+                FlowTaskRepository.Delete(item);
+            }
+            //标记本任务为待处理
+            var currentTask = FlowTaskRepository.Entities.Where(c => c.Id == task.TaskId).Single();
+            CompletedTask(currentTask, 1, "", "撤销提交的任务");
+            var currentSiblingTask = GetSiblingTask(currentTask.FlowItemId, currentTask.StepId).Where(c => c.Status == 30).ToList();
+            foreach (var item in currentSiblingTask)
+            {
+                CompletedTask(item, 1, task.Comment, "他人已撤销提交的任务");
+            }
+            FlowTaskRepository.UnitOfWork.SaveChanges();
+            result = new OperationResult(OperationResultType.Success, "撤销成功！");
+            
+            return result;
+        }
+
+        /// <summary>
+        /// 办结任务
+        /// </summary>
+        /// <param name="task">当前任务Dto</param>
+        /// <returns>业务操作结果</returns>
+        protected OperationResult ExecuteCompleted(FlowExecuteDto task)
+        {
+            OperationResult re = new OperationResult(OperationResultType.NoChanged, "办结未做处理！");
+            var currentTask = FlowTaskRepository.Entities.SingleOrDefault(c => c.Id == task.TaskId);
+            if (currentTask != null)
+            {
+                currentTask.FlowItem.Status = 1;
+                currentTask.FlowItem.CompletedTime = DateTime.Now;
+                currentTask.Comment = task.Comment;
+                currentTask.TaskNote = task.Note;
+                currentTask.Status = 10;
+                currentTask.CompletedTime = DateTime.Now;
+                FlowTaskRepository.UnitOfWork.TransactionEnabled = true;  //事务处理
+                
+                if (currentTask.IsArchives)
+                    FlowArchiveRepository.Insert(new WorkFlowArchive()
+                    {
+                        Id = CombHelper.NewComb(),
+                        FlowItemId = currentTask.FlowItemId,
+                        CreatorUserName = task.SenderName
+                    });
+                FlowTaskRepository.Update(currentTask);
+                FlowTaskRepository.UnitOfWork.SaveChanges();
+                
+                re = new OperationResult(OperationResultType.Success, "成功办结!");
+            }
+            return re;
+        }
+
 
         #region 私有方法
 

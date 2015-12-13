@@ -10,9 +10,11 @@ using AutoMapper;
 using OSky.Core.Security;
 using OSky.UI.Dtos.Flow;
 using OSky.UI.Dtos.Identity;
+using OSky.UI.Dtos.Infos;
 using OSky.UI.Dtos.Security;
 using OSky.UI.Models.Flow;
 using OSky.UI.Models.Identity;
+using OSky.UI.Models.Infos;
 
 
 namespace OSky.UI.Dtos
@@ -27,6 +29,8 @@ namespace OSky.UI.Dtos
         /// </summary>
         public static void MapperRegister()
         {
+            //Common
+            Mapper.CreateMap<DictionaryDto, Dictionary>();
             //Identity
             Mapper.CreateMap<OrganizationDto, Organization>();
             Mapper.CreateMap<UserDto, User>();

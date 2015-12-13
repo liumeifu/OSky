@@ -14,12 +14,19 @@ namespace OSky.UI.Models.Infos
     /// 实体类——系统管理数据字典
     /// </summary>
     [Description("系统管理-数据字典")]
-    public class Dictionary : EntityBase<string>
+    public class Dictionary : EntityBase<int>
     {
+        /// <summary>
+        /// 初始化一个<see cref="Dictionary"/>类型的新实例
+        /// </summary>
+        public Dictionary()
+        {
+            Children = new List<Dictionary>();
+        }
         /// <summary>
         /// 父级Id
         /// </summary>
-        public string ParentId { get; set; }
+        public int? ParentId { get; set; }
 
         /// <summary>
         /// 名称

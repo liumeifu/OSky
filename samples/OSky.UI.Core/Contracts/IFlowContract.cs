@@ -76,6 +76,13 @@ namespace OSky.UI.Contracts
         /// <returns>业务操作结果</returns>
         OperationResult OpenTask(Guid TaskId);
 
+        /// <summary>
+        /// 执行 流转任务
+        /// </summary>
+        /// <param name="taskDto">当前任务Dto</param>
+        /// <returns>业务操作结果</returns>
+        OperationResult Execute(FlowExecuteDto taskDto);
+
         #endregion
 
         #region 流程表单
