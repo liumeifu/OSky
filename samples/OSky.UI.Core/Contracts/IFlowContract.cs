@@ -83,6 +83,13 @@ namespace OSky.UI.Contracts
         /// <returns>业务操作结果</returns>
         OperationResult Execute(FlowExecuteDto taskDto);
 
+        /// <summary>
+        /// 获取 根据指定任务的下一步骤信息dto
+        /// </summary>
+        /// <param name="stepDto">流转步骤信息dto</param>
+        /// <returns>下一步骤信息dto</returns>
+        FlowExecuteFormDto GetFlowNextStep(FlowExecuteFormDto stepDto);
+
         #endregion
 
         #region 流程表单

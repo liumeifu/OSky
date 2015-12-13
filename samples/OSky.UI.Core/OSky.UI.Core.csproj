@@ -87,6 +87,7 @@
     <Compile Include="Dtos\Flow\FlowDelegateDto.cs" />
     <Compile Include="Dtos\Flow\FlowDesignerDto.cs" />
     <Compile Include="Dtos\Flow\FlowExecuteDto.cs" />
+    <Compile Include="Dtos\Flow\FlowExecuteFormDto.cs" />
     <Compile Include="Dtos\Flow\FlowFormDto.cs" />
     <Compile Include="Dtos\Flow\FlowOperateStatusDto.cs" />
     <Compile Include="Dtos\Flow\FlowProjectDto.cs" />

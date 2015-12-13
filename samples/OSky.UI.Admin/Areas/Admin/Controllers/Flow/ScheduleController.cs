@@ -13,6 +13,7 @@ using OSky.UI.Dtos.Flow;
 using OSky.Utility.Extensions;
 using OSky.UI.Models.Flow;
 using OSky.Core.Data.Extensions;
+using OSky.Utility.Data;
 
 namespace OSky.UI.Admin.Areas.Admin.Controllers
 {
@@ -63,7 +64,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         [Description("工作流-任务-查看")]
         public ActionResult Scan(Guid TaskId)
         {
-            return Json(FlowContract.OpenTask(TaskId));
+            return Json(FlowContract.OpenTask(TaskId).ToAjaxResult());
         }
 
         [HttpPost]
@@ -71,7 +72,75 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         [Description("工作流-任务-受理")]
         public ActionResult StartFlow(FlowExecuteDto dto)
         {
-            return Json(dto);
+            dto.TaskId = Guid.Empty;
+            dto.ExecuteType = ExecuteType.Submit;
+            dto.SenderId = Operator.UserId;
+            dto.SenderName = Operator.Name;
+            var re = FlowContract.Execute(dto);
+            return Json(re.ToAjaxResult());
+        }
+
+        [HttpPost]
+        [AjaxOnly]
+        [Description("工作流-任务-审核")]
+        public ActionResult ExecuteAudit(FlowProjectDto dto)
+        {
+            var Edto = new FlowExecuteDto()
+            {
+                FlowId = dto.FlowId,
+                TaskId = dto.TaskId,
+                ItemId = dto.ItemId,
+                ExecuteType = ExecuteType.Submit,
+                SenderId = Operator.UserId,
+                SenderName = Operator.Name
+            };
+            var result = Execute(Edto);
+            return View("Index");
+
+        }
+
+        [HttpPost]
+        [Description("工作流-任务-发送审批")]
+        public JsonResult Execute(FlowExecuteDto dto)
+        {
+            var steps = new Dictionary<int, Dictionary<string,string>>();
+            if (!string.IsNullOrEmpty(Request.Params["stepCheck"]))
+            {
+                var stepsIds = Request.Params["stepCheck"].Split(',');
+                foreach (var stepId in stepsIds)
+                {
+                    if (!string.IsNullOrEmpty(Request.Params["stepCheck_receive_Id_" + stepId]))
+                    {
+                        var userIds = Request.Params["stepCheck_receive_Id_" + stepId].Split(',');
+                        var userNames = Request.Params["stepCheck_receive_Name_" + stepId].Split(',');
+                        var userList = new Dictionary<string,string>();
+                        for (int i = 0; i < userIds.Length;i++ )
+                        {
+                            userList.Add(userIds[i],userNames[i]);
+                        }
+                        steps.Add(int.Parse(stepId), userList);
+                    }
+                }
+            }
+            dto.ExecuteType = ExecuteType.Submit;
+            dto.SenderId = Operator.UserId;
+            dto.SenderName = Operator.Name;
+            dto.Steps = steps;
+            if (steps == null)
+                return Json(new OperationResult(OperationResultType.Error, "请指定发送人！").ToAjaxResult());
+            return Json(FlowContract.Execute(dto).ToAjaxResult());
+        }
+
+        [HttpPost]
+        [Description("工作流-任务-审批完成")]
+        public JsonResult Completed(Guid TaskId)
+        {
+            FlowExecuteDto execut = new FlowExecuteDto()
+            {
+                TaskId = TaskId,
+                ExecuteType = ExecuteType.Completed
+            };
+            return Json(FlowContract.Execute(execut));
         }
 
         #endregion
@@ -80,22 +149,33 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
 
         #region 视图功能
 
-       [Description("工作流-待办事项-列表")]
+        [Description("工作流-待办事项-列表")]
         public ActionResult Index()
         {
             return View();
         }
 
-       [Description("工作流-待办事项-办理信息")]
-       public ActionResult FlowHandle(FlowProjectDto dto)
-       {
-           var form = FlowContract.FlowRelateForms.Where(c => c.FlowDesignId == dto.FlowId).Select(m => new { m.FlowForm.FilePath,m.FlowForm.ActionPath }).SingleOrDefault();
-           dto.FileUrl = form.FilePath;
-           dto.ActionUrl = form.ActionPath;
-           return View(FlowContract.GetFlowOperateStatus(dto, Operator.UserId));
-       }
+        [Description("工作流-待办事项-办理信息")]
+        public ActionResult FlowHandle(FlowProjectDto dto)
+        {
+            var form = FlowContract.FlowRelateForms.Where(c => c.FlowDesignId == dto.FlowId).Select(m => new { m.FlowForm.FilePath,m.FlowForm.ActionPath }).SingleOrDefault();
+            dto.FileUrl = form.FilePath;
+            dto.ActionUrl = form.ActionPath;
+            return View(FlowContract.GetFlowOperateStatus(dto, Operator.UserId));
+        }
 
+        [Description("工作流-任务-发送下一步")]
+        public ActionResult ExecuteForm(FlowExecuteFormDto dto)
+        {
+            dto = FlowContract.GetFlowNextStep(dto);
+            return View(dto);
+        }
 
+        //[Description("工作流-待办事项-列表")]
+        //public ActionResult FlowBack(string taskId)
+        //{
+        //    return View("FlowBack", FlowContract.GetBackSteps(taskId));
+        //}
         #endregion
     }
 }

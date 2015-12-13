@@ -125,6 +125,29 @@ namespace OSky.UI.Services
         }
 
         /// <summary>
+        /// 获取 根据指定任务的下一步骤信息dto
+        /// </summary>
+        /// <param name="stepDto">流转步骤信息dto</param>
+        /// <returns>下一步骤信息dto</returns>
+        public FlowExecuteFormDto GetFlowNextStep(FlowExecuteFormDto stepDto)
+        {
+            var currentId = FlowTaskRepository.Entities.Where(c => c.Id == stepDto.TaskId).Select(c => new { FlowId = c.FlowItem.FlowDesignId, StepId = c.StepId, PrevID = c.PrevId, c.CountersignType }).Single();
+
+            var currentLines = FlowLineRepository.Entities.Where(c => c.FlowDesignId == currentId.FlowId && c.FromStepId == currentId.StepId).Select(c => new { c.ToStepId, c.ToStepName, c.HandlerIds, c.HandlerNames }).ToList();
+            foreach (var item in currentLines)
+            {
+                StepToUser stepUser = new StepToUser();
+                stepUser.HandlerIds = item.HandlerIds;
+                stepUser.HandlerNames = item.HandlerNames;
+                stepUser.StepId = item.ToStepId;
+                stepUser.StepName = item.ToStepName;
+                stepDto.CountersignType = currentId.CountersignType;
+                stepDto.StepToUsers.Add(stepUser);
+            }
+            return stepDto;
+        }
+
+        /// <summary>
         /// 执行 流转任务
         /// </summary>
         /// <param name="taskDto">当前任务Dto</param>
@@ -153,6 +176,50 @@ namespace OSky.UI.Services
         }
 
         /// <summary>
+        /// 获取一个步骤可退回的步骤
+        /// </summary>
+        /// <param name="taskId">流程任务Id</param>
+        /// <returns>业务操作结果</returns>
+        public Dictionary<string, string> GetBackSteps(Guid TaskId,Guid FlowId)
+        {
+            Dictionary<string, string> steps = new Dictionary<string, string>();
+            ////当前任务
+            //var task = FlowTasks.SingleOrDefault(c => c.Id == TaskId);
+            ////当前步骤
+            //var step = flow.Steps.SingleOrDefault(c => c.StepId == task.StepId);
+            //if (step.StepType != "0")
+            //{
+            //    switch (step.BackType)
+            //    {
+            //        //退回到上一步
+            //        case 1:
+            //            //如果是会签 则要退回所有步骤
+            //            var prevTask = FlowTasks.Single(c => c.Id == task.PrevId);
+            //            steps.Add(prevTask.StepId.ToString(), prevTask.StepName);
+            //            break;
+            //        //退回到第一步
+            //        case 2:
+            //            var fisrtStep = flow.Steps.SingleOrDefault(c => c.StepType == "0");
+            //            if (fisrtStep != null)
+            //                steps.Add(fisrtStep.StepId.ToString(), fisrtStep.StepName);
+            //            break;
+            //        //退回到指定步
+            //        case 3:
+            //            if (!string.IsNullOrEmpty(step.SpecifiedBackStep))
+            //            {
+            //                var singStep = flow.Steps.SingleOrDefault(c => c.StepName == step.SpecifiedBackStep);
+            //                if (singStep != null)
+            //                    steps.Add(singStep.StepId.ToString(), singStep.StepName);
+            //            }
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //}
+            return steps;
+        }
+
+        /// <summary>
         /// 提交任务
         /// </summary>
         /// <param name="task">当前任务Dto</param>
@@ -167,19 +234,19 @@ namespace OSky.UI.Services
                 return CreateFirstTask(task);
             }
 
-            var currentStep = FlowStepRepository.Entities.Where(c => c.FlowDesignId == task.FlowId && c.StepId == currentTask.StepId).
-                Select(m => new {m.StepType,m.CountersignStrategy,m.CountersignPer,m.BackType }).SingleOrDefault();
+            //var currentStep = FlowStepRepository.Entities.Where(c => c.FlowDesignId == task.FlowId && c.StepId == currentTask.StepId).
+            //    Select(m => new {m.StepType,m.CountersignStrategy,m.CountersignPer,m.BackType }).SingleOrDefault();
 
             #region 新增下级任务
 
-            if (currentStep != null)
-            {
+            //if (currentStep != null)
+            //{
                 if (currentTask.Status == 1 || currentTask.Status == 2)
                 {
                     FlowTaskRepository.UnitOfWork.TransactionEnabled = true;  //事务处理
                     bool createNextTask = true;
 
-                    switch (currentStep.CountersignStrategy)
+                    switch (currentTask.CountersignStrategy)
                     {
                         case 0:                      //所有步骤同意   
                             int count = GetSiblingTask(currentTask.FlowItemId, currentTask.StepId).Where(c => c.Status < 10).Count();
@@ -192,7 +259,7 @@ namespace OSky.UI.Services
                             CompletedOtherSiblingTask(currentTask, 30, "", "他人已处理此任务！");
                             break;
                         case 2:                      //比例同意即可
-                            decimal percentage = currentStep.CountersignPer <= 0 ? 100 : currentStep.CountersignPer;
+                            decimal percentage = currentTask.CountersignPer <= 0 ? 100 : currentTask.CountersignPer;
                             IQueryable<WorkFlowTask> TaskQueryable = GetSiblingTask(currentTask.FlowItemId, currentTask.StepId).Where(c => c.PrevId == currentTask.PrevId);
                             if (Math.Round((((decimal)(TaskQueryable.Where(p => p.Status == 10).Count() + 1) / (decimal)TaskQueryable.Where(p => p.Status <= 10).Count()) * 100), 2, MidpointRounding.AwayFromZero) < percentage)
                             {
@@ -219,11 +286,11 @@ namespace OSky.UI.Services
                     return new OperationResult(OperationResultType.ValidError, "当前步骤已经由他人处理！");
                 }
 
-            }
-            else
-            {
-                re = new OperationResult(OperationResultType.ValidError, "找不到当前步骤！");
-            }
+            //}
+            //else
+            //{
+            //    re = new OperationResult(OperationResultType.ValidError, "找不到当前步骤！");
+            //}
 
             #endregion
 
@@ -543,7 +610,7 @@ namespace OSky.UI.Services
                     {
                         Id =CombHelper.NewComb(),
                         PrevId = task.TaskId,
-                        FlowItemId = task.EntityId,
+                        FlowItemId = task.ItemId,
                         PrevStepId = stepId,
                         StepId = nextStep.StepId,
                         StepName = nextStep.StepName,
