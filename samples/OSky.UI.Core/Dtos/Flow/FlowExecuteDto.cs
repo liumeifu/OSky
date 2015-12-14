@@ -52,10 +52,10 @@ namespace OSky.UI.Dtos.Flow
         /// 处理意见
         /// </summary>
         public string Comment { get; set; }
-        /// <summary>
-        /// 是否签章
-        /// </summary>
-        public bool IsSeal { get; set; }
+        ///// <summary>
+        ///// 签章
+        ///// </summary>
+        //public bool Seal { get; set; }
         /// <summary>
         /// 备注
         /// </summary>

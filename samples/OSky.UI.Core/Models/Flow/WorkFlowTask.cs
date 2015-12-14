@@ -78,35 +78,20 @@ namespace OSky.UI.Models.Flow
         [StringLength(200), Description("审批意见")]
         public string Comment { get; set; }
         /// <summary>
-        /// 会签类型（0：无签批意见栏 1：有签批意见栏 2：有签批意见栏且需要盖章）
+        /// 是否有审批意见
         /// </summary>
-        [Description("步骤类别")]
-        public short CountersignType { get; set; }
+        [Display(Name = "是否有审批意见")]
+        public virtual bool IsComment { get; set; }
         /// <summary>
-        /// 会签策略（0：所有步骤同意 1：一人同意即可 2:比例同意即可）
+        /// 是否需要签名盖章
         /// </summary>
-        [Description("会签策略")]
-        public short CountersignStrategy { get; set; }
+        [Display(Name = "是否需要签名盖章")]
+        public virtual bool IsSeal { get; set; }
         /// <summary>
-        /// 会签通过比例
-        /// </summary>
-        [Description("会签通过比例")]
-        public short CountersignPer { get; set; }
-        /// <summary>
-        /// 退回类型（0：无退回 1:退回到上一步，2：退回到第一步，3：退回到指定步骤）
-        /// </summary>
-        [Description("退回类型")]
-        public short BackType { get; set; }
-        /// <summary>
-        /// 指定退回步骤名称
-        /// </summary>
-        [StringLength(50), Description("指定退回步骤名称")]
-        public string SpecifiedBackStep { get; set; }
-        /// <summary>
-        /// 本步骤是否归档（1：流程归档 0：不归档）
+        /// 本步骤是否归档
         /// </summary>
         [Description("本步骤是否归档")]
-        public bool IsArchives { get; set; }
+        public bool IsArchive { get; set; }
         /// <summary>
         /// 任务说明
         /// </summary>

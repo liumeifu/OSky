@@ -90,6 +90,14 @@ namespace OSky.UI.Contracts
         /// <returns>下一步骤信息dto</returns>
         FlowExecuteFormDto GetFlowNextStep(FlowExecuteFormDto stepDto);
 
+        /// <summary>
+        /// 获取 可退回的步骤
+        /// </summary>
+        /// <param name="TaskId">流程任务Id</param>
+        /// <param name="FlowId">流程Id</param>
+        /// <returns>步骤<StepId,StepName>的键值对数据集</returns>
+        Dictionary<int, string> GetBackSteps(Guid TaskId, Guid FlowId);
+
         #endregion
 
         #region 流程表单

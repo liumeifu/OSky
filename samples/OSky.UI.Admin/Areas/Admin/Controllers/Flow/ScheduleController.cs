@@ -143,6 +143,30 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             return Json(FlowContract.Execute(execut));
         }
 
+        /// <summary>
+        /// 退回执行
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Backed(FlowExecuteDto dto)
+        {
+            var steps = new Dictionary<int, Dictionary<string,string>>();
+            if (!string.IsNullOrEmpty(Request.Params["stepCheck"]))
+            {
+                var stepsIds = Request.Params["stepCheck"].Split(',');
+                foreach (var stepId in stepsIds)
+                {
+                    steps.Add(int.Parse(stepId), null);
+                }
+            }
+            dto.ExecuteType = ExecuteType.Back;
+            dto.SenderId = Operator.UserId;
+            dto.SenderName = Operator.Name;
+            dto.Steps = steps;
+            if (steps == null)
+                return Json(new OperationResult(OperationResultType.Error, "请指定退回人！"));
+            return Json(FlowContract.Execute(dto));
+        }
+
         #endregion
 
         #endregion
@@ -171,11 +195,11 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             return View(dto);
         }
 
-        //[Description("工作流-待办事项-列表")]
-        //public ActionResult FlowBack(string taskId)
-        //{
-        //    return View("FlowBack", FlowContract.GetBackSteps(taskId));
-        //}
+        [Description("工作流-任务-退回")]
+        public ActionResult BackForm(Guid TaskId,Guid FlowId)
+        {
+            return View(FlowContract.GetBackSteps(TaskId,FlowId));
+        }
         #endregion
     }
 }

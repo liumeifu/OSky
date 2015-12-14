@@ -29,9 +29,17 @@ namespace OSky.UI.Dtos.Flow
         public Guid ItemId { get; set; }
 
         /// <summary>
-        /// 会签类型（0：无签批意见栏 1：有签批意见栏 2：有签批意见栏且需要盖章）
+        /// 是否有审批意见
         /// </summary>
-        public int CountersignType { get; set; }
+        public virtual bool IsComment { get; set; }
+        /// <summary>
+        /// 是否需要签名盖章
+        /// </summary>
+        public virtual bool IsSeal { get; set; }
+        /// <summary>
+        /// 本步骤是否归档
+        /// </summary>
+        public bool IsArchive { get; set; }
         /// <summary>
         /// 任务说明
         /// </summary>

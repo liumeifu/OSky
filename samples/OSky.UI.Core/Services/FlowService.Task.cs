@@ -131,9 +131,10 @@ namespace OSky.UI.Services
         /// <returns>下一步骤信息dto</returns>
         public FlowExecuteFormDto GetFlowNextStep(FlowExecuteFormDto stepDto)
         {
-            var currentId = FlowTaskRepository.Entities.Where(c => c.Id == stepDto.TaskId).Select(c => new { FlowId = c.FlowItem.FlowDesignId, StepId = c.StepId, PrevID = c.PrevId, c.CountersignType }).Single();
+            var current = FlowTaskRepository.Entities.Where(c => c.Id == stepDto.TaskId).
+                Select(c => new { FlowId = c.FlowItem.FlowDesignId, StepId = c.StepId, PrevID = c.PrevId, c.IsComment, c.IsSeal, c.IsArchive }).Single();
 
-            var currentLines = FlowLineRepository.Entities.Where(c => c.FlowDesignId == currentId.FlowId && c.FromStepId == currentId.StepId).Select(c => new { c.ToStepId, c.ToStepName, c.HandlerIds, c.HandlerNames }).ToList();
+            var currentLines = FlowLineRepository.Entities.Where(c => c.FlowDesignId == current.FlowId && c.FromStepId == current.StepId).Select(c => new { c.ToStepId, c.ToStepName, c.HandlerIds, c.HandlerNames }).ToList();
             foreach (var item in currentLines)
             {
                 StepToUser stepUser = new StepToUser();
@@ -141,9 +142,12 @@ namespace OSky.UI.Services
                 stepUser.HandlerNames = item.HandlerNames;
                 stepUser.StepId = item.ToStepId;
                 stepUser.StepName = item.ToStepName;
-                stepDto.CountersignType = currentId.CountersignType;
                 stepDto.StepToUsers.Add(stepUser);
             }
+            stepDto.IsComment = current.IsComment;
+            stepDto.IsSeal = current.IsSeal;
+            stepDto.IsArchive = current.IsArchive;
+
             return stepDto;
         }
 
@@ -176,46 +180,44 @@ namespace OSky.UI.Services
         }
 
         /// <summary>
-        /// 获取一个步骤可退回的步骤
+        /// 获取 可退回的步骤
         /// </summary>
-        /// <param name="taskId">流程任务Id</param>
-        /// <returns>业务操作结果</returns>
-        public Dictionary<string, string> GetBackSteps(Guid TaskId,Guid FlowId)
+        /// <param name="TaskId">流程任务Id</param>
+        /// <param name="FlowId">流程Id</param>
+        /// <returns>步骤<StepId,StepName>的键值对数据集</returns>
+        public Dictionary<int, string> GetBackSteps(Guid TaskId, Guid FlowId)
         {
-            Dictionary<string, string> steps = new Dictionary<string, string>();
-            ////当前任务
-            //var task = FlowTasks.SingleOrDefault(c => c.Id == TaskId);
-            ////当前步骤
-            //var step = flow.Steps.SingleOrDefault(c => c.StepId == task.StepId);
-            //if (step.StepType != "0")
-            //{
-            //    switch (step.BackType)
-            //    {
-            //        //退回到上一步
-            //        case 1:
-            //            //如果是会签 则要退回所有步骤
-            //            var prevTask = FlowTasks.Single(c => c.Id == task.PrevId);
-            //            steps.Add(prevTask.StepId.ToString(), prevTask.StepName);
-            //            break;
-            //        //退回到第一步
-            //        case 2:
-            //            var fisrtStep = flow.Steps.SingleOrDefault(c => c.StepType == "0");
-            //            if (fisrtStep != null)
-            //                steps.Add(fisrtStep.StepId.ToString(), fisrtStep.StepName);
-            //            break;
-            //        //退回到指定步
-            //        case 3:
-            //            if (!string.IsNullOrEmpty(step.SpecifiedBackStep))
-            //            {
-            //                var singStep = flow.Steps.SingleOrDefault(c => c.StepName == step.SpecifiedBackStep);
-            //                if (singStep != null)
-            //                    steps.Add(singStep.StepId.ToString(), singStep.StepName);
-            //            }
-            //            break;
-            //        default:
-            //            break;
-            //    }
-            //}
+            Dictionary<int, string> steps = new Dictionary<int, string>();
+            //当前任务
+            var task = FlowTasks.Where(c => c.Id == TaskId).Select(m => new { m.StepId,m.PrevId}).SingleOrDefault();
+            //当前步骤
+            var step = FlowSteps.Where(c => c.FlowDesignId == FlowId && c.StepId == task.StepId).Select(m => new { m.StepType, m.BackType,m.SpecifiedBackStep }).FirstOrDefault();
+            if (step.StepType != 0)
+            {
+                switch (step.BackType)
+                {
+                    //退回到上一步
+                    case 1:
+                        var prevTask = FlowTasks.Where(c => c.Id == task.PrevId).Select(m => new { m.StepId, m.StepName }).SingleOrDefault();
+                        steps.Add(prevTask.StepId, prevTask.StepName);
+                        break;
+                    //退回到第一步
+                    case 2:
+                        var fisrtStep = FlowSteps.Where(c => c.StepType == 0).Select(m => new { m.StepId, m.StepName }).SingleOrDefault();
+                        steps.Add(fisrtStep.StepId, fisrtStep.StepName);
+                        break;
+                    //退回到指定步
+                    case 3:
+                        if (!string.IsNullOrEmpty(step.SpecifiedBackStep))
+                        {
+                            var singStep = FlowSteps.Where(c => c.StepName == step.SpecifiedBackStep).Select(m => new { m.StepId, m.StepName }).SingleOrDefault();
+                            steps.Add(singStep.StepId, singStep.StepName);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
             return steps;
         }
 
@@ -234,19 +236,19 @@ namespace OSky.UI.Services
                 return CreateFirstTask(task);
             }
 
-            //var currentStep = FlowStepRepository.Entities.Where(c => c.FlowDesignId == task.FlowId && c.StepId == currentTask.StepId).
-            //    Select(m => new {m.StepType,m.CountersignStrategy,m.CountersignPer,m.BackType }).SingleOrDefault();
+            var currentStep = FlowStepRepository.Entities.Where(c => c.FlowDesignId == task.FlowId && c.StepId == currentTask.StepId).
+                Select(m => new { m.StepType, m.CountersignStrategy, m.CountersignPer, m.BackType }).SingleOrDefault();
 
             #region 新增下级任务
 
-            //if (currentStep != null)
-            //{
+            if (currentStep != null)
+            {
                 if (currentTask.Status == 1 || currentTask.Status == 2)
                 {
                     FlowTaskRepository.UnitOfWork.TransactionEnabled = true;  //事务处理
                     bool createNextTask = true;
 
-                    switch (currentTask.CountersignStrategy)
+                    switch (currentStep.CountersignStrategy)
                     {
                         case 0:                      //所有步骤同意   
                             int count = GetSiblingTask(currentTask.FlowItemId, currentTask.StepId).Where(c => c.Status < 10).Count();
@@ -259,7 +261,7 @@ namespace OSky.UI.Services
                             CompletedOtherSiblingTask(currentTask, 30, "", "他人已处理此任务！");
                             break;
                         case 2:                      //比例同意即可
-                            decimal percentage = currentTask.CountersignPer <= 0 ? 100 : currentTask.CountersignPer;
+                            decimal percentage = currentStep.CountersignPer <= 0 ? 100 : currentStep.CountersignPer;
                             IQueryable<WorkFlowTask> TaskQueryable = GetSiblingTask(currentTask.FlowItemId, currentTask.StepId).Where(c => c.PrevId == currentTask.PrevId);
                             if (Math.Round((((decimal)(TaskQueryable.Where(p => p.Status == 10).Count() + 1) / (decimal)TaskQueryable.Where(p => p.Status <= 10).Count()) * 100), 2, MidpointRounding.AwayFromZero) < percentage)
                             {
@@ -286,11 +288,11 @@ namespace OSky.UI.Services
                     return new OperationResult(OperationResultType.ValidError, "当前步骤已经由他人处理！");
                 }
 
-            //}
-            //else
-            //{
-            //    re = new OperationResult(OperationResultType.ValidError, "找不到当前步骤！");
-            //}
+            }
+            else
+            {
+                re = new OperationResult(OperationResultType.ValidError, "找不到当前步骤！");
+            }
 
             #endregion
 
@@ -314,7 +316,13 @@ namespace OSky.UI.Services
                     return new OperationResult(OperationResultType.ValidError, "任务已经处理，不能进行退回！");
                 }
 
-                if (currentTask.BackType == 0)
+                var currentStep = FlowStepRepository.Entities.Where(c => c.FlowDesignId == task.FlowId && c.StepId == currentTask.StepId).Select(m => new { m.StepType, m.BackType, m.SpecifiedBackStep }).SingleOrDefault();
+
+                if (currentStep.StepType == 0)
+                {
+                    return new OperationResult(OperationResultType.ValidError, "流程的第一个步骤不能退回！");
+                }
+                if (currentStep.BackType == 0)
                 {
                     return new OperationResult(OperationResultType.ValidError, "当前步骤为不可退回步骤！");
                 }
@@ -322,18 +330,18 @@ namespace OSky.UI.Services
                 #region 退回处理
                 List<WorkFlowTask> backTasks = new List<WorkFlowTask>();
 
-                if (currentTask.BackType == 1)                                         //退回到上一步
+                if (currentStep.StepType == 1)                                         //退回到上一步
                 {
                     backTasks.AddRange(GetSiblingTask(currentTask.FlowItemId, currentTask.PrevStepId).ToList());
                 }
-                else if (currentTask.BackType == 2)                                        //退回到第一步
+                else if (currentStep.BackType == 2)                                        //退回到第一步
                 {
                     var fistTack = FlowTaskRepository.Entities.Where(c => c.StepId == 2 && c.FlowItemId == currentTask.FlowItemId).OrderByDescending(c => c.CreatedTime).Single();
                     backTasks.Add(fistTack);
                 }
                 else                                                                     //退回到指定步
                 {
-                    var backStep = FlowStepRepository.Entities.Where(c => c.FlowDesignId == task.FlowId && c.StepName == currentTask.SpecifiedBackStep).Select(c => new { c.StepId }).Single();
+                    var backStep = FlowStepRepository.Entities.Where(c => c.FlowDesignId == task.FlowId && c.StepName == currentStep.SpecifiedBackStep).Select(c => new { c.StepId }).Single();
                     if (backStep == null)
                     {
                         return new OperationResult(OperationResultType.ValidError, "当前流程步骤配置有误,不能退回！");
@@ -356,12 +364,9 @@ namespace OSky.UI.Services
                     newTask.OpenedTime = null;
                     newTask.CompletedTime = null;
                     newTask.Comment = task.Comment;
-                    newTask.CountersignType = item.CountersignType;
-                    newTask.CountersignStrategy = item.CountersignStrategy;
-                    newTask.CountersignPer = item.CountersignPer;
-                    newTask.BackType = item.BackType;
-                    newTask.SpecifiedBackStep = item.SpecifiedBackStep;
-                    newTask.IsArchives = item.IsArchives;
+                    newTask.IsComment = item.IsComment;
+                    newTask.IsSeal = item.IsSeal;
+                    newTask.IsArchive = item.IsArchive;
                     newTask.TaskNote = "退回任务";
                     newTask.StepDay = item.StepDay;
                     newTask.DelayDay = 0;
@@ -435,7 +440,7 @@ namespace OSky.UI.Services
                 currentTask.CompletedTime = DateTime.Now;
                 FlowTaskRepository.UnitOfWork.TransactionEnabled = true;  //事务处理
                 
-                if (currentTask.IsArchives)
+                if (currentTask.IsArchive)
                     FlowArchiveRepository.Insert(new WorkFlowArchive()
                     {
                         Id = CombHelper.NewComb(),
@@ -499,7 +504,6 @@ namespace OSky.UI.Services
             {
                 var firstStep = FlowStepRepository.Entities.First(c =>c.FlowDesignId==task.FlowId && c.StepType == 0);    //起始步骤
                 var flowItemId = CombHelper.NewComb();
-                task.IsSeal = false;
                 var id = CombHelper.NewComb();
                 WorkFlowTask taskModel = new WorkFlowTask()
                 {
@@ -514,11 +518,9 @@ namespace OSky.UI.Services
                     ReceiverId = task.SenderId,
                     ReceiverName = task.SenderName,
                     Comment = task.Comment,
-                    CountersignType=0,
-                    CountersignStrategy=0,
-                    CountersignPer=100,
-                    BackType=0,
-                    IsArchives=false,
+                    IsComment = false,
+                    IsSeal = false,
+                    IsArchive=false,
                     Status = 1
                 };
                 taskModel.FlowItem = new WorkFlowItem()
@@ -608,22 +610,19 @@ namespace OSky.UI.Services
                     GetReceiver(task.FlowId,ref uid,ref uname);
                     WorkFlowTask taskModel = new WorkFlowTask()
                     {
-                        Id =CombHelper.NewComb(),
+                        Id = CombHelper.NewComb(),
                         PrevId = task.TaskId,
                         FlowItemId = task.ItemId,
                         PrevStepId = stepId,
                         StepId = nextStep.StepId,
                         StepName = nextStep.StepName,
                         SenderId = task.SenderId,
-                        SenderName=task.SenderName,
+                        SenderName = task.SenderName,
                         ReceiverId = uid,
-                        ReceiverName=uname,
-                        CountersignType=nextStep.CountersignType,
-                        CountersignStrategy = nextStep.CountersignStrategy,
-                        CountersignPer = nextStep.CountersignPer,
-                        BackType = nextStep.BackType,
-                        SpecifiedBackStep = nextStep.SpecifiedBackStep,
-                        IsArchives = nextStep.IsArchives,
+                        ReceiverName = uname,
+                        IsComment = nextStep.CountersignType == 0 ? false : true,
+                        IsSeal = nextStep.CountersignType == 2 ? true : false,
+                        IsArchive = nextStep.IsArchives,
                         StepDay = nextStep.SpecifiedDay,
                         Status = 1
                     };
