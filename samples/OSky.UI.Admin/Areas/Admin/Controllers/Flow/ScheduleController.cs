@@ -101,7 +101,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
 
         [HttpPost]
         [Description("工作流-任务-发送审批")]
-        public JsonResult Execute(FlowExecuteDto dto)
+        public ActionResult Execute(FlowExecuteDto dto)
         {
             var steps = new Dictionary<int, Dictionary<string,string>>();
             if (!string.IsNullOrEmpty(Request.Params["stepCheck"]))
@@ -133,7 +133,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
 
         [HttpPost]
         [Description("工作流-任务-审批完成")]
-        public JsonResult Completed(Guid TaskId)
+        public ActionResult Completed(Guid TaskId)
         {
             FlowExecuteDto execut = new FlowExecuteDto()
             {
