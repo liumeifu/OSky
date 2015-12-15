@@ -210,12 +210,14 @@ namespace OSky.UI.Services
                     case 3:
                         if (!string.IsNullOrEmpty(step.SpecifiedBackStep))
                         {
-                            var singStep = FlowSteps.Where(c => c.StepName == step.SpecifiedBackStep).Select(m => new { m.StepId, m.StepName }).SingleOrDefault();
+                            var singStep = FlowSteps.Where(c => c.FlowDesignId == FlowId && c.StepName == step.SpecifiedBackStep).Select(m => new { m.StepId, m.StepName }).SingleOrDefault();
                             steps.Add(singStep.StepId, singStep.StepName);
                         }
                         break;
                     default:
                         break;
+
+                       
                 }
             }
             return steps;
