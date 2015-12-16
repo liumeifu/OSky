@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@model Dictionary<string, string>
+
+<input name="TaskId" type="hidden" value="@Request.QueryString["TaskId"]" />
+<input name="FlowId" type="hidden" value="@Request.QueryString["FlowId"]">
+@Html.AntiForgeryToken()
+<table cellpadding="0" cellspacing="0" summary="">
+    <tbody>
+        @if (Model.Count > 0)
+        {
+            var count = 0;
+            foreach (var item in Model)
+            {
+                count++;
+                <tr>
+                    <th>
+                        @if (count == 1)
+                        {
+                            <input type="radio" name="stepCheck" value="@item.Key" checked="checked" />
+                        }
+                        else
+                        {
+                            <input type="radio" name="stepCheck" value="@item.Key" />
+                        }
+                    </th>
+                    <td>
+                        @item.Value
+                    </td>
+                </tr>
+            }
+            <tr>
+                <th>
+                    退回意见
+                </th>
+                <td colspan="3">
+                    <textarea id="Comment" name="Comment" cols="50" rows="3" class="form-control"></textarea>
+
+                </td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <th>
+                    系统提示
+                </th>
+                <td colspan="3">
+                    <label>当前任务不可退回！</label>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

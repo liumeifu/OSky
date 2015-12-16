@@ -522,6 +522,8 @@
     <Content Include="Areas\Admin\Views\Form\LeaveForm.cshtml" />
     <Content Include="Areas\Admin\Views\Dictionarys\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Dictionarys\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Schedule\ExecuteForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Schedule\ExecuteBack.cshtml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

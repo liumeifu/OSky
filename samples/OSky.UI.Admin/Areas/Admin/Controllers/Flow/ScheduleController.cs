@@ -94,8 +94,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                 SenderId = Operator.UserId,
                 SenderName = Operator.Name
             };
-            var result = Execute(Edto);
-            return View("Index");
+            return Json(Execute(Edto));
 
         }
 
@@ -196,7 +195,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         }
 
         [Description("工作流-任务-退回")]
-        public ActionResult BackForm(Guid TaskId,Guid FlowId)
+        public ActionResult ExecuteBack(Guid TaskId, Guid FlowId)
         {
             return View(FlowContract.GetBackSteps(TaskId,FlowId));
         }
