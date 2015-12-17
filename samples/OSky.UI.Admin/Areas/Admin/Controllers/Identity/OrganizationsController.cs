@@ -143,7 +143,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             #endregion
 
             var roots = IdentityContract.Organizations
-                .OrderBy(m => m.SortCode).Select(m => new OrganTree
+                .OrderBy(m => m.SortCode).Select(m => new OTree
                 {
                     id= m.Id, 
                     pid=m.ParentId,

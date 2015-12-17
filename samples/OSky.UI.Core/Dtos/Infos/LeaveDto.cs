@@ -5,53 +5,46 @@ using System.Text;
 using System.Threading.Tasks;
 
 using OSky.Core.Data;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using OSky.UI.Models.Identity;
 
-namespace OSky.UI.Models.Infos
+namespace OSky.UI.Dtos.Infos
 {
-    public class Leave : EntityBase<Guid>, ICreatedAudited, ICreatedTime, ITimestamp
+    public class LeaveDto : IAddDto, IEditDto<Guid>
     {
         /// <summary>
-        /// 获取或设置 请假类型
+        /// 获取或设置 主键，唯一标识
         /// </summary>
-        [Required, StringLength(50), Description("请假类型")]
+        public Guid Id { get; set; }
+        /// <summary>
+        /// 获取或设置 请假类型值
+        /// </summary>
         public string TypeVal { get; set; }
         /// <summary>
         /// 获取或设置 请假类型
         /// </summary>
-        [Required, StringLength(200)]
+        public string TypeHtml { get; set; }
+        /// <summary>
+        /// 获取或设置 请假类型
+        /// </summary>
         public string Reason { get; set; }
         /// <summary>
         /// 获取或设置 创建者Id
         /// </summary>
-        [Required, StringLength(50), Description("创建者Id")]
         public string CreatorUserId { get; set; }
+        /// <summary>
+        /// 获取或设置 创建者
+        /// </summary>
+        public string CreatorUserName { get; set; }
         /// <summary>
         /// 获取设置 信息创建时间
         /// </summary>
-        [Description("信息创建时间")]
         public DateTime CreatedTime { get; set; }
         /// <summary>
         /// 获取设置 开始时间
         /// </summary>
-        [Description("开始时间")]
         public DateTime StartTime { get; set; }
         /// <summary>
         /// 获取设置 结束时间
         /// </summary>
-        [Description("结束时间")]
         public DateTime EndTime { get; set; }
-        /// <summary>
-        /// 获取或设置 版本控制标识，用于处理并发
-        /// </summary>
-        [Description("并发效验")]
-        [Timestamp]
-        public byte[] Timestamp { get; set; }
-        /// <summary>
-        /// 获取 创建者
-        /// </summary>
-        public User CreatorUser { get; set; }
     }
 }

@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="Contracts\ICommonContract.cs" />
     <Compile Include="Contracts\IFlowContract.cs" />
+    <Compile Include="Contracts\IFormContract.cs" />
     <Compile Include="Contracts\IIdentityContract.cs" />
     <Compile Include="Contracts\ILoggingContract.cs" />
     <Compile Include="Contracts\ISecurityContract.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Dtos\Identity\UserDto.cs" />
     <Compile Include="Dtos\Identity\UserRoleMapDto.cs" />
     <Compile Include="Dtos\Infos\DictionaryDto.cs" />
+    <Compile Include="Dtos\Infos\LeaveDto.cs" />
     <Compile Include="Dtos\Security\EntityInfoDto.cs" />
     <Compile Include="Dtos\Security\EntityRoleMapDto.cs" />
     <Compile Include="Dtos\Security\EntityUserMapDto.cs" />
@@ -159,6 +161,7 @@
     </Compile>
     <Compile Include="ModelConfigurations\Infos\ArticleConfiguration.cs" />
     <Compile Include="ModelConfigurations\Infos\DictionaryConfiguration.cs" />
+    <Compile Include="ModelConfigurations\Infos\LeaveConfiguration.cs" />
     <Compile Include="ModelConfigurations\Security\EntityInfoConfiguration.cs" />
     <Compile Include="ModelConfigurations\Security\EntityRoleMapConfiguration.cs" />
     <Compile Include="ModelConfigurations\Security\EntityUserMapConfiguration.cs" />
@@ -202,6 +205,7 @@
     <Compile Include="Services\FlowService.RelateForm.cs" />
     <Compile Include="Services\FlowService.Step.cs" />
     <Compile Include="Services\FlowService.Task.cs" />
+    <Compile Include="Services\FormService.cs" />
     <Compile Include="Services\IdentityService.cs" />
     <Compile Include="Services\IdentityService.Organization.cs" />
     <Compile Include="Services\IdentityService.Role.cs" />

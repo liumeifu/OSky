@@ -22,10 +22,10 @@ namespace OSky.UI.Models.Flow
         [Required, StringLength(50), DisplayName("表单名称")]
         public string FormName { get; set; }
         /// <summary>
-        /// 表单类型
+        /// 表单类型值
         /// </summary>
         [Required, StringLength(50), DisplayName("表单类型")]
-        public string Type { get; set; }
+        public string TypeVal { get; set; }
         /// <summary>
         /// 表单路径
         /// </summary>

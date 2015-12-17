@@ -25,6 +25,13 @@ namespace OSky.UI.Contracts
         IQueryable<Dictionary> Dictionarys { get; }
 
         /// <summary>
+        /// 获取 指定字典值 的所有子集的Option
+        /// </summary>
+        /// <param name="val">字典值</param>
+        /// <returns>拼接的optin字符串</returns>
+        string GetDropdownOptionHtml(string val);
+
+        /// <summary>
         /// 检查数据字典信息信息是否存在
         /// </summary>
         /// <param name="predicate">检查谓语表达式</param>

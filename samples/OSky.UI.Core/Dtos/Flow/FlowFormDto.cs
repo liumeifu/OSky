@@ -27,9 +27,14 @@ namespace OSky.UI.Dtos.Flow
         public string FormName { get; set; }
 
         /// <summary>
-        /// 表单类型
+        /// 表单类型值
         /// </summary>
-        public string Type { get; set; }
+        public string TypeVal { get; set; }
+
+        /// <summary>
+        /// 表单类型名称
+        /// </summary>
+        public string TypeName { get; set; }
 
         /// <summary>
         /// 创建人姓名
@@ -39,7 +44,7 @@ namespace OSky.UI.Dtos.Flow
         /// <summary>
         /// 获取设置 信息创建时间
         /// </summary>
-        public DateTime CreatedTime { get; set; }
+        public DateTime CreatTime { get; set; }
         /// <summary>
         /// 表单路径
         /// </summary>

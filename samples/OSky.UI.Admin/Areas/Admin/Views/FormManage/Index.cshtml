@@ -13,13 +13,23 @@
     <script type="text/javascript">
         columns = [[
             { field: "Id", title: "编号", hidden: true },
+            { field: "TypeVal", title: "表单类型值", hidden: true, editor: { type: "validatebox" } },
             {
                 field: "FormName", title: "表单名称", width: 150, sortable: true, halign: "center", align: "center",
                 editor: { type: "validatebox", options: { required: true, validType: "length[1,50]" } }
             },
             {
-                field: "Type", title: "表单类型", width: 150, sortable: true, halign: "center", align: "center",
-                editor: { type: "combobox", options: { required: true, data: $.OSky.data.bool, valueField: "id", textField: "text" } }
+                field: "TypeName", title: "表单类型", width: 150, sortable: true, halign: "center", align: "center",
+                editor: {
+                    type: "combobox", options: {
+                        required: true, url: '@Url.Action("DicData")',
+                        valueField: "Value", textField: "Name",
+                        onSelect: function (row) {
+                            var ed = grid.datagrid('getEditor', { index: GridCurrentRowIndex, field: 'TypeVal' });
+                            $(ed.target).val(row.Value);
+                        }
+                    }
+                }
             },
             {
                 field: "FilePath", title: "表单路径", width: 200, sortable: true, halign: "center", align: "center", 
@@ -38,7 +48,7 @@
                 editor: { type: "combobox", options: { required: true, editable: false, data: $.OSky.data.status, valueField: "id", textField: "text" } }
             },
             { field: "CreatorUserName", title: "创建人姓名", width: 120, sortable: true, halign: "center", align: "center" },
-            { field: "CreatedTime", title: "创建时间", width: 150, sortable: true, halign: "center", align: "center", formatter: function (value) { return $.OSky.tools.formatDate(value); } }
+            { field: "CreatTime", title: "创建时间", width: 150, sortable: true, halign: "center", align: "center", formatter: function (value) { return $.OSky.tools.formatDate(value); } }
         ]];
 
         startfunction = function () {

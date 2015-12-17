@@ -67,7 +67,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         public ActionResult NodeData(int Id)
         {
             var roots = IdentityContract.Organizations
-                .OrderBy(m => m.SortCode).Select(m => new OrganTree
+                .OrderBy(m => m.SortCode).Select(m => new OTree
                 {
                     id = m.Id,
                     pid = m.ParentId,
@@ -76,7 +76,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                     Checked = false
                 }).ToList();
             //获取 当前可用的用户信息及指定角色的用户
-            var users = (from us in IdentityContract.Users.Where(c => c.IsLocked == false).Select(m => new OrganTree
+            var users = (from us in IdentityContract.Users.Where(c => c.IsLocked == false).Select(m => new OTree
              {
                  id = m.Id,
                  pid = m.OrganizationId,
@@ -84,7 +84,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                  Type = 1,
                  Checked = false
              })
-                         join urm in IdentityContract.UserRoleMaps.Where(m => m.RoleId == Id).Select(m => new OrganTree
+                         join urm in IdentityContract.UserRoleMaps.Where(m => m.RoleId == Id).Select(m => new OTree
                          {
                              id = m.UserId,
                              pid = 0,
@@ -93,7 +93,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                              Checked = true
                          }) on us.id equals urm.id into temp
                          from t in temp.DefaultIfEmpty()
-                         select new OrganTree
+                         select new OTree
                          {
                              id = us.id,
                              pid = us.pid,

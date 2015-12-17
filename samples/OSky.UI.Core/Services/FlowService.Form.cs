@@ -11,6 +11,7 @@ using OSky.Utility.Extensions;
 using System.Security.Claims;
 using System.Threading;
 using OSky.Core.Exceptions;
+using OSky.Utility;
 
 namespace OSky.UI.Services
 {
@@ -34,7 +35,7 @@ namespace OSky.UI.Services
         {
             return FlowFormRepository.Insert(dtos, dto =>
             {
-                if (FlowFormRepository.CheckExists(m => m.FormName == dto.FormName && m.Type == dto.Type))
+                if (FlowFormRepository.CheckExists(m => m.FormName == dto.FormName && m.TypeVal == dto.TypeVal))
                 {
                     throw new Exception("名称为“{0}”的表单信息已存在，不能重复添加。".FormatWith(dto.FormName));
                 }
@@ -48,7 +49,8 @@ namespace OSky.UI.Services
         /// <returns>业务操作结果</returns>
         public OperationResult EditFlowForm(params FlowFormDto[] dtos)
         {
-            return FlowFormRepository.Update(dtos, null, null);
+            dtos.CheckNotNull("dtos");
+            return FlowFormRepository.Update(dtos);
         }
 
         /// <summary>

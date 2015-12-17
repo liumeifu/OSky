@@ -41,7 +41,7 @@ namespace OSky.UI.Admin.ViewModels
     /// <summary>
     /// 组织结构树
     /// </summary>
-    public class OrganTree
+    public class OTree
     {
         public int id { get; set; }
         /// <summary>

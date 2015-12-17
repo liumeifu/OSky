@@ -34,6 +34,21 @@ namespace OSky.UI.Services
         }
 
         /// <summary>
+        /// 获取 指定字典值 的所有子集的Option
+        /// </summary>
+        /// <param name="val">字典值</param>
+        /// <returns>拼接的optin字符串</returns>
+        public string GetDropdownOptionHtml(string val)
+        {
+            string optstr = "";
+            var parent = DictionaryRepository.Entities.SingleOrDefault(c => c.Value == val);
+            foreach (var item in parent.Children)
+            {
+                optstr += "<option value=\"" + item.Value + "\">"+item.Name+"</option>";
+            }
+            return optstr;
+        }
+        /// <summary>
         /// 检查数据字典信息信息是否存在
         /// </summary>
         /// <param name="predicate">检查谓语表达式</param>
@@ -55,7 +70,7 @@ namespace OSky.UI.Services
             OperationResult result = DictionaryRepository.Insert(dtos,
                 dto =>
                 {
-                    if (DictionaryRepository.CheckExists(m => m.Name == dto.Name))
+                    if (DictionaryRepository.CheckExists(m => m.Name == dto.Name || m.Value==dto.Value))
                     {
                         throw new Exception("名称为“{0}”的数据字典已存在，不能重复添加。".FormatWith(dto.Name));
                     }

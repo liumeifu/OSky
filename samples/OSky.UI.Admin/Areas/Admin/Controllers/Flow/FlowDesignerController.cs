@@ -53,7 +53,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         public ActionResult NodeData()
         {
             var roots = IdentityContract.Organizations
-               .OrderBy(m => m.SortCode).Select(m => new OrganTree
+               .OrderBy(m => m.SortCode).Select(m => new OTree
                {
                    id = m.Id,
                    pid = m.ParentId,
@@ -62,7 +62,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                    Checked = false
                }).ToList();
             //获取 当前可用的用户信息及指定角色的用户
-            var users = IdentityContract.Users.Where(c => c.IsLocked == false).Select(m => new OrganTree
+            var users = IdentityContract.Users.Where(c => c.IsLocked == false).Select(m => new OTree
                 {
                     id = m.Id,
                     pid = m.OrganizationId,

@@ -1,0 +1,44 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "数据字典管理";
+    ViewBag.NodeDataUrl = Url.Action("NodeData");
+}
+<div class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'west', split:true, minWidth:100, width:250, title:'数据字典'">
+        <div class="easyui-panel" style="width: 100%; height: 100%; padding: 10px; ">
+            <ul id="tree-Dictionary" class="easyui-tree"></ul>
+        </div>
+    </div>
+    <div data-options="region:'center',title:'字典设置'">
+        <div id="p" class="easyui-panel" style="width: 100%; height: 100%; padding: 10px; "></div>
+    </div>
+</div>
+
+@section footer{
+    <script src="~/Scripts/plugins/OSky.easyui.tree.js"></script>
+    <script type="text/javascript">
+    $(function () {
+        treeFun();
+        $('#p').panel('refresh', '@Url.Action("FlowHandle", "Schedule")?FlowId=1&FileUrl=2&ActionUrl=3');
+    })
+ 
+    function treeFun() {
+        $Tree = $("#tree-Dictionary");
+        $Tree.tree({
+            url: "@ViewBag.NodeDataUrl",
+            lines: true,
+            animate: true,
+            loadFilter: function (data) {
+                var treeData = new TreeHelper(data).dataTransferer();
+                return treeData;
+            },
+            onClick: function (node) {
+                
+                $('#p').panel('refresh', '@Url.Action("FlowHandle", "Schedule")/' + node.id);
+            }
+        });
+
+    }
+
+    </script>
+}

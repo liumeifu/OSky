@@ -11,10 +11,10 @@
     <script type="text/javascript">
         columns = [[
             { field: "Id", title: "编号", hidden: true },
-            {
-                field: "FlowType", title: "流程类型", width: 150, sortable: true, halign: "center", align: "center",
-                editor: { type: "validatebox", options: { required: true, validType: "length[1,50]" } }
-            },
+            //{
+            //    field: "FlowType", title: "流程类型", width: 150, sortable: true, halign: "center", align: "center",
+            //    editor: { type: "validatebox", options: { required: true, validType: "length[1,50]" } }
+            //},
             {
                 field: "FlowName", title: "流程名称", width: 150, sortable: true, halign: "center", align: "center",
                 editor: { type: "combobox", options: { required: true, data: $.OSky.data.bool, valueField: "id", textField: "text" } }
