@@ -26,6 +26,11 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         /// </summary>
         public ICommonContract CommonContract { get; set; }
 
+       /// <summary>
+        /// 获取或设置 工作流业务对象
+        /// </summary>
+        public IFlowContract FlowContract { get; set; }
+
         #region Ajax功能
 
         #region 获取数据
@@ -35,23 +40,48 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         public ActionResult NodeData()
         {
             var roots = CommonContract.Dictionarys.SingleOrDefault(c => c.Value == "BDLX").Children
-                .OrderBy(m => m.SortCode).Select(m => new
+                .OrderBy(m => m.SortCode).Select(m => new TreeView
                 {
-                    id = m.Id,
-                    pid = m.ParentId,
-                    text = m.Name
+                    id=m.Id,
+                    text = m.Name,
+                    url = "",
+                    FlowId=Guid.Empty
                 }).ToList();
-            var forms = (from l in FormContract.Leaves
+  
+            var forms = (from l in FlowContract.FlowForms
+                         join r in FlowContract.FlowRelateForms on l.Id equals r.FlowFormId
                          join d in CommonContract.Dictionarys on l.TypeVal equals d.Value
-                         select new
+                         select new TreeView
                          {
-                             id = d.Id,
-                             pid = d.ParentId,
-                             text = "请假单"
+                             id=d.Id,
+                             text = "请假单",
+                             url = l.FilePath,
+                             FlowId=r.FlowDesignId
                          }).ToList();
-            roots.AddRange(forms);
+
+            foreach (var item in roots)
+	        {
+		        foreach (var d in forms)
+	            {
+		            if(item.id==d.id)
+                        item.children.Add(d);
+	            }
+	        }
             return Json(roots, JsonRequestBehavior.AllowGet);
 
+        }
+
+        public class TreeView
+        {
+            public TreeView()
+            {
+                children = new List<TreeView>();
+            }
+            public int? id{ get; set; }
+            public Guid? FlowId { get; set; }
+            public string text { get; set; }
+            public string url { get; set; }
+            public ICollection<TreeView> children { get; set; }
         }
         #endregion
 
