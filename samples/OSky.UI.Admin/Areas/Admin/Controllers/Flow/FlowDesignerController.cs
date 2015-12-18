@@ -91,7 +91,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             if (dto.Id==Guid.Empty)
             {
                 dto.Id = CombHelper.NewComb();
-                dto.CreatorUserName = Operator.Name;
+                dto.CreatorUserName = Operator.UserName;
             }
             return Json(FlowContract.Save(dto));
         }

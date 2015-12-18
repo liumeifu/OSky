@@ -6,7 +6,7 @@
 #main-nav .tree-node { height: 35px; }
 #main-nav .tree-title { line-height: 35px; }
 
-/*表单*/
+/*表单-------begin----------*/
 .formTable table {
 	width: 100%;
 	border-collapse: collapse;
@@ -25,3 +25,56 @@
 	font-weight: normal;
 	width: 150px;
 }
+
+ .bills-table {
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        width: 85%;
+        margin-left: 8%;
+        box-shadow: 10px 6px 5px rgba(0, 0, 0, 0.2);
+        font-size: 13px;
+    }
+
+    .bills-head {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+        height: 30px;
+        font-weight: bold !important;
+        font-size: 16px;
+        text-align: center;
+        padding-top: 15px;
+    }
+
+    .main-content-left {
+        width: 50%;
+        float: left;
+    }
+
+    .td-left {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+        border-right: 1px solid rgba(0, 0, 0, 0.2);
+        height: 50px;
+        padding-top: 20px;
+    }
+
+    .form-label {
+        float: left;
+        text-align: right;
+        width: 28%;
+        padding-right: 10px;
+        margin-top: 5px;
+    }
+
+    .main-content-right {
+        width: 50%;
+        float: left;
+    }
+
+    .td-right {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+        height: 50px;
+        padding-top: 20px;
+    }
+.bills-footer {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    height: 240px;
+}
+/*表单-------end----------*/

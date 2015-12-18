@@ -73,7 +73,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             {
                 if (dto.Id == Guid.Empty)
                     dto.Id = CombHelper.NewComb();
-                dto.CreatorUserName = Operator.Name;
+                dto.CreatorUserName = Operator.UserName;
             }
             OperationResult result = FlowContract.AddDelegation(dtos);
             return Json(result.ToAjaxResult());
@@ -86,7 +86,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             foreach (var dto in dtos)
             {
                 dto.CreatorUserId = Operator.UserId;
-                dto.CreatorUserName = Operator.Name;
+                dto.CreatorUserName = Operator.UserName;
             }
             OperationResult result = FlowContract.EditDelegation(dtos);
             return Json(result.ToAjaxResult());

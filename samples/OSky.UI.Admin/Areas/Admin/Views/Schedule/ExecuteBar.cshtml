@@ -1,45 +1,41 @@
-﻿@if (Model.TaskId != null)
+﻿@if (Model.TaskId != Guid.Empty)
 {
-     <div class='btn-group btn-group-sm' role='group' style='padding-top:5px;padding-bottom:5px; float:right;'>
-        <ul>
-            @if (Model.OperateStatus.GroupTask)
-            {
-                <li><input type="button" class="btn btn-primary" value="审批过程" onclick="FlowExecute.OpenGroupTask()"></li>
-            }
-            @if (Model.OperateStatus.HasBack)
-            {
-                <li><input type="button" class="btn btn-info" value="退 回" onclick="FlowExecute.Back()"></li>
-            }
-            @if (Model.OperateStatus.HasCallBack)
-            {
-                <li><input type="button" class="btn btn-info" value="撤 销" onclick="FlowExecute.CallBack()"></li>
-            }
-            @if (Model.OperateStatus.HasSave)
-            {
-                <li><input type="button" class="btn btn-warning" value="编 辑" onclick="FlowExecute.Save()"></li>
-            }
-            @if (Model.OperateStatus.HasAudit)
-            {
-                <li><input type="button" class="btn btn-danger" value="审 核" onclick="FlowExecute.Audit()"></li>
-            }
-            @if (Model.OperateStatus.HasAssign)
-            {
-                <li><input type="button" class="btn btn-danger" value="发 送" onclick="FlowExecute.Sende()"></li>
-            }
-            @if (Model.OperateStatus.IsCompleted)
-            {
-                <li><input type="button" class="btn btn-success" value="完 成" onclick="FlowExecute.Complete()"></li>
-            }
-            
-        </ul>
-                
+     <div class='btn-group btn-group-sm' role='group' style='padding-top:10px;padding-bottom:5px; float:right;width:30%'>
+        @if (Model.OperateStatus.GroupTask)
+        {
+            <input type="button" class="btn btn-primary" value="审批过程" onclick="FlowExecute.OpenGroupTask()" />
+        }
+        @if (Model.OperateStatus.HasBack)
+        {
+            <input type="button" class="btn btn-info" value="退 回" onclick="FlowExecute.Back()" />
+        }
+        @if (Model.OperateStatus.HasCallBack)
+        {
+            <input type="button" class="btn btn-info" value="撤 销" onclick="FlowExecute.CallBack()" />
+        }
+        @if (Model.OperateStatus.HasSave)
+        {
+            <input type="button" class="btn btn-warning" value="编 辑" onclick="FlowExecute.Save()" />
+        }
+        @if (Model.OperateStatus.HasAudit)
+        {
+            <input type="button" class="btn btn-danger" value="审 核" onclick="FlowExecute.Audit()" />
+        }
+        @if (Model.OperateStatus.HasAssign)
+        {
+            <input type="button" class="btn btn-danger" value="发 送" onclick="FlowExecute.Sende()" />
+        }
+        @if (Model.OperateStatus.IsCompleted)
+        {
+            <input type="button" class="btn btn-success" value="完 成" onclick="FlowExecute.Complete()" />
+        }
+                   
     </div>
 }
 else
 {
-    <div class='btn-group btn-group-sm' role='group' style='padding-top:5px;padding-bottom:5px; float:right;'>
-        <ul>
-            <li><input type="button" class="btn btn-danger" value="提 交" onclick="FlowExecute.Accept()"></li>
-        </ul>
+    <div class='btn-group btn-group-sm' role='group' style='padding-top: 10px; padding-bottom: 5px; float: right; width: 20%;'>
+        <input type="button" class="btn btn-danger" value="提 交" onclick="FlowExecute.Accept()" />
+        
     </div>
 }

@@ -22,7 +22,7 @@ namespace OSky.Web.Mvc.Extensions
             return new Operator()
             {
                 UserId = (_context.GetOwinContext().Authentication.User.Identity as ClaimsIdentity).GetClaimValue(ClaimTypes.NameIdentifier),
-                Name = (_context.GetOwinContext().Authentication.User.Identity as ClaimsIdentity).GetClaimValue(ClaimTypes.Name),
+                UserName = (_context.GetOwinContext().Authentication.User.Identity as ClaimsIdentity).GetClaimValue(ClaimTypes.Name),
                 Ip = _context.Request.GetIpAddress()
             };
         }

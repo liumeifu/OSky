@@ -14,7 +14,7 @@
 @Html.Partial("ExecuteBar")
 
 <!--表单 -->
-<iframe id="ifrForm" width="96.5%" height="700px;" style=" margin-left:2%;" frameborder="0" marginheight="0" marginwidth="0" src="@Url.Action(Model.FileUrl, new { id = Model.EntityId })"></iframe>
+<iframe id="ifrForm" style="width: 95%; height:480px; margin-left:2%; "frameborder="0" marginheight="0" marginwidth="0" src="@Url.Action(Model.FileUrl, new { id = Model.EntityId })"></iframe>
 
 @section footer{
 <script type="text/javascript">
@@ -79,7 +79,23 @@
     //保存数据
     function doSubmit(isAcc) {
         var $form = $(window.frames["ifrForm"].contentDocument).find("#context-form");
-        if ($form.valid()) {
+        $form.form('submit', {
+            url: "@Model.ActionUrl",
+            onSubmit: function () {
+                return $(this).form('validate');
+            },
+            success: function (data) {
+                if (data.Type == "Success") {
+                    if (isAcc)//是否提交受理
+                        $.post('@Url.Action("StartFlow")', { FlowId: '@Model.FlowId', EntityId: data.Data.EntityId, Title: data.Data.Title }, ajaxResultHandler);
+                    else
+                        alert(data.Content);
+                }
+                else
+                    alert(data.Content);
+            }
+        });
+        @*if ($form.valid()) {
             //表单内容
             var param = $form.serializeArray().serializeJson();
             $.ajax({
@@ -100,7 +116,7 @@
                 }
             });
 
-        }
+        }*@
 
     }
 

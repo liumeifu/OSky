@@ -103,9 +103,9 @@ namespace OSky.UI.Services
             OperationResult result = DictionaryRepository.Update(dtos,
                 dto =>
                 {
-                    if (DictionaryRepository.CheckExists(m => m.Name == dto.Name))
+                    if (DictionaryRepository.CheckExists(m => m.Value == dto.Value))
                     {
-                        throw new Exception("名称为“{0}”的数据字典已存在，不能重复添加。".FormatWith(dto.Name));
+                        throw new Exception("值为“{0}”的数据字典已存在，不能重复添加。".FormatWith(dto.Value));
                     }
                 }, 
                 (dto, entity) =>

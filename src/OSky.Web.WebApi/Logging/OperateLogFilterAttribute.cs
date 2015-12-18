@@ -68,7 +68,7 @@ namespace OSky.Web.Http.Logging
                 if (user != null)
                 {
                     @operator.UserId = user.GetClaimValue(ClaimTypes.NameIdentifier);
-                    @operator.Name = user.GetClaimValue(ClaimTypes.Name);
+                    @operator.UserName = user.GetClaimValue(ClaimTypes.Name);
                     @operator.NickName = user.GetClaimValue(ClaimTypes.GivenName);
                 }
             }

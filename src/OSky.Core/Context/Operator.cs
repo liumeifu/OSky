@@ -27,7 +27,12 @@ namespace OSky.Core.Context
         /// <summary>
         /// 获取或设置 当前用户名称
         /// </summary>
-        public string Name { get; set; }
+        public string UserName { get; set; }
+
+        /// <summary>
+        /// 获取或设置 当前用户真实姓名
+        /// </summary>
+        public string RealName { get; set; }
 
         /// <summary>
         /// 获取或设置 当前用户昵称

@@ -75,7 +75,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             dto.TaskId = Guid.Empty;
             dto.ExecuteType = ExecuteType.Submit;
             dto.SenderId = Operator.UserId;
-            dto.SenderName = Operator.Name;
+            dto.SenderName = Operator.UserName;
             var re = FlowContract.Execute(dto);
             return Json(re.ToAjaxResult());
         }
@@ -92,7 +92,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                 ItemId = dto.ItemId,
                 ExecuteType = ExecuteType.Submit,
                 SenderId = Operator.UserId,
-                SenderName = Operator.Name
+                SenderName = Operator.UserName
             };
             return Json(Execute(Edto));
 
@@ -123,7 +123,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             }
             dto.ExecuteType = ExecuteType.Submit;
             dto.SenderId = Operator.UserId;
-            dto.SenderName = Operator.Name;
+            dto.SenderName = Operator.UserName;
             dto.Steps = steps;
             if (steps == null)
                 return Json(new OperationResult(OperationResultType.Error, "请指定发送人！").ToAjaxResult());
@@ -159,7 +159,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             }
             dto.ExecuteType = ExecuteType.Back;
             dto.SenderId = Operator.UserId;
-            dto.SenderName = Operator.Name;
+            dto.SenderName = Operator.UserName;
             dto.Steps = steps;
             if (steps == null)
                 return Json(new OperationResult(OperationResultType.Error, "请指定退回人！"));
@@ -181,9 +181,9 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         [Description("工作流-待办事项-办理信息")]
         public ActionResult FlowHandle(FlowProjectDto dto)
         {
-            var form = FlowContract.FlowRelateForms.Where(c => c.FlowDesignId == dto.FlowId).Select(m => new { m.FlowForm.FilePath,m.FlowForm.ActionPath }).SingleOrDefault();
-            dto.FileUrl = form.FilePath;
-            dto.ActionUrl = form.ActionPath;
+            //var form = FlowContract.FlowRelateForms.Where(c => c.FlowDesignId == dto.FlowId).Select(m => new { m.FlowForm.FilePath,m.FlowForm.ActionPath }).SingleOrDefault();
+            //dto.FileUrl = form.FilePath;
+            //dto.ActionUrl = form.ActionPath;
             return View(FlowContract.GetFlowOperateStatus(dto, Operator.UserId));
         }
 

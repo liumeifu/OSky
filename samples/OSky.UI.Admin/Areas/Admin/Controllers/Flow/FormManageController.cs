@@ -98,7 +98,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             dtos.CheckNotNull("dtos");
             foreach (var item in dtos)
             {
-                item.CreatorUserName = Operator.Name;
+                item.CreatorUserName = Operator.UserName;
             }
             OperationResult result = FlowContract.AddFlowForm(dtos);
             return Json(result.ToAjaxResult());

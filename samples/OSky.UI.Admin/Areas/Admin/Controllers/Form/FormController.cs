@@ -45,6 +45,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                     id=m.Id,
                     text = m.Name,
                     url = "",
+                    action ="",
                     FlowId=Guid.Empty
                 }).ToList();
   
@@ -56,16 +57,14 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                              id=d.Id,
                              text = "请假单",
                              url = l.FilePath,
+                             action=l.ActionPath,
                              FlowId=r.FlowDesignId
                          }).ToList();
 
             foreach (var item in roots)
 	        {
-		        foreach (var d in forms)
-	            {
-		            if(item.id==d.id)
-                        item.children.Add(d);
-	            }
+                item.children.AddRange(forms.FindAll(c => c.id == item.id));
+                forms.RemoveAll(c => c.id == item.id);
 	        }
             return Json(roots, JsonRequestBehavior.AllowGet);
 
@@ -81,7 +80,8 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             public Guid? FlowId { get; set; }
             public string text { get; set; }
             public string url { get; set; }
-            public ICollection<TreeView> children { get; set; }
+            public string action { get; set; }
+            public List<TreeView> children { get; set; }
         }
         #endregion
 
@@ -115,15 +115,15 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         [Description("工作流-表单事项-请假单")]
         public ActionResult LeaveForm(Guid Id)
         {
-            var dto = new LeaveDto { CreatorUserId = Operator.UserId, CreatorUserName = Operator.Name };
+            var dto = new LeaveDto { CreatorUserId = Operator.UserId, CreatorUserName = Operator.UserName };
             if (Guid.Empty != Id) { 
                 var model = FormContract.Leaves.SingleOrDefault(c => c.Id == Id);
                 dto.TypeVal = model.TypeVal;
                 dto.Reason = model.Reason;
                 dto.StartTime = model.StartTime;
                 dto.EndTime = model.EndTime;
-                dto.TypeHtml = CommonContract.GetDropdownOptionHtml("QJLX");
             }
+            dto.TypeHtml = CommonContract.GetDropdownOptionHtml("QJLX");
             return View(dto);
         }
 
