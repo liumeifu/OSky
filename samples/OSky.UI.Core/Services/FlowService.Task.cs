@@ -89,11 +89,11 @@ namespace OSky.UI.Services
                 if (currentTask.ReceiverId == userId)
                 {
                     //判断是否具有编辑表单的权限
-                    if (currentTask.Id == currentTask.PrevId)
+                    if (currentTask.PrevId!=Guid.Empty)
                         status.HasSave = true;
                     //判断任务是否可以撤销
                     OperationResult result = IsCallBack(dto.TaskId);
-                    if (result.ResultType == OperationResultType.Success && currentTask.Id != currentTask.PrevId)
+                    if (result.ResultType == OperationResultType.Success && currentTask.PrevId != Guid.Empty)
                         status.HasCallBack = true;
                     else
                         status.HasCallBack = false;
@@ -504,13 +504,12 @@ namespace OSky.UI.Services
             OperationResult re = CheckFlow(task.FlowId, task.EntityId);
             if (re.ResultType == OperationResultType.Success)
             {
-                var firstStep = FlowStepRepository.Entities.First(c =>c.FlowDesignId==task.FlowId && c.StepType == 0);    //起始步骤
+                var firstStep = FlowStepRepository.Entities.Where(c => c.FlowDesignId == task.FlowId && c.StepType == 0).Select(m => new { m.StepId,m.StepName}).SingleOrDefault();    //起始步骤
                 var flowItemId = CombHelper.NewComb();
                 var id = CombHelper.NewComb();
                 WorkFlowTask taskModel = new WorkFlowTask()
                 {
                     Id = id,
-                    PrevId = id,
                     FlowItemId = flowItemId,
                     PrevStepId = -1,
                     StepId = firstStep.StepId,
@@ -519,13 +518,14 @@ namespace OSky.UI.Services
                     SenderName=task.SenderName,
                     ReceiverId = task.SenderId,
                     ReceiverName = task.SenderName,
+                    CreatedTime=DateTime.Now,
                     Comment = task.Comment,
                     IsComment = false,
                     IsSeal = false,
                     IsArchive=false,
                     Status = 1
                 };
-                taskModel.FlowItem = new WorkFlowItem()
+                var model = new WorkFlowItem()
                 {
                     Id = flowItemId,
                     FlowDesignId = task.FlowId,
@@ -536,8 +536,8 @@ namespace OSky.UI.Services
                     //StepDay,DelayDay,HandleDay 用触发器保证数据正确性
                     Status = 0
                 };
-
-                FlowTaskRepository.Insert(taskModel);
+                model.Tasks.Add(taskModel);
+                FlowItemRepository.Insert(model);
                 re = new OperationResult(OperationResultType.Success, "流程启动成功！");
                 //re.Data = taskModel;
 

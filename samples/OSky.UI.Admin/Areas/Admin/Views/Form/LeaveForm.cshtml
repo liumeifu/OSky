@@ -1,5 +1,6 @@
 ﻿@{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    string act = Request["act"];
 }
 @model OSky.UI.Dtos.Infos.LeaveDto
 
@@ -22,13 +23,13 @@
                 <div class="main-content-left">
                     <div class="td-left">
                         <label class="form-label"><span style="color:red">*</span>开始时间：</label>
-                        <input class="easyui-datetimebox" style=" width:190px;" name="StartTime" value="@Model.StartTime.ToString("yyyy-MM-dd hh:mm")" data-options="required:true,editable: false">
+                        <input class="easyui-datetimebox" style=" width:190px;" name="StartTime" value="@Model.StartTime" data-options="required:true,editable: false">
                     </div>
                 </div>
                 <div class="main-content-right">
                     <div class="td-right">
                         <label class="form-label"><span style="color:red">*</span>结束时间：</label>
-                        <input class="easyui-datetimebox" style=" width:190px;" name="EndTime" value="@Model.EndTime.ToString("yyyy-MM-dd hh:mm")" data-options="required:true,editable: false">
+                        <input class="easyui-datetimebox" style=" width:190px;" name="EndTime" value="@Model.EndTime" data-options="required:true,editable: false">
                     </div>
                 </div>
                 <div class="bills-footer">
@@ -39,15 +40,33 @@
                         </div>
                     </div>
                 </div>
-
             </div>
     </form>
 
 
 @section footer{
     <script type="text/javascript">
-        $(function () {
-            $('input[name="TypeVal"]').combobox('setValue', '@Model.TypeVal');
-        })
+    $(function () {
+        $('input[name="TypeVal"]').combobox('setValue', '@Model.TypeVal');
+    })
+
+    //父窗体调用保存
+    function Save() {
+        $('#context-form').form('submit', {
+            url: "@act",
+            onSubmit: function () {
+                return $(this).form('validate');
+            },
+            success: function (d) {
+                var data = eval("(" + d + ")");
+                if (data.Type == "Success")
+                    parent.Submit(true, data.Data.entityId, "请假单--@Model.CreatorUserName");
+                else
+                    alert(data.Content);
+            }
+        });
+
+    }
+
     </script>
     }

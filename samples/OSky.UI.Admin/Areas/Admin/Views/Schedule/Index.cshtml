@@ -48,8 +48,13 @@
         //格式化数据
         function formatStatus(value) {
             switch (value) {
-                case 0: return "启用";
-                case 1: return "禁用";
+                case 1: return "待处理";
+                case 2: return "已打开";
+                case 10: return "正常办结";
+                case 20: return "已退回";
+                case 30: return "他人处理";
+                case 40: return "他人退回";
+                case 50: return "其他";
                 default:
 
             }

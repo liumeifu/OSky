@@ -14,7 +14,7 @@
 @Html.Partial("ExecuteBar")
 
 <!--表单 -->
-<iframe id="ifrForm" style="width: 95%; height:480px; margin-left:2%; "frameborder="0" marginheight="0" marginwidth="0" src="@Url.Action(Model.FileUrl, new { id = Model.EntityId })"></iframe>
+<iframe id="ifrForm" style="width: 95%; height:480px; margin-left:2%; "frameborder="0" marginheight="0" marginwidth="0" src="@Url.Action(Model.FileUrl, new { Id = Model.EntityId,act=Model.ActionUrl })"></iframe>
 
 @section footer{
 <script type="text/javascript">
@@ -78,54 +78,22 @@
 
     //保存数据
     function doSubmit(isAcc) {
-        var $form = $(window.frames["ifrForm"].contentDocument).find("#context-form");
-        $form.form('submit', {
-            url: "@Model.ActionUrl",
-            onSubmit: function () {
-                return $(this).form('validate');
-            },
-            success: function (data) {
-                if (data.Type == "Success") {
-                    if (isAcc)//是否提交受理
-                        $.post('@Url.Action("StartFlow")', { FlowId: '@Model.FlowId', EntityId: data.Data.EntityId, Title: data.Data.Title }, ajaxResultHandler);
-                    else
-                        alert(data.Content);
-                }
-                else
-                    alert(data.Content);
-            }
-        });
-        @*if ($form.valid()) {
-            //表单内容
-            var param = $form.serializeArray().serializeJson();
-            $.ajax({
-                type: "POST",
-                url: "@Model.ActionUrl",
-                data: JSON.stringify(param),
-                datatype: "json",
-                contentType: "application/json",
-                success: function (data) {
-                    if (data.Type == "Success") {
-                        if (isAcc)//是否提交受理
-                            $.post('@Url.Action("StartFlow")', { FlowId: '@Model.FlowId', EntityId: data.Data.EntityId, Title: data.Data.Title }, ajaxResultHandler);
-                        else
-                            alert(data.Content);
-                    }
-                    else
-                        alert(data.Content);
-                }
-            });
-
-        }*@
-
+        window.frames["ifrForm"].contentWindow.Save();
+    }
+    //子窗体调用方法
+    function Submit(isAcc,entityId,title) {
+        if (isAcc)//是否提交受理
+            $.post('@Url.Action("StartFlow")', { FlowId: '@Model.FlowId', EntityId: entityId, Title: title }, ajaxResultHandler);
+        else
+            alert(data.Content);
     }
 
     function ajaxResultHandler(data) {
         if (data.Type == "Success") {
             $.OSky.layer.msg.tip(data.Content);
-            document.location.href = '@Url.Action("Index", "Schedule", new { area = "Flow" })';
+            window.parent.location.href = '@Url.Action("Index", "Schedule")';
         }
-        if (data.Type == "Error") {
+        else if (data.Type == "Error") {
             $.OSky.layer.msg.error(data.Content);
         } else {
             $.OSky.layer.msg.info(data.Content);

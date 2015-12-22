@@ -37,7 +37,7 @@ namespace OSky.UI.Models.Flow
         /// <summary>
         /// 事项名称
         /// </summary>
-        [Required, StringLength(100), Description("事项名称")]
+        [Required, StringLength(200), Description("事项名称")]
         public string EntityName { get; set; }
         /// <summary>
         /// 完成时间

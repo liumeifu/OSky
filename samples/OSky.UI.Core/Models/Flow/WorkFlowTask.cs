@@ -21,7 +21,7 @@ namespace OSky.UI.Models.Flow
         /// 上级任务Id
         /// </summary>
         [Description("上级任务Id")]
-        public Guid PrevId { get; set; }
+        public Guid? PrevId { get; set; }
         /// <summary>
         /// 流程事项Id
         /// </summary>

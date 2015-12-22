@@ -87,24 +87,19 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
 
         #region 功能方法
 
-        [AjaxOnly]
-        [HttpPost]
-        [Description("工作流-请假单-添加")]
-        public ActionResult AddLeave(LeaveDto[] dtos)
+        [Description("工作流-请假单-更新")]
+        public ActionResult SaveLeave(LeaveDto dtos)
         {
-            OperationResult result = FormContract.AddLeave(dtos);
-            return Json(result.ToAjaxResult());
+            OperationResult result ;
+            if(dtos.Id==Guid.Empty){
+                dtos.Id = CombHelper.NewComb();
+                result = FormContract.AddLeave(dtos);
+                result.Data = new { entityId = dtos.Id };
+            }
+            else
+                result = FormContract.EditLeave(dtos);
+            return Json(result.ToAjaxResult(),JsonRequestBehavior.AllowGet);
         }
-
-        [AjaxOnly]
-        [HttpPost]
-        [Description("工作流-请假单-修改")]
-        public ActionResult EditLeave(LeaveDto[] dtos)
-        {
-            OperationResult result = FormContract.EditLeave(dtos);
-            return Json(result.ToAjaxResult());
-        }
-
 
         #endregion
 

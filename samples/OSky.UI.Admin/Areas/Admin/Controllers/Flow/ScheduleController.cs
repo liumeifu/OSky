@@ -181,9 +181,9 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         [Description("工作流-待办事项-办理信息")]
         public ActionResult FlowHandle(FlowProjectDto dto)
         {
-            //var form = FlowContract.FlowRelateForms.Where(c => c.FlowDesignId == dto.FlowId).Select(m => new { m.FlowForm.FilePath,m.FlowForm.ActionPath }).SingleOrDefault();
-            //dto.FileUrl = form.FilePath;
-            //dto.ActionUrl = form.ActionPath;
+            var form = FlowContract.FlowRelateForms.Where(c => c.FlowDesignId == dto.FlowId).Select(m => new { m.FlowForm.FilePath, m.FlowForm.ActionPath }).SingleOrDefault();
+            dto.FileUrl = form.FilePath;
+            dto.ActionUrl = form.ActionPath;
             return View(FlowContract.GetFlowOperateStatus(dto, Operator.UserId));
         }
 
