@@ -63,25 +63,29 @@
 
     //保存数据
     function doSubmit(isAcc) {
-        window.frames["ifrForm"].contentWindow.Save();
+        window.frames["ifrForm"].contentWindow.Save(isAcc);
     }
     //子窗体调用方法
     function Submit(isAcc, entityId, title) {
         if (isAcc)//是否提交受理
-            $.post('@Url.Action("StartFlow")', { FlowId: '@Model.FlowId', EntityId: entityId, Title: title }, ajaxResultHandler);
+            $.post('@Url.Action("StartFlow")', { FlowId: '@Model.FlowId', EntityId: entityId, Title: title }, function (data) {
+                if (data.Type == "Success") {
+                    $.OSky.layer.msg.tip(data.Content);
+                    window.parent.location.href = '@Url.Action("Index", "Schedule")';
+                }else {
+                    $.OSky.layer.msg.error(data.Content);
+                }
+            });
         else
-            alert(data.Content);
+            $.OSky.layer.msg.tip("更新成功！");
     }
 
     function ajaxResultHandler(data) {
         if (data.Type == "Success") {
             $.OSky.layer.msg.tip(data.Content);
-            window.parent.location.href = '@Url.Action("Index", "Schedule")';
-        }
-        else if (data.Type == "Error") {
-            $.OSky.layer.msg.error(data.Content);
+            window.location.href = '@Url.Action("Index", "Schedule")';
         } else {
-            $.OSky.layer.msg.info(data.Content);
+            $.OSky.layer.msg.error(data.Content);
         }
     }
 </script>

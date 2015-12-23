@@ -75,7 +75,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             dto.TaskId = Guid.Empty;
             dto.ExecuteType = ExecuteType.Submit;
             dto.SenderId = Operator.UserId;
-            dto.SenderName = Operator.UserName;
+            dto.SenderName = Operator.NickName;
             var re = FlowContract.Execute(dto);
             return Json(re.ToAjaxResult(), JsonRequestBehavior.AllowGet);
         }
@@ -92,7 +92,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                 ItemId = dto.ItemId,
                 ExecuteType = ExecuteType.Submit,
                 SenderId = Operator.UserId,
-                SenderName = Operator.UserName
+                SenderName = Operator.NickName
             };
             return Json(Execute(Edto), JsonRequestBehavior.AllowGet);
 
@@ -122,7 +122,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             }
             dto.ExecuteType = ExecuteType.Submit;
             dto.SenderId = Operator.UserId;
-            dto.SenderName = Operator.UserName;
+            dto.SenderName = Operator.NickName;
             dto.Steps = steps;
             if (steps == null)
                 return Json(new OperationResult(OperationResultType.Error, "请指定发送人！").ToAjaxResult());
@@ -158,7 +158,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             }
             dto.ExecuteType = ExecuteType.Back;
             dto.SenderId = Operator.UserId;
-            dto.SenderName = Operator.UserName;
+            dto.SenderName = Operator.NickName;
             dto.Steps = steps;
             if (steps == null)
                 return Json(new OperationResult(OperationResultType.Error, "请指定退回人！"));

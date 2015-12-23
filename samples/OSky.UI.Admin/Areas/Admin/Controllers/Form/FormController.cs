@@ -86,8 +86,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         #endregion
 
         #region 功能方法
-        [HttpPost]
-        [AjaxOnly]
+
         [Description("工作流-请假单-更新")]
         public ActionResult SaveLeave(LeaveDto dtos)
         {
@@ -95,10 +94,12 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             if(dtos.Id==Guid.Empty){
                 dtos.Id = CombHelper.NewComb();
                 result = FormContract.AddLeave(dtos);
-                result.Data = new { entityId = dtos.Id };
+                result.Data = new { EntityId = dtos.Id };
             }
-            else
+            else { 
                 result = FormContract.EditLeave(dtos);
+                result.Data = new { EntityId = dtos.Id };
+            }
             return Json(result.ToAjaxResult(),JsonRequestBehavior.AllowGet);
         }
 

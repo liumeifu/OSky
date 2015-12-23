@@ -19,10 +19,12 @@ namespace OSky.Web.Mvc.Extensions
     {
         public static Operator GetOperator(HttpContextBase _context)
         {
+            var claimsIdentity = _context.GetOwinContext().Authentication.User.Identity as ClaimsIdentity;
             return new Operator()
             {
-                UserId = (_context.GetOwinContext().Authentication.User.Identity as ClaimsIdentity).GetClaimValue(ClaimTypes.NameIdentifier),
-                UserName = (_context.GetOwinContext().Authentication.User.Identity as ClaimsIdentity).GetClaimValue(ClaimTypes.Name),
+                UserId = claimsIdentity.GetClaimValue(ClaimTypes.NameIdentifier),
+                UserName = claimsIdentity.GetClaimValue(ClaimTypes.Name),
+                NickName = claimsIdentity.GetClaimValue(ClaimTypes.Surname),
                 Ip = _context.Request.GetIpAddress()
             };
         }

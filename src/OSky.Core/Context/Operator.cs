@@ -30,11 +30,6 @@ namespace OSky.Core.Context
         public string UserName { get; set; }
 
         /// <summary>
-        /// 获取或设置 当前用户真实姓名
-        /// </summary>
-        public string RealName { get; set; }
-
-        /// <summary>
         /// 获取或设置 当前用户昵称
         /// </summary>
         public string NickName { get; set; }

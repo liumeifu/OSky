@@ -77,7 +77,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                            
                             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
                             AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = false },
-                                new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie).SetClaimsIdentity(user.Id.ToString(), user.UserName, null ));
+                                new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie).SetClaimsIdentity(user.Id.ToString(), user.UserName,user.NickName, null ));
                             return RedirectToAction("Index", "Home", new { });
                             
                         }

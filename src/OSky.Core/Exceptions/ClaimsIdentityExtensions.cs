@@ -47,10 +47,11 @@ namespace OSky.Core.Exceptions
         /// <param name="name">登录名</param>
         /// <param name="roles">角色集合</param>
         /// <returns></returns>
-        public static ClaimsIdentity SetClaimsIdentity(this ClaimsIdentity identity,string id, string name, string[] roles)
+        public static ClaimsIdentity SetClaimsIdentity(this ClaimsIdentity identity, string id, string loginName, string realName, string[] roles)
         {
             identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, id));
-            identity.AddClaim(new Claim(ClaimTypes.Name, name));
+            identity.AddClaim(new Claim(ClaimTypes.Name, loginName));
+            identity.AddClaim(new Claim(ClaimTypes.Surname, realName));
             if (roles != null)
                 foreach (var item in roles)
                 {
