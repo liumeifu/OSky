@@ -11,7 +11,7 @@ using OSky.UI.Models.Identity;
 
 namespace OSky.UI.Models.Infos
 {
-    public class Leave : EntityBase<Guid>, ICreatedAudited, ICreatedTime, ITimestamp
+    public class Leave : Entity<Guid>, ICreatedAudited, ICreatedTime, ITimestamp
     {
         /// <summary>
         /// 获取或设置 请假类型

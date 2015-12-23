@@ -101,6 +101,7 @@
     <Compile Include="Context\Operator.cs" />
     <Compile Include="Context\OSkyContext.cs" />
     <Compile Include="Data\DataPage.cs" />
+    <Compile Include="Data\Entity.cs" />
     <Compile Include="Data\Extensions\EntityInterfaceExtensions.cs" />
     <Compile Include="Data\IEntity.cs">
       <SubType>Code</SubType>

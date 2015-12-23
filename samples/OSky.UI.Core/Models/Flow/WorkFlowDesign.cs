@@ -14,7 +14,7 @@ namespace OSky.UI.Models.Flow
     /// 实体类——流程设计信息
     /// </summary>
     [Description("工作流-流程设计信息")]
-    public class WorkFlowDesign :EntityBase<Guid>, IAudited, ICreatedTime, ITimestamp
+    public class WorkFlowDesign :Entity<Guid>, IAudited, ICreatedTime, ITimestamp
     {
         /// <summary>
         /// 初始化一个<see cref="WorkFlowDesign"/>类型的新实例

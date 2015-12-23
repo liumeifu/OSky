@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 namespace OSky.Core.Data
 {
     /// <summary>
-    /// 可持久化到数据库的数据模型基类
+    /// 可持久化到数据库的数据模型基类(主键设为自增)
     /// </summary>
     /// <typeparam name="TKey">主键数据类型</typeparam>
     public abstract class EntityBase<TKey> : IEntity<TKey>
@@ -31,7 +31,7 @@ namespace OSky.Core.Data
         /// </summary>
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [DisplayName("主键")]
-        public TKey Id { get; set; }
+        public virtual TKey Id { get; set; }
         
         #endregion
 

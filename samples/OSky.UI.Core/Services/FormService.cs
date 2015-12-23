@@ -15,7 +15,7 @@ namespace OSky.UI.Services
     /// <summary>
     /// 业务实现——表单模块
     /// </summary>
-    public class FormService : IFormContract
+    public partial class FormService : IFormContract
     {
         #region 请假单
 
@@ -27,8 +27,10 @@ namespace OSky.UI.Services
         /// <summary>
         /// 获取 请假单数据集
         /// </summary>
-        public IQueryable<Leave> Leaves { get; set; }
-
+        public IQueryable<Leave> Leaves
+        {
+            get { return LeaveRepository.Entities; }
+        }
         /// <summary>
         /// 添加 请假单数据
         /// </summary>

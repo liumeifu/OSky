@@ -35,10 +35,6 @@ namespace OSky.UI.Dtos.Infos
         /// </summary>
         public string CreatorUserName { get; set; }
         /// <summary>
-        /// 获取设置 信息创建时间
-        /// </summary>
-        public DateTime CreatedTime { get; set; }
-        /// <summary>
         /// 获取设置 开始时间
         /// </summary>
         public DateTime StartTime { get; set; }

@@ -14,7 +14,7 @@ namespace OSky.UI.Models.Flow
     /// 实体类——表单流程关联信息
     /// </summary>
     [Description("工作流-表单流程关联信息")]
-    public class WorkFlowRelateForm : EntityBase<Guid>, IAudited, ICreatedTime
+    public class WorkFlowRelateForm : Entity<Guid>, IAudited, ICreatedTime
     {
         /// <summary>
         /// 所属流程Id

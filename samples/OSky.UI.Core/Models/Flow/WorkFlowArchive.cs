@@ -14,7 +14,7 @@ namespace OSky.UI.Models.Flow
     /// 实体类——流程事项档案信息
     /// </summary>
     [Description("工作流-流程事项档案信息")]
-    public class WorkFlowArchive : EntityBase<Guid>, ICreatedAudited, ICreatedTime
+    public class WorkFlowArchive : Entity<Guid>, ICreatedAudited, ICreatedTime
     {
         /// <summary>
         /// 流程事项Id

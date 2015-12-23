@@ -85,6 +85,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Dtos\DtoMappers.cs" />
+    <Compile Include="Dtos\Flow\FlowApprovalDto.cs" />
     <Compile Include="Dtos\Flow\FlowDelegateDto.cs" />
     <Compile Include="Dtos\Flow\FlowDesignerDto.cs" />
     <Compile Include="Dtos\Flow\FlowExecuteDto.cs" />

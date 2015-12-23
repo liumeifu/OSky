@@ -77,7 +77,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             dto.SenderId = Operator.UserId;
             dto.SenderName = Operator.UserName;
             var re = FlowContract.Execute(dto);
-            return Json(re.ToAjaxResult());
+            return Json(re.ToAjaxResult(), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -94,11 +94,10 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                 SenderId = Operator.UserId,
                 SenderName = Operator.UserName
             };
-            return Json(Execute(Edto));
+            return Json(Execute(Edto), JsonRequestBehavior.AllowGet);
 
         }
 
-        [HttpPost]
         [Description("工作流-任务-发送审批")]
         public ActionResult Execute(FlowExecuteDto dto)
         {
@@ -127,7 +126,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             dto.Steps = steps;
             if (steps == null)
                 return Json(new OperationResult(OperationResultType.Error, "请指定发送人！").ToAjaxResult());
-            return Json(FlowContract.Execute(dto).ToAjaxResult());
+            return Json(FlowContract.Execute(dto).ToAjaxResult(),JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -139,7 +138,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                 TaskId = TaskId,
                 ExecuteType = ExecuteType.Completed
             };
-            return Json(FlowContract.Execute(execut));
+            return Json(FlowContract.Execute(execut), JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -163,7 +162,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             dto.Steps = steps;
             if (steps == null)
                 return Json(new OperationResult(OperationResultType.Error, "请指定退回人！"));
-            return Json(FlowContract.Execute(dto));
+            return Json(FlowContract.Execute(dto), JsonRequestBehavior.AllowGet);
         }
 
         #endregion
@@ -198,6 +197,22 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         public ActionResult ExecuteBack(Guid TaskId, Guid FlowId)
         {
             return View(FlowContract.GetBackSteps(TaskId,FlowId));
+        }
+
+        [Description("工作流-任务-审批过程")]
+        public ActionResult ApprovalList(Guid ItemId)
+        {
+            var list = FlowContract.FlowTasks.Where(c => c.FlowItemId == ItemId).Select(m => new FlowApprovalDto{ 
+                StepName=m.StepName,
+                SenderName=m.SenderName,
+                CreatedTime=m.CreatedTime,
+                ReceiverName=m.ReceiverName,
+                CompletedTime=m.CompletedTime,
+                Status=m.Status,
+                Comment=m.Comment,
+                TaskNote=m.TaskNote
+            }).ToList();
+            return View(list);
         }
         #endregion
     }

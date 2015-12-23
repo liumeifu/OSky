@@ -41,38 +41,23 @@
         Sende: function () {
             $.OSky.layer.msg.open(2, "@Url.Action("ExecuteForm")?TaskId=@Model.TaskId&FlowId=@Model.FlowId&ItemId=@Model.ItemId", true,
                     function (index, layero) {
-                        $(layero).form('submit', {
-                            url: '@Url.Action("Execute")',
-                            onSubmit: function(){    
-                                return this.form('validate');
-                            },    
-                            success:function(data){    
-                                ajaxResultHandler(data);
-                            }    
-                        });  
-                    }, null, "发送下一步", "800px", "600px");
+                        window[layero.find('iframe')[0]['name']].Save();
+                    }, null, "发送下一步", "450px", "570px");
         },
         Complete: function () {
             $.post('@Url.Action("Completed")', { TaskId: '@Model.TaskId', FlowId: '@Model.FlowId' }, ajaxResultHandler);
         },
         Back: function () {
-            $.OSky.layer.msg.open(2, "@Url.Action("FlowBack")?TaskId=@Model.TaskId&FlowId=@Model.FlowId", true,
-                    function (index, layero) {
-                        var nodes = $(layero).find("iframe")[0].serializeArray().serializeJson();
-                        if (nodes.length == 0) {
-                            $.OSky.layer.msg.tip("您没有做任何更改。");
-                            return;
-                        }
-                        $.post("@Url.Action("Backed")", { "dtos": nodes }, function (data) {
-                            ajaxResultHandler(data);
-                        });
-                    }, null, "退回处理", "800px", "600px");
+            $.OSky.layer.msg.open(2, "@Url.Action("ExecuteBack")?TaskId=@Model.TaskId&FlowId=@Model.FlowId", true,
+                function (index, layero) {
+                    window[layero.find('iframe')[0]['name']].Save();
+                }, null, "退回处理", "340px", "280px");
         },
         CallBack: function () {
             $.post('@Url.Action("CallBack")', { TaskId: '@Model.TaskId' }, ajaxResultHandler);
         },
         OpenGroupTask: function () {
-            $.OSky.layer.msg.open(2, "@Url.Action("ApprovalList")?ItemId=@Model.ItemId", false, null, null, "审批过程", "800px", "600px");
+                $.OSky.layer.msg.open(2, "@Url.Action("ApprovalList")?ItemId=@Model.ItemId", false, null, null, "审批过程", "750px", "550px");
         }
     }
 
@@ -81,7 +66,7 @@
         window.frames["ifrForm"].contentWindow.Save();
     }
     //子窗体调用方法
-    function Submit(isAcc,entityId,title) {
+    function Submit(isAcc, entityId, title) {
         if (isAcc)//是否提交受理
             $.post('@Url.Action("StartFlow")', { FlowId: '@Model.FlowId', EntityId: entityId, Title: title }, ajaxResultHandler);
         else

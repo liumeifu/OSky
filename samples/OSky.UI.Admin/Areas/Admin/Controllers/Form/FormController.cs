@@ -86,7 +86,8 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         #endregion
 
         #region 功能方法
-
+        [HttpPost]
+        [AjaxOnly]
         [Description("工作流-请假单-更新")]
         public ActionResult SaveLeave(LeaveDto dtos)
         {
@@ -111,8 +112,10 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         public ActionResult LeaveForm(Guid Id)
         {
             var dto = new LeaveDto { CreatorUserId = Operator.UserId, CreatorUserName = Operator.UserName };
-            if (Guid.Empty != Id) { 
-                var model = FormContract.Leaves.SingleOrDefault(c => c.Id == Id);
+            if (Guid.Empty != Id) {
+                var model = FormContract.Leaves.Where(c => c.Id == Id).Select(m => new { m.TypeVal, m.Reason, m.StartTime, m.EndTime,m.CreatorUserId,m.CreatedTime }).FirstOrDefault();
+                dto.Id = Id;
+                dto.CreatorUserId = model.CreatorUserId;
                 dto.TypeVal = model.TypeVal;
                 dto.Reason = model.Reason;
                 dto.StartTime = model.StartTime;

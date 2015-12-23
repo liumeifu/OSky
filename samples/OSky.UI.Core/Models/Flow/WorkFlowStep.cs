@@ -14,7 +14,7 @@ namespace OSky.UI.Models.Flow
     /// 实体类——流程步骤信息
     /// </summary>
     [Description("工作流-流程步骤信息")]
-    public class WorkFlowStep : EntityBase<Guid>
+    public class WorkFlowStep : Entity<Guid>
     {
         /// <summary>
         /// 所属流程Id

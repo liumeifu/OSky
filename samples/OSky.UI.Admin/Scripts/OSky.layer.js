@@ -43,7 +43,7 @@ document.write('<script src="/Scripts/layer-2.0/extend/layer.ext.js"></script>')
                 yes: function (index, layero) {                   //或者使用btn1
                     if (onYes && (typeof onYes) == "function")
                         onYes(index, layero);                     //按钮【按钮一】的回调
-                    layer.close(index);                           //关闭弹出层必须进行手工关闭
+                    setTimeout("layer.close("+index+")",500);                           //关闭弹出层必须进行手工关闭
                     
                 },
                 cancel: function (index) {                        //或者使用btn2

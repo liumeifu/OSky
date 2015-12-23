@@ -525,6 +525,7 @@
     <Content Include="Areas\Admin\Views\Schedule\ExecuteForm.cshtml" />
     <Content Include="Areas\Admin\Views\Schedule\ExecuteBack.cshtml" />
     <Content Include="Areas\Admin\Views\Form\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Schedule\ApprovalList.cshtml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

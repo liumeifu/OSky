@@ -31,7 +31,7 @@ namespace OSky.UI.Services
         /// <returns>当前任务操作的状态dto</returns>
         public FlowProjectDto GetFlowOperateStatus(FlowProjectDto dto, string userId)
         {
-            var currentTask = FlowTaskRepository.Entities.Where(c => c.Id == dto.TaskId).Select(m => new { m.Id,m.PrevId,m.StepId,m.Status,m.ReceiverId}).SingleOrDefault();
+            var currentTask = FlowTaskRepository.Entities.Where(c => c.Id == dto.TaskId).Select(m => new { m.Id,m.PrevId,m.StepId,m.Status,m.ReceiverId,m.PrevStepId}).SingleOrDefault();
             FlowOperateStatusDto status = new FlowOperateStatusDto();
             if (currentTask == null)
             {
@@ -89,7 +89,7 @@ namespace OSky.UI.Services
                 if (currentTask.ReceiverId == userId)
                 {
                     //判断是否具有编辑表单的权限
-                    if (currentTask.PrevId!=Guid.Empty)
+                    if (currentTask.PrevStepId == -1)
                         status.HasSave = true;
                     //判断任务是否可以撤销
                     OperationResult result = IsCallBack(dto.TaskId);
@@ -203,7 +203,7 @@ namespace OSky.UI.Services
                         break;
                     //退回到第一步
                     case 2:
-                        var fisrtStep = FlowSteps.Where(c => c.StepType == 0).Select(m => new { m.StepId, m.StepName }).SingleOrDefault();
+                        var fisrtStep = FlowSteps.Where(c => c.StepType == 0 && c.FlowDesignId==FlowId).Select(m => new { m.StepId, m.StepName }).SingleOrDefault();
                         steps.Add(fisrtStep.StepId, fisrtStep.StepName);
                         break;
                     //退回到指定步
@@ -338,8 +338,9 @@ namespace OSky.UI.Services
                 }
                 else if (currentStep.BackType == 2)                                        //退回到第一步
                 {
-                    var fistTack = FlowTaskRepository.Entities.Where(c => c.StepId == 2 && c.FlowItemId == currentTask.FlowItemId).OrderByDescending(c => c.CreatedTime).Single();
-                    backTasks.Add(fistTack);
+                    var firstTack = FlowTaskRepository.Entities.Where(c => c.StepId == 2 && c.FlowItemId == currentTask.FlowItemId).OrderByDescending(c => c.CreatedTime).Single();
+                    firstTack.PrevId = task.TaskId;  //上一个任务Id
+                    backTasks.Add(firstTack);
                 }
                 else                                                                     //退回到指定步
                 {
@@ -362,14 +363,16 @@ namespace OSky.UI.Services
                     newTask.StepId = item.StepId;
                     newTask.StepName = item.StepName;
                     newTask.SenderId = task.SenderId;
+                    newTask.SenderName = task.SenderName;
                     newTask.ReceiverId = item.ReceiverId;
+                    newTask.ReceiverName = item.ReceiverName;
                     newTask.OpenedTime = null;
                     newTask.CompletedTime = null;
                     newTask.Comment = task.Comment;
                     newTask.IsComment = item.IsComment;
                     newTask.IsSeal = item.IsSeal;
                     newTask.IsArchive = item.IsArchive;
-                    newTask.TaskNote = "退回任务";
+                    newTask.TaskNote = "退回的任务";
                     newTask.StepDay = item.StepDay;
                     newTask.DelayDay = 0;
                     newTask.Status = 1;
@@ -604,7 +607,7 @@ namespace OSky.UI.Services
             foreach (var step in task.Steps)
             {
                 //流转的下个步骤
-                var nextStep = FlowStepRepository.Entities.Single(p => p.StepId == step.Key);
+                var nextStep = FlowStepRepository.Entities.Single(p => p.StepId == step.Key && p.FlowDesignId==task.FlowId);
                 foreach (var user in step.Value)
                 {
                     var uid=user.Key;

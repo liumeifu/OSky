@@ -6,6 +6,7 @@
 
     <form id="context-form" style=" margin-top:10px;">
         <input type="hidden" name="Id" value="@Model.Id" />
+        <input type="hidden" name="CreatorUserId" value="@Model.CreatorUserId" />
         <div class="bills-table" style="height: 400px; ">
                 <div class="bills-head">请&nbsp;&nbsp; 假&nbsp;&nbsp;条</div>
                 <div class=" main-content-left">
@@ -47,7 +48,7 @@
 @section footer{
     <script type="text/javascript">
     $(function () {
-        $('input[name="TypeVal"]').combobox('setValue', '@Model.TypeVal');
+        $('select[name="TypeVal"]').val('@Model.TypeVal');
     })
 
     //父窗体调用保存

@@ -15,7 +15,7 @@ namespace OSky.UI.Models.Flow
     /// 实体类——流程任务信息
     /// </summary>
     [Description("工作流-流程任务信息")]
-    public class WorkFlowTask : EntityBase<Guid>, ICreatedTime, ITimestamp
+    public class WorkFlowTask : Entity<Guid>, ICreatedTime, ITimestamp
     {
         /// <summary>
         /// 上级任务Id

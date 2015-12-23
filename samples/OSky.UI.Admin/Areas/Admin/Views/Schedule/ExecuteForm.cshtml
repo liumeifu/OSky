@@ -32,16 +32,22 @@
             onCheck: function (node, checked) {
                 node.Checked = checked;
                 checkedNotes = $(this).tree('getChecked');
-                var nodes = $.Enumerable.From(checkedNotes).Where(function (m) { return m.Type == 1 && m.Checked == true })
+                var nodes = $.Enumerable.From(checkedNotes).Where(function (m) { return m.Type == 1 && m.checked == true })
                             .Select(function (m) { return { Id: m.id, Name: m.text }; }).ToArray();
-                var Ids="", Names="";
-                nodes.each(function (i, v) {
-                    Ids += v.Id + ",";
-                    Names += v.Name + ",";
+                var Ids = "", Names = "";
+                nodes.forEach(function (e) {
+                    Ids += e.Id + ",";
+                    Names += e.Name + ",";
                 });
                 if (Ids != "") {
-                    $("input[name='" + iname + "']").val(Ids.substring(0,Ids.length-1));
+                    $("input[name='" + iname + "']").val(Ids.substring(0, Ids.length - 1));
                     $("input[name='" + nname + "']").val(Names.substring(0, Names.length - 1));
+                    $("input[name='" + nname + "']").focus();
+                }
+                else {
+                    $("input[name='" + iname + "']").val("");
+                    $("input[name='" + nname + "']").val("");
+                    $("input[name='" + nname + "']").focus();
                 }
 
             }
@@ -79,69 +85,76 @@
             document.getElementById("ztree_style").style.display = "none";
 
     }
+
+    function Save() {
+        $('#exc-form').form('submit', {
+            url: '@Url.Action("Execute")',
+            onSubmit: function () {
+                return $(this).form('validate');
+            },
+            success: function (data) {
+                //ajaxResultHandler(data);
+            }
+        });
+    }
     </script>
     }
-@Html.AntiForgeryToken()
-<div style="display:none">
-    <input name="FlowId" value="@Model.FlowId">
-    <input name="TaskId" value="@Model.TaskId">
-    <input name="ItemId" value="@Model.ItemId">
-</div>
-<table cellpadding="0" cellspacing="0" >
-    <tbody>
-        @{var count = 0;}
-        @foreach (var item in Model.StepToUsers)
-        {
-            count++;
-            <tr>
-                <th>
-                    @if (count == 1)
-                    {
-                        <input type="radio" checked="checked" name="stepCheck" value="@item.StepId" /><span>@item.StepName </span>
-                    }
-                    else
-                    {
-                        <input type="radio" name="stepCheck" value="@item.StepId" /><span>@item.StepName </span>
-                    }
-                    @*@if (Model.StepToUsers.Count == 1)
+<form id="exc-form" class="formTable">
+    <div style="display:none">
+        <input name="FlowId" value="@Model.FlowId">
+        <input name="TaskId" value="@Model.TaskId">
+        <input name="ItemId" value="@Model.ItemId">
+    </div>
+    <table cellpadding="0" cellspacing="0" style="width:100%;font-size:13px;">
+        <tbody>
+            @{var count = 0;}
+            @foreach (var item in Model.StepToUsers)
+            {
+                count++;
+                <tr>
+                    <th>
+                        @if (count == 1)
+                        {
                             <input type="radio" checked="checked" name="stepCheck" value="@item.StepId" /><span>@item.StepName </span>
+                        }
                         else
-                            <input type="checkbox" name="stepCheck" value="@item.StepId" />
-                    *@
-                    <input type="hidden" name="stepCheck_receive_Id_@item.StepId" value="@item.HandlerIds" />
-                </th>
-                <td colspan="3" style="height:40px">
-                    <div>
-                        <div style="float:left; width: 250px"><input class="textbox" name="stepCheck_receive_Name_@item.StepId" value="@item.HandlerNames" readonly="readonly" /></div>
-                        <div style="float:right;"><a href="#" class="btn btn-primary" onclick="selectUser('stepCheck_receive_Id_@item.StepId','stepCheck_receive_Name_@item.StepId')">选择发送人</a></div>
+                        {
+                            <input type="radio" name="stepCheck" value="@item.StepId" /><span>@item.StepName </span>
+                        }
+                        @*@if (Model.StepToUsers.Count == 1)
+                                <input type="radio" checked="checked" name="stepCheck" value="@item.StepId" /><span>@item.StepName </span>
+                            else
+                                <input type="checkbox" name="stepCheck" value="@item.StepId" />
+                        *@
+                        <input type="hidden" name="stepCheck_receive_Id_@item.StepId" value="@item.HandlerIds" />
+                    </th>
+                    <td >
+                        <div>
+                            <div style="float:left; width: 40%"><input class="easyui-validatebox textbox" data-options="required:true" style="cursor: not-allowed; " name="stepCheck_receive_Name_@item.StepId" value="@item.HandlerNames" /></div>
+                            <div style="float: right; width: 40%"><input type="button" class="btn btn-primary" onclick="selectUser('stepCheck_receive_Id_@item.StepId','stepCheck_receive_Name_@item.StepId')" value="选择发送人" /></div>
+                        </div>
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td id="ztree_style" style="display:none" colspan="2">
+                    <div class="easyui-panel" style="width: 400px; height: 320px; padding: 10px; float:left">
+                        <ul id="tree-organization" class="easyui-tree"></ul>
                     </div>
                 </td>
-
             </tr>
-        }
-        <tr>
-            <td id="ztree_style" style="display:none" colspan="4">
-                <div class="easyui-panel" style="width: 100%; height: 430px; padding: 10px; ">
-                    <ul id="tree-organization" class="easyui-tree"></ul>
-                </div>
-            </td>
-        </tr>
-        @if (Model.IsComment)
-        {
+            @if (Model.IsComment)
+            {
+                <tr style="padding-top：5px;">
+                    <th><span>办理意见</span></th>
+                    <td >
+                        <input id="Comment" name="Comment" class="easyui-textbox" data-options="multiline:true,required:true,validType:'length[2,200]'" style="height:60px;width:300px" />
+                    </td>
+                </tr>
+            }
             <tr>
-                <th><span>办理意见</span></th>
-                <td colspan="3">
-                    <ul style="list-style:none; float:left;">
-                        <li>
-                            <textarea id="Comment" name="Comment" cols="50" rows="3" class="easyui-validatebox"></textarea>
-                        </li>
-                    </ul>
-
-                </td>
+                <td colspan="4">@Model.TaskNote</td>
             </tr>
-        }
-        <tr>
-            <td colspan="4">@Model.TaskNote</td>
-        </tr>
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</form>

@@ -14,7 +14,7 @@ namespace OSky.UI.Models.Flow
     /// 实体类——流程表单信息
     /// </summary>
     [Description("工作流-流程表单信息")]
-    public class WorkFlowForm : EntityBase<Guid>, ICreatedAudited, ICreatedTime
+    public class WorkFlowForm : Entity<Guid>, ICreatedAudited, ICreatedTime
     {
         /// <summary>
         /// 表单名称

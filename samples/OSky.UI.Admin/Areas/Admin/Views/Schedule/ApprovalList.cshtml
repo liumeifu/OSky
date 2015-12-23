@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "审批过程";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+}
+@model List<OSky.UI.Dtos.Flow.FlowApprovalDto>
+
+<div style=" height:480px;">
+    <div id="tbody">
+        <table class="table-bordered">
+            <thead>
+                <tr>
+                    <th>步骤名称</th>
+                    <th>发送人</th>
+                    <th>发送时间</th>
+                    <th>处理人</th>
+                    <th>处理时间</th>
+                    <th>状态</th>
+                    <th>意见</th>
+                    <th>说明</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.StepName
+                        </td>
+                        <td>
+                            @item.SenderName
+                        </td>
+                        <td>
+                            @item.CreatedTime
+                        </td>
+                        <td>
+                            @item.ReceiverName
+                        </td>
+                        <td>
+                            @item.CompletedTime
+                        </td>
+                        <td>
+                            @switch (item.Status)
+                            {
+                                case 1: <span>待处理</span> ; break;
+                                case 2: <span>已查看</span> ; break;
+                                case 10: <span>已完成</span>; break;
+                                case 20: <span>已退回</span>; break;
+                                case 30: <span>他人处理</span> ; break;
+                                case 40: <span>他人退回</span> ; break;
+                                default:
+                                    break;
+                            }
+                        </td>
+                        <td>
+                            @item.Comment
+                        </td>
+                        <td>
+                            @item.TaskNote
+                        </td>
+                    </tr>
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+
+</div>

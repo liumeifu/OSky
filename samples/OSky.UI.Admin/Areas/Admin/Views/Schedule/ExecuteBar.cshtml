@@ -1,6 +1,6 @@
 ﻿@if (Model.TaskId != Guid.Empty)
 {
-     <div class='btn-group btn-group-sm' role='group' style='padding-top:10px;padding-bottom:5px; float:right;width:30%'>
+     <div class='btn-group btn-group-sm' role='group' style='padding-top:10px;padding-bottom:5px; float:right;width:28%'>
         @if (Model.OperateStatus.GroupTask)
         {
             <input type="button" class="btn btn-primary" value="审批过程" onclick="FlowExecute.OpenGroupTask()" />

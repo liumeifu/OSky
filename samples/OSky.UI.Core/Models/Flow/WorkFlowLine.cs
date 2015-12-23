@@ -14,7 +14,7 @@ namespace OSky.UI.Models.Flow
     /// 实体类——流程线
     /// </summary>
     [Description("工作流-流程线")]
-    public class WorkFlowLine : EntityBase<Guid>
+    public class WorkFlowLine : Entity<Guid>
     {
         /// <summary>
         /// 所属流程Id

@@ -14,7 +14,7 @@ namespace OSky.UI.Models.Flow
     /// 实体类——流程任务委托信息
     /// </summary>
     [Description("工作流-流程任务委托信息")]
-    public class WorkFlowDelegation : EntityBase<Guid>, ICreatedAudited, ICreatedTime
+    public class WorkFlowDelegation : Entity<Guid>, ICreatedAudited, ICreatedTime
     {
         /// <summary>
         /// 所属流程Id
