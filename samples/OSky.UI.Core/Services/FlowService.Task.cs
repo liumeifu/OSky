@@ -89,7 +89,7 @@ namespace OSky.UI.Services
                 if (currentTask.ReceiverId == userId)
                 {
                     //判断是否具有编辑表单的权限
-                    if (currentTask.PrevStepId == -1)
+                    if (currentTask.PrevStepId == -1 && (currentTask.Status == 1 || currentTask.Status==2))
                         status.HasSave = true;
                     //判断任务是否可以撤销
                     OperationResult result = IsCallBack(dto.TaskId);
@@ -332,13 +332,13 @@ namespace OSky.UI.Services
                 #region 退回处理
                 List<WorkFlowTask> backTasks = new List<WorkFlowTask>();
 
-                if (currentStep.StepType == 1)                                         //退回到上一步
+                if (currentStep.BackType == 1)                                         //退回到上一步
                 {
-                    backTasks.AddRange(GetSiblingTask(currentTask.FlowItemId, currentTask.PrevStepId).ToList());
+                    backTasks.AddRange(FlowTaskRepository.Entities.Where(c => c.Id == currentTask.PrevId).ToList());   
                 }
                 else if (currentStep.BackType == 2)                                        //退回到第一步
                 {
-                    var firstTack = FlowTaskRepository.Entities.Where(c => c.StepId == 2 && c.FlowItemId == currentTask.FlowItemId).OrderByDescending(c => c.CreatedTime).Single();
+                    var firstTack = FlowTaskRepository.Entities.Where(c => c.PrevStepId == -1 && c.FlowItemId == currentTask.FlowItemId).OrderByDescending(c => c.CreatedTime).ToList()[0];
                     firstTack.PrevId = task.TaskId;  //上一个任务Id
                     backTasks.Add(firstTack);
                 }
@@ -349,7 +349,15 @@ namespace OSky.UI.Services
                     {
                         return new OperationResult(OperationResultType.ValidError, "当前流程步骤配置有误,不能退回！");
                     }
-                    backTasks.AddRange(GetSiblingTask(currentTask.FlowItemId, backStep.StepId).ToList());
+                    var backtask = GetSiblingTask(currentTask.FlowItemId, backStep.StepId).OrderByDescending(c=>c.SenderId).ThenByDescending(c=>c.CreatedTime).ToList();
+                    string senderId = "";
+                    foreach (var item in backtask)             //移除同一步骤中相同的发送人的以前的任务
+                    {
+                        if (senderId == item.SenderId)
+                            backtask.Remove(item);
+                        senderId = item.SenderId;
+                    }
+                    backTasks.AddRange(backtask); 
                 }
 
                 FlowTaskRepository.UnitOfWork.TransactionEnabled = true;  //事务处理
@@ -368,7 +376,6 @@ namespace OSky.UI.Services
                     newTask.ReceiverName = item.ReceiverName;
                     newTask.OpenedTime = null;
                     newTask.CompletedTime = null;
-                    newTask.Comment = task.Comment;
                     newTask.IsComment = item.IsComment;
                     newTask.IsSeal = item.IsSeal;
                     newTask.IsArchive = item.IsArchive;
@@ -407,18 +414,18 @@ namespace OSky.UI.Services
             if (result.ResultType != OperationResultType.Success)
                 return new OperationResult(OperationResultType.ValidError, "任务在下级已经有处理，不能再撤销！");
             FlowTaskRepository.UnitOfWork.TransactionEnabled = true;  //事务处理
-            var nextTask = (List<WorkFlowTask>)result.Data;
+            var nextTask = (List<Guid>)result.Data;
             foreach (var item in nextTask)
             {
                 FlowTaskRepository.Delete(item);
             }
             //标记本任务为待处理
             var currentTask = FlowTaskRepository.Entities.Where(c => c.Id == task.TaskId).Single();
-            CompletedTask(currentTask, 1, "", "撤销提交的任务");
+            CompletedTask(currentTask, 1, "", "撤销的任务");
             var currentSiblingTask = GetSiblingTask(currentTask.FlowItemId, currentTask.StepId).Where(c => c.Status == 30).ToList();
             foreach (var item in currentSiblingTask)
             {
-                CompletedTask(item, 1, task.Comment, "他人已撤销提交的任务");
+                CompletedTask(item, 1, "", "他人已撤销的任务");
             }
             FlowTaskRepository.UnitOfWork.SaveChanges();
             result = new OperationResult(OperationResultType.Success, "撤销成功！");
@@ -437,8 +444,10 @@ namespace OSky.UI.Services
             var currentTask = FlowTaskRepository.Entities.SingleOrDefault(c => c.Id == task.TaskId);
             if (currentTask != null)
             {
-                currentTask.FlowItem.Status = 1;
-                currentTask.FlowItem.CompletedTime = DateTime.Now;
+                var currentItem = FlowItemRepository.Entities.Single(c => c.Id == currentTask.FlowItemId);
+                currentItem.Status = 1;
+                currentItem.CompletedTime = DateTime.Now;
+               
                 currentTask.Comment = task.Comment;
                 currentTask.TaskNote = task.Note;
                 currentTask.Status = 10;
@@ -453,6 +462,7 @@ namespace OSky.UI.Services
                         CreatorUserName = task.SenderName
                     });
                 FlowTaskRepository.Update(currentTask);
+                FlowItemRepository.Update(currentItem);
                 FlowTaskRepository.UnitOfWork.SaveChanges();
                 
                 re = new OperationResult(OperationResultType.Success, "成功办结!");
@@ -494,7 +504,7 @@ namespace OSky.UI.Services
                 }
             }
 
-            return new OperationResult(OperationResultType.Success, "可以撤销处理", nextTask);
+            return new OperationResult(OperationResultType.Success, "可以撤销处理", nextTask.Select(c=>c.Id).ToList());
         }
 
         /// <summary>
@@ -522,7 +532,6 @@ namespace OSky.UI.Services
                     ReceiverId = task.SenderId,
                     ReceiverName = task.SenderName,
                     CreatedTime=DateTime.Now,
-                    Comment = task.Comment,
                     IsComment = false,
                     IsSeal = false,
                     IsArchive=false,
@@ -668,7 +677,8 @@ namespace OSky.UI.Services
             {
                 currentTask.CompletedTime = DateTime.Now;
                 currentTask.Comment = Comment;
-                currentTask.TaskNote = Note;
+                if (Note!="")
+                    currentTask.TaskNote = Note;
                 currentTask.Status = status;
                 FlowTaskRepository.Update(currentTask);
             }

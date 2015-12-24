@@ -98,7 +98,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
 
         }
 
-        [Description("工作流-任务-发送审批")]
+        [Description("工作流-任务-发送")]
         public ActionResult Execute(FlowExecuteDto dto)
         {
             var steps = new Dictionary<int, Dictionary<string,string>>();
@@ -129,8 +129,9 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             return Json(FlowContract.Execute(dto).ToAjaxResult(),JsonRequestBehavior.AllowGet);
         }
 
+        [AjaxOnly]
         [HttpPost]
-        [Description("工作流-任务-审批完成")]
+        [Description("工作流-任务-完成")]
         public ActionResult Completed(Guid TaskId)
         {
             FlowExecuteDto execut = new FlowExecuteDto()
@@ -138,13 +139,10 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                 TaskId = TaskId,
                 ExecuteType = ExecuteType.Completed
             };
-            return Json(FlowContract.Execute(execut), JsonRequestBehavior.AllowGet);
+            return Json(FlowContract.Execute(execut).ToAjaxResult(), JsonRequestBehavior.AllowGet);
         }
 
-        /// <summary>
-        /// 退回执行
-        /// </summary>
-        /// <returns></returns>
+        [Description("工作流-任务-退回")]
         public ActionResult Backed(FlowExecuteDto dto)
         {
             var steps = new Dictionary<int, Dictionary<string,string>>();
@@ -162,7 +160,20 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             dto.Steps = steps;
             if (steps == null)
                 return Json(new OperationResult(OperationResultType.Error, "请指定退回人！"));
-            return Json(FlowContract.Execute(dto), JsonRequestBehavior.AllowGet);
+            return Json(FlowContract.Execute(dto).ToAjaxResult(), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [AjaxOnly]
+        [Description("工作流-任务-撤销")]
+        public ActionResult CallBack(Guid TaskId)
+        {
+            FlowExecuteDto dto = new FlowExecuteDto()
+            {
+                TaskId = TaskId,
+                ExecuteType = ExecuteType.CallBack
+            };
+            return Json(FlowContract.Execute(dto).ToAjaxResult());
         }
 
         #endregion

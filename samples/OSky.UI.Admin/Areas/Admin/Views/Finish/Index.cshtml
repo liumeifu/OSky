@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "流程列表";
+    Layout = "~/Areas/Admin/Views/Shared/_DataGridLayout.cshtml";
+
+    ViewBag.GridId = "flowForm";
+    ViewBag.GridDataUrl = Url.Action("GridData");
+    ViewBag.ToolbarItem = "search";
+}
+@section customScript
+{
+    <script type="text/javascript">
+        columns = [[
+            { field: "Id", title: "编号", hidden: true },
+            { field: "EntityId", title: "实体编号", hidden: true },
+            { field: "FlowItemId", title: "项目编号", hidden: true },
+            { field: "FlowDesignId", title: "流程编号", hidden: true },
+            { field: "EntityName", title: "事项名称", width: 150, sortable: true, halign: "center", align: "center" },
+            { field: "StepName", title: "步骤名称", width: 120, sortable: true, halign: "center", align: "center" },
+            { field: "SenderName", title: "发送人", width: 120, sortable: true, halign: "center", align: "center" },
+            { field: "CreatedTime", title: "发送时间", width: 150, sortable: true, halign: "center", align: "center", formatter: function (value) { return $.OSky.tools.formatDate(value); } },
+            { field: "Status", title: "状态", width: 100, halign: "center", align: "center", sortable: true, formatter: formatStatus },
+            { field: "StepDay", title: "时限(天)", width: 80, sortable: true, halign: "center", align: "center" },
+            { field: "DelayDay", title: "延期(天)", width: 80, sortable: true, halign: "center", align: "center",},
+            { field: "DelayReason", title: "延期事由", width: 250, halign: "center", align: "center",}
+        ]];
+
+        startfunction = function () {
+            //审批过程
+            function OpenGroupTask() {
+                var row = grid.datagrid("getSelected");
+                if (!row) {
+                    $.OSky.layer.msg.tip("请选择要编辑的行。");
+                    return;
+                }
+                $.OSky.layer.msg.open(2, "@Url.Action("ApprovalList", "Schedule")?ItemId=" + row.FlowItemId, false, null, null, "审批过程", "750px", "550px");
+            }
+            toolbarData.push({ text: "审批过程", iconCls: "pic_83", handler: OpenGroupTask });
+
+            //查看详情
+            function OptionFlow() {
+                var row = grid.datagrid("getSelected");
+                if (!row) {
+                    $.OSky.layer.msg.tip("请选择要编辑的行。");
+                    return;
+                }
+                $.OSky.layer.msg.detail(2, "/Flow/Matter/Detail?Id=" + row.Id, false);
+
+            }
+            toolbarData.push({ text: "查看详情", iconCls: "pic_139", handler: OptionFlow });
+
+        };
+
+        //格式化数据
+        function formatStatus(value) {
+            switch (value) {
+                case 1: return "待处理";
+                case 2: return "已打开";
+                case 10: return "正常办结";
+                case 20: return "已退回";
+                case 30: return "他人处理";
+                case 40: return "他人退回";
+                case 50: return "其他";
+                default:
+
+            }
+        }
+
+    </script>
+}

@@ -11,8 +11,12 @@
                 onSubmit: function () {
                     return $(this).form('validate');
                 },
-                success: function (data) {
-                    //ajaxResultHandler(data);
+                success: function (d) {
+                    var data = eval("(" + d + ")");
+                    if (data.Type == "Success")
+                        window.parent.location.href = '@Url.Action("Index", "Schedule")';
+                    else
+                        $.OSky.layer.msg.tip(data.Content);
                 }
             });
         }

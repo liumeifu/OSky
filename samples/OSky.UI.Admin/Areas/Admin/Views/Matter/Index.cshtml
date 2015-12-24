@@ -13,7 +13,7 @@
             { field: "Id", title: "编号", hidden: true },
             { field: "EntityName", title: "事项名称", width: 150, sortable: true, halign: "center", align: "center"},
             { field: "CreatorUserName", title: "创建人", width: 150, sortable: true, halign: "center", align: "center" },
-            { field: "CreatedTime", title: "创建时间", width: 150, sortable: true, halign: "center", align: "center" },
+            { field: "CreatedTime", title: "创建时间", width: 150, sortable: true, halign: "center", align: "center", formatter: function (value) { return $.OSky.tools.formatDate(value); } },
             { field: "StepDay", title: "时限（天）", width: 100, sortable: true, halign: "center", align: "center" },
             { field: "DelayDay", title: "延期（天）", width: 100, sortable: true, halign: "center", align: "center" },
             { field: "HandleDay", title: "办理天数", width: 100, sortable: true, halign: "center", align: "center" }
@@ -21,7 +21,7 @@
         ]];
 
         startfunction = function () {
-            //设置流程
+            //查看详情
             function OptionFlow() {
                 var row = grid.datagrid("getSelected");
                 if (!row) {
