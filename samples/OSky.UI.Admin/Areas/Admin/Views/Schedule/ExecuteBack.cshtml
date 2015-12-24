@@ -5,7 +5,7 @@
 
 @section footer{
     <script type="text/javascript">
-        function Save() {
+        function Save(index) {
             $('#exc-form').form('submit', {
                 url: '@Url.Action("Backed")',
                 onSubmit: function () {
@@ -13,8 +13,10 @@
                 },
                 success: function (d) {
                     var data = eval("(" + d + ")");
-                    if (data.Type == "Success")
+                    if (data.Type == "Success"){
+                        layer.close(index);
                         window.parent.location.href = '@Url.Action("Index", "Schedule")';
+                    }
                     else
                         $.OSky.layer.msg.tip(data.Content);
                 }

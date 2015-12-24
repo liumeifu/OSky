@@ -30,7 +30,7 @@ document.write('<script src="/Scripts/layer-2.0/extend/layer.ext.js"></script>')
         error: function (content) {
             layer.alert(content, { icon: 5 });
         },
-        open: function (type,content, btn, onYes, onCancel, title, width, height) {        //弹出层-父子操作
+        open: function (type,content, btn, onYes, onCancel, title, width, height,optionClose) {        //弹出层-父子操作
             layer.open({
                 type: type,                     //基本层类型(类型：Number，默认：0 信息框 1 页面层2 iframe层 3 加载层 4 tips层 )
                 content: content,               //内容（type=1 content可传入任意的文本或html；type=2 content是一个URL）
@@ -43,7 +43,8 @@ document.write('<script src="/Scripts/layer-2.0/extend/layer.ext.js"></script>')
                 yes: function (index, layero) {                   //或者使用btn1
                     if (onYes && (typeof onYes) == "function")
                         onYes(index, layero);                     //按钮【按钮一】的回调
-                    setTimeout("layer.close("+index+")",500);                           //关闭弹出层必须进行手工关闭
+                    if (optionClose != "undefined" && optionClose != false)
+                        layer.close(index);              //关闭弹出层必须进行手工关闭
                     
                 },
                 cancel: function (index) {                        //或者使用btn2
@@ -52,7 +53,7 @@ document.write('<script src="/Scripts/layer-2.0/extend/layer.ext.js"></script>')
                 },
             });
         },
-        full: function (type, content, btn, onYes, onCancel, title) {
+        full: function (type, content, btn, onYes, onCancel, title, optionClose) {
             var index = layer.open({
                 type: type,                     //基本层类型(类型：Number，默认：0 信息框 1 页面层2 iframe层 3 加载层 4 tips层 )
                 content: content,               //内容（type=1 content可传入任意的文本或html；type=2 content是一个URL）
@@ -63,7 +64,8 @@ document.write('<script src="/Scripts/layer-2.0/extend/layer.ext.js"></script>')
                 yes: function (index, layero) {                   //或者使用btn1
                     if (onYes && (typeof onYes) == "function")
                         onYes(index, layero);                     //按钮【按钮一】的回调
-                    layer.close(index);                           //关闭弹出层必须进行手工关闭
+                    if (optionClose != "undefined" && optionClose != false)
+                        layer.close(index);              //关闭弹出层必须进行手工关闭
                    
                 },
                 cancel: function (index) {                        //或者使用btn2

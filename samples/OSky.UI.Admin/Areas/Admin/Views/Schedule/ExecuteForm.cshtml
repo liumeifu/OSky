@@ -86,7 +86,7 @@
 
     }
 
-    function Save() {
+    function Save(index) {
         $('#exc-form').form('submit', {
             url: '@Url.Action("Execute")',
             onSubmit: function () {
@@ -94,8 +94,11 @@
             },
             success: function (d) {
                 var data = eval("(" + d + ")");
-                if (data.Type == "Success") 
+                if (data.Type == "Success") {
+                    layer.close(index);
+                    $.OSky.layer.msg.tip(data.Content);
                     window.parent.location.href = document.referrer;
+                }
                 else
                     $.OSky.layer.msg.tip(data.Content);
             }

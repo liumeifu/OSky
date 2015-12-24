@@ -64,7 +64,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         [Description("工作流-任务-查看")]
         public ActionResult Scan(Guid TaskId)
         {
-            return Json(FlowContract.OpenTask(TaskId).ToAjaxResult());
+            return Json(FlowContract.OpenTask(TaskId).ToAjaxResult(), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -126,7 +126,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             dto.Steps = steps;
             if (steps == null)
                 return Json(new OperationResult(OperationResultType.Error, "请指定发送人！").ToAjaxResult());
-            return Json(FlowContract.Execute(dto).ToAjaxResult(),JsonRequestBehavior.AllowGet);
+            return Json(FlowContract.Execute(dto).ToAjaxResult(), JsonRequestBehavior.AllowGet);
         }
 
         [AjaxOnly]
@@ -173,7 +173,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                 TaskId = TaskId,
                 ExecuteType = ExecuteType.CallBack
             };
-            return Json(FlowContract.Execute(dto).ToAjaxResult());
+            return Json(FlowContract.Execute(dto).ToAjaxResult(), JsonRequestBehavior.AllowGet);
         }
 
         #endregion

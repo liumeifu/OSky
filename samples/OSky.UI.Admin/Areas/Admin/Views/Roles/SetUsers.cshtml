@@ -40,7 +40,7 @@
                 $(this).tree('toggle', node.target);
             },
             onCheck: function (node, checked) {
-                node.Checked = checked;
+                setCheckedChildren(node, checked);
                 checkedNotes = $(this).tree('getChecked');
             }
         });
@@ -60,6 +60,18 @@
         data.checked = data.Checked;
         if(data.checked==true)
             $("#" + data.domId).find('span.tree-checkbox').attr("class","tree-checkbox tree-checkbox1");
+        }
+
+    //设置节点及子节点的Checked的值
+    function setCheckedChildren(node, checked)
+    {
+        node.Checked = checked;
+        node.checked = checked;
+        if (node.children != null)
+            for (var i = 0; i < node.children.length; i++) {
+                setCheckedChildren(node.children[i], checked);
+            }
+
     }
 
     //获取选中的节点

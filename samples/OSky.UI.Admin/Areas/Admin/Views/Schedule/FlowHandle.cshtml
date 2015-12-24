@@ -41,8 +41,8 @@
         Sende: function () {
             $.OSky.layer.msg.open(2, "@Url.Action("ExecuteForm")?TaskId=@Model.TaskId&FlowId=@Model.FlowId&ItemId=@Model.ItemId", true,
                     function (index, layero) {
-                        window[layero.find('iframe')[0]['name']].Save();
-                    }, null, "发送下一步", "450px", "570px");
+                        window[layero.find('iframe')[0]['name']].Save(index);
+                    }, null, "发送下一步", "450px", "570px",false);
         },
         Complete: function () {
             $.post('@Url.Action("Completed")', { TaskId: '@Model.TaskId', FlowId: '@Model.FlowId' }, ajaxResultHandler);
@@ -50,8 +50,8 @@
         Back: function () {
             $.OSky.layer.msg.open(2, "@Url.Action("ExecuteBack")?TaskId=@Model.TaskId&FlowId=@Model.FlowId", true,
                 function (index, layero) {
-                    window[layero.find('iframe')[0]['name']].Save();
-                }, null, "退回处理", "340px", "280px");
+                    window[layero.find('iframe')[0]['name']].Save(index);
+                }, null, "退回处理", "340px", "280px", false);
         },
         CallBack: function () {
             $.post('@Url.Action("CallBack")', { TaskId: '@Model.TaskId' }, ajaxResultHandler);

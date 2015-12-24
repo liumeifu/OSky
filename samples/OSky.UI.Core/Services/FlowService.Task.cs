@@ -421,7 +421,7 @@ namespace OSky.UI.Services
             }
             //标记本任务为待处理
             var currentTask = FlowTaskRepository.Entities.Where(c => c.Id == task.TaskId).Single();
-            CompletedTask(currentTask, 1, "", "撤销的任务");
+            CompletedTask(currentTask, 1, "", "");
             var currentSiblingTask = GetSiblingTask(currentTask.FlowItemId, currentTask.StepId).Where(c => c.Status == 30).ToList();
             foreach (var item in currentSiblingTask)
             {
@@ -655,7 +655,7 @@ namespace OSky.UI.Services
         protected void GetReceiver(Guid flowId,ref string userId,ref string userName)
         {
             var uid = userId;
-            var delegation = FlowDelegationRepository.Entities.Where(c => c.FlowDesignId == flowId && c.Status == 1 && c.CreatorUserId == uid
+            var delegation = FlowDelegationRepository.Entities.Where(c => c.FlowDesignId == flowId && c.Status == 0 && c.CreatorUserId == uid
                 && c.StartTime <= DateTime.Now && c.EndTime >= DateTime.Now).Select(m => new { m.TrusteeId,m.TrusteeName}).FirstOrDefault();
             if (delegation != null)
             {
