@@ -24,13 +24,13 @@
                 <div class="main-content-left">
                     <div class="td-left">
                         <label class="form-label"><span style="color:red">*</span>开始时间：</label>
-                        <input class="easyui-datetimebox" style=" width:190px;" id="StartTime" name="StartTime" data-options="required:true,editable: false">
+                        <input class="easyui-datetimebox" style=" width:190px;" id="StartTime" name="StartTime" value="@Model.StartTime" data-options="required:true,validType:'datetime'">
                     </div>
                 </div>
                 <div class="main-content-right">
                     <div class="td-right">
                         <label class="form-label"><span style="color:red">*</span>结束时间：</label>
-                        <input class="easyui-datetimebox" style=" width:190px;" id="EndTime" name="EndTime" data-options="required:true,editable: false">
+                        <input class="easyui-datetimebox" style=" width:190px;" id="EndTime" name="EndTime" value="@Model.EndTime" data-options="required:true,validType:'datetime'">
                     </div>
                 </div>
                 <div class="bills-footer">
@@ -46,6 +46,7 @@
 
 
 @section footer{
+    <script src="~/Scripts/jquery.validateRules.js"></script>
     <script type="text/javascript">
     $(function () {
         var typeval = '@Model.TypeVal';
@@ -53,8 +54,8 @@
             $('select[name="TypeVal"]').val(typeval);
         @*$('#StartTime').datetimebox('setValue', '@Model.StartTime');
         $('#EndTime').datetimebox('setValue', '@Model.EndTime');*@
-        $('input[name="StartTime"]').val('@Model.StartTime');
-        $('input[name="EndTime"]').val('@Model.EndTime');
+        @*$('input[name="StartTime"]').val('@Model.StartTime');
+        $('input[name="EndTime"]').val('@Model.EndTime');*@
     })
 
     //父窗体调用保存

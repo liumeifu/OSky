@@ -60,7 +60,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                             Status=form.Status,
                             FlowDesignId=r.FlowDesignId
                         })
-                        .WhereIf(c=>c.FormName==formName,!formName.IsNullOrEmpty());
+                        .WhereIf(c=>c.FormName.Contains(formName),!formName.IsNullOrEmpty());
             var total = query.Count();
             if (request.PageCondition.SortConditions.Length > 0  )
             {

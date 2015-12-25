@@ -527,6 +527,7 @@
     <Content Include="Areas\Admin\Views\Form\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Schedule\ApprovalList.cshtml" />
     <Content Include="Areas\Admin\Views\Finish\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Archives\Index.cshtml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -594,6 +595,7 @@
     <Content Include="Views\web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Compile Include="Areas\Admin\Controllers\Flow\ArchivesController.cs" />
     <Compile Include="Areas\Admin\Controllers\Flow\DelegateController.cs" />
     <Compile Include="Areas\Admin\Controllers\Flow\FinishController.cs" />
     <Compile Include="Areas\Admin\Controllers\Flow\FlowController.cs" />

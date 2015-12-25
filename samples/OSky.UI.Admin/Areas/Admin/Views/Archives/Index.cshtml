@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "表单信息列表";
+    Layout = "~/Areas/Admin/Views/Shared/_DataGridLayout.cshtml";
+
+    ViewBag.GridId = "flowForm";
+    ViewBag.GridDataUrl = Url.Action("GridData");
+    ViewBag.ToolbarItem = "search";
+}
+@section customScript
+{
+    <script type="text/javascript">
+        columns = [[
+            { field: "Id", title: "编号", hidden: true },
+            { field: "TypeName", title: "事项类型", width: 150, sortable: true, halign: "center", align: "center", },
+            { field: "FormName", title: "事项名称", width: 150, sortable: true, halign: "center", align: "center", },
+            { field: "CreatorUserName", title: "创建人姓名", width: 120, sortable: true, halign: "center", align: "center" },
+            { field: "CreatTime", title: "创建时间", width: 150, sortable: true, halign: "center", align: "center", formatter: function (value) { return $.OSky.tools.formatDate(value); } }
+        ]];
+
+       
+    </script>
+}

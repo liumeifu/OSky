@@ -15,9 +15,9 @@ using OSky.Web.Mvc.Extensions;
 
 namespace OSky.UI.Admin.Areas.Admin.Controllers
 {
+    [Description("工作流-已办事项")]
     public class FinishController : AdminBaseController
     {
-
         /// <summary>
         /// 获取或设置 工作流业务对象
         /// </summary>

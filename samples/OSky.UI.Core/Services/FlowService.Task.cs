@@ -452,6 +452,7 @@ namespace OSky.UI.Services
                 currentTask.TaskNote = task.Note;
                 currentTask.Status = 10;
                 currentTask.CompletedTime = DateTime.Now;
+
                 FlowTaskRepository.UnitOfWork.TransactionEnabled = true;  //事务处理
                 
                 if (currentTask.IsArchive)
