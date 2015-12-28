@@ -137,7 +137,8 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             FlowExecuteDto execut = new FlowExecuteDto()
             {
                 TaskId = TaskId,
-                ExecuteType = ExecuteType.Completed
+                ExecuteType = ExecuteType.Completed,
+                SenderName = Operator.NickName
             };
             return Json(FlowContract.Execute(execut).ToAjaxResult(), JsonRequestBehavior.AllowGet);
         }

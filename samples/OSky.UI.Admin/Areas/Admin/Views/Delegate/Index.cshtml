@@ -3,6 +3,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_DataGridLayout.cshtml";
 
     ViewBag.GridId = "flowDelegate";
+    ViewBag.ToolbarItem = "add,edit,save,cancel,search";
     ViewBag.GridDataUrl = Url.Action("GridData");
     ViewBag.AddUrl = Url.Action("Add");
     ViewBag.EditUrl = Url.Action("Edit");
@@ -44,6 +45,11 @@
                             var treeData = new TreeHelper(data).dataTransferer();
                             return treeData;
                         },
+                        onLoadSuccess: function () {
+                            var ed = grid.datagrid('getEditor', { index: GridCurrentRowIndex, field: 'TrusteeName' });
+                            if ($(ed.target).combotree('getValue') == "undefined")
+                                $(ed.target).combotree('setValue', "");
+                        },
                         onClick: function (node) {
                             $(this).tree('toggle', node.target);
                             var ed = grid.datagrid('getEditor', { index: GridCurrentRowIndex, field: 'TrusteeName' });
@@ -61,12 +67,16 @@
                 }
             },
             {
-                field: "StartTime", title: "委托起始时间", width: 150, sortable: true, halign: "center", align: "center", formatter: function (value) { return $.OSky.tools.formatDate(value); },
+                field: "StartTime", title: "委托起始时间", width: 150, sortable: true, halign: "center", align: "center", formatter: function (value) { return $.OSky.tools.formatDate(value,"yyyy-MM-dd"); },
                 editor: { type: "datebox", options: { required: true, editable: false, validType: "length[1,100]" } }
             },
             {
-                field: "EndTime", title: "委托结束时间", width: 150, sortable: true, halign: "center", align: "center", formatter: function (value) { return $.OSky.tools.formatDate(value); },
-                editor: { type: "datebox", options: { required: true, editable: false, validType: "length[1,100]" } }
+                field: "EndTime", title: "委托结束时间", width: 150, sortable: true, halign: "center", align: "center", formatter: function (value) { return $.OSky.tools.formatDate(value, "yyyy-MM-dd"); },
+                editor: {
+                    type: "datebox", options: {
+                        required: true, editable: false, validType: "length[1,100]",
+                    }
+                }
             },
             {
                 field: "Status", title: "状态信息", width: 80, halign: "center", align: "center", sortable: true, halign: "center", align: "center", formatter: formatStatus,
