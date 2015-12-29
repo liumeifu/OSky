@@ -119,9 +119,9 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                 dto.CreatorUserId = model.CreatorUserId;
                 dto.TypeVal = model.TypeVal;
                 dto.Reason = model.Reason;
-                dto.StartTime = model.StartTime;
-                dto.EndTime = model.EndTime;
             }
+            dto.StartTime = dto.StartTime == DateTime.MinValue ? DateTime.Now : dto.StartTime;
+            dto.EndTime = dto.EndTime == DateTime.MinValue ? DateTime.Now : dto.EndTime;
             dto.TypeHtml = CommonContract.GetDropdownOptionHtml("QJLX");
             return View(dto);
         }

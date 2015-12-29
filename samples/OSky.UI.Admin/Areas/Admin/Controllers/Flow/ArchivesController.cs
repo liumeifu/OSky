@@ -35,9 +35,10 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
         public ActionResult GridData(string entityName)
         {
             GridRequest request = new GridRequest(Request);
-            var query = (from a in FlowContract.FlowArchives
+            var query = (from a in FlowContract.FlowArchives where a.CreatorUserId==Operator.UserId 
                          join i in FlowContract.FlowItems on a.FlowItemId equals i.Id
-                         join f in FlowContract.FlowForms on i.EntityId equals f.Id 
+                         join r in FlowContract.FlowRelateForms on i.FlowDesignId equals r.FlowDesignId
+                         join f in FlowContract.FlowForms on r.FlowFormId equals f.Id 
                          join d in CommonContract.Dictionarys on f.TypeVal equals d.Value
                          select new FlowFormDto
                          {
