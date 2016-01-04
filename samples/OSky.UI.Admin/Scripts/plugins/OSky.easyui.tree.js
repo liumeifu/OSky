@@ -2,11 +2,14 @@
 	this.list = list;
 }
 (function (TreeHelper) {
-	function getAllChildren(list, item) {
-		var children = getNextLevelChildren(list, item);
-		for (var i = 0, ii = children.length; i < ii; i++) {
-			getAllChildren(list, children[i]);
-		}
+    function getAllChildren(list, item) {
+        if (item.Type == 0)   // 如果type=1为叶子节点
+        {
+            var children = getNextLevelChildren(list, item);
+            for (var i = 0, ii = children.length; i < ii; i++) {
+                getAllChildren(list, children[i]);
+            }
+        }
 	}
 	//遍历list剩下的数据，找到item的下一层的子节点
 	function getNextLevelChildren(list, item) {
