@@ -62,7 +62,8 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                 {
                     id = m.Id,
                     pid = m.ParentId,
-                    text = m.Name
+                    text = m.Name,
+                    Type = 0
                 }).ToList();
             return Json(roots, JsonRequestBehavior.AllowGet);
 

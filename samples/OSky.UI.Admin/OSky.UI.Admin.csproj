@@ -168,6 +168,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\images\checkmark.gif" />
     <Content Include="Content\images\checknomark.gif" />
     <Content Include="Content\images\icon.png" />
@@ -398,11 +400,6 @@
     <Content Include="Content\themes\icons\filesave.png" />
     <Content Include="Content\themes\icons\filter.png" />
     <Content Include="Content\themes\icons\help.png" />
-    <Content Include="Content\themes\icons\large_chart.png" />
-    <Content Include="Content\themes\icons\large_clipart.png" />
-    <Content Include="Content\themes\icons\large_picture.png" />
-    <Content Include="Content\themes\icons\large_shapes.png" />
-    <Content Include="Content\themes\icons\large_smartart.png" />
     <Content Include="Content\themes\icons\lock.png" />
     <Content Include="Content\themes\icons\man.png" />
     <Content Include="Content\themes\icons\mini_add.png" />
@@ -470,6 +467,7 @@
     <Content Include="Content\themes\metro\validatebox.css" />
     <Content Include="Content\themes\metro\window.css" />
     <Content Include="Content\themes\mobile.css" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="packages.config">
@@ -528,6 +526,10 @@
     <Content Include="Areas\Admin\Views\Schedule\ApprovalList.cshtml" />
     <Content Include="Areas\Admin\Views\Finish\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Archives\Index.cshtml" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
