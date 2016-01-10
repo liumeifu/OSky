@@ -19,6 +19,7 @@ using Microsoft.AspNet.SignalR.Hubs;
 using OSky.Core.Reflection;
 using OSky.Utility.Extensions;
 using OSky.Web.SignalR.Properties;
+using OSky.Utility.Data;
 
 
 namespace OSky.Web.SignalR.Initialize
@@ -50,7 +51,8 @@ namespace OSky.Web.SignalR.Initialize
             {
                 throw new InvalidOperationException(Resources.HubMethodInfoFinder_TypeNotHubType.FormatWith(type.FullName));
             }
-            MethodInfo[] methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public).ToArray();
+            MethodInfo[] methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public)
+                .Where(m => typeof(OperationResult).IsAssignableFrom(m.ReturnType) || m.ReturnType == typeof(Task<OperationResult>)).ToArray();
             return methods;
         }
     }

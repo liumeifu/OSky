@@ -14,6 +14,8 @@ using OSky.Utility.Extensions;
 using OSky.UI.Models.Flow;
 using OSky.Core.Data.Extensions;
 using OSky.Utility.Data;
+using System.Threading.Tasks;
+using Microsoft.AspNet.SignalR;
 
 namespace OSky.UI.Admin.Areas.Admin.Controllers
 {
@@ -77,6 +79,16 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             dto.SenderId = Operator.UserId;
             dto.SenderName = Operator.NickName;
             var re = FlowContract.Execute(dto);
+
+            ////线程推送
+            //Task.Factory.StartNew(
+            //    (flowContract) =>
+            //    {
+            //        int taskCount = ((IFlowContract)flowContract).FlowTasks.Count(c => c.Status <= 2 && c.ReceiverId == Operator.UserId);
+            //        IHubContext hubcontext = GlobalHost.ConnectionManager.GetHubContext<SignalFlowService>();
+            //        hubcontext.Clients.All.AddTask(taskCount);
+            //    },FlowContract);
+
             return Json(re.ToAjaxResult(), JsonRequestBehavior.AllowGet);
         }
 

@@ -88,7 +88,7 @@ namespace OSky.Web.SignalR.Initialize
             {
                 throw new InvalidOperationException(Resources.FunctionHandler_DefindActionTypeIsNull.FormatWith(method.Name));
             }
-            if (typeof(IHub).IsAssignableFrom(type))
+            if (!typeof(IHub).IsAssignableFrom(type))
             {
                 throw new InvalidOperationException(Resources.FunctionHandler_MethodOwnTypeNotHubType.FormatWith(method.Name, type.FullName));
             }

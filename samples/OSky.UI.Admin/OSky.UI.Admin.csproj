@@ -592,6 +592,8 @@
     <Content Include="Scripts\plugins\datagrid-detailview.js" />
     <Content Include="Scripts\plugins\datagrid-filter.js" />
     <Content Include="Scripts\plugins\datagrid-groupview.js" />
+    <Content Include="Scripts\plugins\jquery.signalR-2.2.0.js" />
+    <Content Include="Scripts\plugins\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\plugins\OSky.easyui.tree.js" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\web.config" />
@@ -607,6 +609,7 @@
     <Compile Include="Areas\Admin\Controllers\Flow\ScheduleController.cs" />
     <Compile Include="Areas\Admin\Controllers\Form\FormController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SignalR\SignalFlowService.cs" />
     <Compile Include="Areas\Admin\Controllers\Systems\DictionarysController.cs" />
     <Compile Include="Startup\Startup.SignalR.cs" />
     <Compile Include="Startup\Startup.WebApi.cs" />
@@ -704,6 +707,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Admin\Views\SignalFlow\" />
     <Folder Include="Areas\Manage\Controllers\" />
     <Folder Include="Areas\Manage\Models\" />
     <Folder Include="Areas\Manage\Views\Shared\" />

@@ -53,7 +53,7 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Description("登录-登录-验证")]
+        [Description("管理-登录-验证")]
         public ActionResult Login(LoginDto dto)
         {
             dto.CheckNotNull("dto");
@@ -94,6 +94,15 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             }
             ViewBag.ErrorsMessage = GetModelErrors(ModelState);
             return View(dto);
+        }
+
+
+        [Description("管理-登录-退出")]
+        public ActionResult LoginOut()
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            Response.Redirect("Index");  
+            return View();
         }
 
         #endregion
