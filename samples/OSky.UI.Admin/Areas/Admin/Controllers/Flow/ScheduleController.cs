@@ -56,7 +56,14 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             return Json(page.ToGridData(), JsonRequestBehavior.AllowGet);
 
         }
-
+        [HttpPost]
+        [AjaxOnly]
+        [Description("工作流-任务-记录数")]
+        public ActionResult GetTaskCount()
+        {
+            int taskCount = FlowContract.FlowTasks.Count(c => c.Status <= 2 && c.ReceiverId == Operator.UserId);
+            return Json(taskCount, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region 功能方法
@@ -79,15 +86,8 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             dto.SenderId = Operator.UserId;
             dto.SenderName = Operator.NickName;
             var re = FlowContract.Execute(dto);
-
-            ////线程推送
-            //Task.Factory.StartNew(
-            //    (flowContract) =>
-            //    {
-            //        int taskCount = ((IFlowContract)flowContract).FlowTasks.Count(c => c.Status <= 2 && c.ReceiverId == Operator.UserId);
-            //        IHubContext hubcontext = GlobalHost.ConnectionManager.GetHubContext<SignalFlowService>();
-            //        hubcontext.Clients.All.AddTask(taskCount);
-            //    },FlowContract);
+            //推送
+            ExecTask();
 
             return Json(re.ToAjaxResult(), JsonRequestBehavior.AllowGet);
         }
@@ -106,6 +106,9 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                 SenderId = Operator.UserId,
                 SenderName = Operator.NickName
             };
+            //推送
+            ExecTask();
+
             return Json(Execute(Edto), JsonRequestBehavior.AllowGet);
 
         }
@@ -138,6 +141,9 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             dto.Steps = steps;
             if (steps == null)
                 return Json(new OperationResult(OperationResultType.Error, "请指定发送人！").ToAjaxResult());
+            //推送
+            ExecTask();
+
             return Json(FlowContract.Execute(dto).ToAjaxResult(), JsonRequestBehavior.AllowGet);
         }
 
@@ -152,6 +158,9 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                 ExecuteType = ExecuteType.Completed,
                 SenderName = Operator.NickName
             };
+            //推送
+            ExecTask();
+
             return Json(FlowContract.Execute(execut).ToAjaxResult(), JsonRequestBehavior.AllowGet);
         }
 
@@ -173,6 +182,9 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             dto.Steps = steps;
             if (steps == null)
                 return Json(new OperationResult(OperationResultType.Error, "请指定退回人！"));
+            //推送
+            ExecTask();
+
             return Json(FlowContract.Execute(dto).ToAjaxResult(), JsonRequestBehavior.AllowGet);
         }
 
@@ -186,6 +198,9 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
                 TaskId = TaskId,
                 ExecuteType = ExecuteType.CallBack
             };
+            //推送
+            ExecTask();
+
             return Json(FlowContract.Execute(dto).ToAjaxResult(), JsonRequestBehavior.AllowGet);
         }
 
@@ -238,6 +253,22 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
             }).ToList();
             return View(list);
         }
+        #endregion
+
+        #region 内部方法
+
+        private void ExecTask()
+        {
+            int taskCount = FlowContract.FlowTasks.Count(c => c.Status <= 2 && c.ReceiverId == Operator.UserId);
+            //线程推送
+            Task.Factory.StartNew(
+                () =>
+                {
+                    IHubContext hubcontext = GlobalHost.ConnectionManager.GetHubContext<SignalFlowService>();
+                    hubcontext.Clients.All.AddTask(taskCount);
+                });
+        }
+
         #endregion
     }
 }

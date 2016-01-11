@@ -6,13 +6,16 @@
 @section header{
 <link href="/Content/font-awesome.min.css" rel="stylesheet" />
     <style>
+        li:hover {
+            background-color: #eee;
+        }
         a p {
             margin: 0 0 0 -8px;
             -webkit-box-sizing: border-box;
         }
         a p.counter {
             position: absolute;
-            top: 15px;
+            top: 12px;
             height: 18px;
             min-width: 18px;
             padding: 5px -2px 0px 1px;
@@ -23,12 +26,15 @@
             color: white;
             font-size: 11px;
         }
-
+        ul,li{
+            padding: 0 0px;
+            margin: 0 0 0 0px !important;
+        }
         .ulclass li {
             list-style-type: none;
             float: left;
             display: block;
-            padding: 10px 0px 0px 30px;
+            padding: 20px 20px 20px 20px;
         }
     </style>
 
@@ -41,7 +47,7 @@
         <div style="float:right;padding:2px 20px 0px 30px;">
             <ul class="ulclass" style="float:left;">
                 <li>
-                    <a href="#" title="代办事项">
+                    <a href="#" title="代办事项" onclick="click_atask()" style="height:80px;width:80px;">
                         <span class="icon-bell" style="width: 20px; height: 20px; font-size: 24px;color:#aaa"></span>
                         <p id="pTaskCount" class="counter" style="display:none;"></p>
                     </a>
@@ -97,7 +103,7 @@
         var chatHub = $.connection.SignalFlow;
 
         registerClientMethods(chatHub);
-        //registerEvents(chatHub);
+        registerEvents(chatHub);
 
         $.connection.hub.start();
 
@@ -112,27 +118,25 @@
         //注册客户端事件
         function registerEvents(chatHub) {
 
-            //$("#logOut").click(function {
-            //chatHub.server.SendScheduleTaskCount("1");
+            //$("#a_daib").click(function () {
+            //    chatHub.server.sendScheduleTaskCount("1");
             //});
-            Send();
         }
-        function Send() {
-            chatHub.server.SendScheduleTaskCount("1").fail(function (e) {
-                console.warn(e);
-            });
-        }
-
+        
         function Display_P(count)
         {
             var p = $("#pTaskCount");
             if (count > 0) {
-                p.val(count);
+                p.html(count);
                 p.show();
             } else {
                 p.hide();
             }
 
+        }
+
+        function click_atask() {
+            addTab("代办事宜", "@Url.Action("Index", "Schedule")", "pic_123");
         }
 
         $(function () {
@@ -182,6 +186,18 @@
                     tabHandle(this, item.id);
                 }
             });
+
+            //获取代办数
+            $.post("@Url.Action("GetTaskCount","Schedule")", function (count) {
+                var p = $("#pTaskCount");
+                if (count > 0) {
+                    p.html(count);
+                    p.show();
+                } else {
+                    p.hide();
+                }
+            });
+
         });
 
         function addTab(title, url, icon) {

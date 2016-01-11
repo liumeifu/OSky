@@ -17,19 +17,19 @@ namespace OSky.UI.Admin.Areas.Admin.Controllers
     [Description("工作流-任务-推送")]
     public class SignalFlowService : Hub
     {
-        /// <summary>
-        /// 获取或设置 工作流业务对象
-        /// </summary>
-        public IFlowContract FlowContract { get; set; }
+        ///// <summary>
+        ///// 获取或设置 工作流业务对象
+        ///// </summary>
+        //public IFlowContract FlowContract { get; set; }
 
-        /// <summary>
-        /// 向客户端推送 对应接受人的代办任务数量
-        /// </summary>
-        /// <param name="receiverId">任务接受人Id</param>
-        public void SendScheduleTaskCount(string receiverId)
-        {
-            int taskCount = FlowContract.FlowTasks.Count(c => c.Status <= 2 && c.ReceiverId == receiverId);
-            Clients.All.AddTask(taskCount);
-        }
+        ///// <summary>
+        ///// 向客户端推送 对应接受人的代办任务数量
+        ///// </summary>
+        ///// <param name="receiverId">任务接受人Id</param>
+        //public void SendScheduleTaskCount(string receiverId)
+        //{
+        //    int taskCount = FlowContract.FlowTasks.Count(c => c.Status <= 2 && c.ReceiverId == receiverId);
+        //    Clients.All.AddTask(taskCount);
+        //}
     }
 }
