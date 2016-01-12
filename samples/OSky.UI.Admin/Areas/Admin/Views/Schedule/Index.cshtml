@@ -4,7 +4,7 @@
 
     ViewBag.GridId = "flowForm";
     ViewBag.GridDataUrl = Url.Action("GridData");
-    ViewBag.ToolbarItem = "edit,save,cancel,search";
+    ViewBag.ToolbarItem = "edit,save,cancel";
 }
 @section customScript
 {
@@ -61,4 +61,27 @@
         }
 
     </script>
+}
+
+@section footHtml
+{
+    <table class="query-table" id="advance">
+    <tr>
+        <th>步骤名称</th>
+        <td><input type="text" name="Name" class="easyui-validatebox textbox" style="width:200px" /></td>
+    </tr>
+    <tr>
+        <th>发送人</th>
+        <td><input type="text" name="Name" class="easyui-validatebox textbox" style="width:200px" /></td>
+    </tr>
+    <tr>
+        <th>发送时间</th>
+        <td><input type="text" name="Name" class="easyui-validatebox textbox" style="width:200px" /></td>
+    </tr>
+    <tr>
+        <th>状态</th>
+        <td><input type="text" name="Name" class="easyui-validatebox textbox" style="width:200px" /></td>
+    </tr>
+</table>
+
 }

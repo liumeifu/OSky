@@ -10,6 +10,7 @@
     ViewBag.EditUrl = Url.Action("Edit");
     ViewBag.DeleteUrl = Url.Action("Delete");
 }
+
 @section customScript
 {
     <script type="text/javascript">
@@ -52,7 +53,7 @@
             }
             toolbarData.push({ text: "设置人员", iconCls: "pic_2", handler: functionUser });
             toolbarData.push({ text: "功能权限", iconCls: "pic_94", handler: functionPermission });
-        };
+    };
 
         @*endfunction = function() {
             var $tree = $("#tree-@ViewBag.TreeId");
@@ -79,6 +80,18 @@
         };*@
     </script>
 }
+
+@section endScript{
+    <script type="text/javascript">
+
+        $(function () {
+            //$('.datagrid-toolbar table tbody tr').append("<td><input id='searchKey' type='text' /></td>");
+           
+        });
+        
+    </script>
+    }
+
 @*@section headHtml
 {
     <div id="layout-@ViewBag.GridId" class="easyui-layout" data-options="fit:true">

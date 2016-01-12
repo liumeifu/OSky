@@ -6,6 +6,13 @@
 #main-nav .tree-node { height: 35px; }
 #main-nav .tree-title { line-height: 35px; }
 
+/*查询条件table-------begin----------*/
+ .query-table {padding: 0px; width: auto; border-collapse: collapse; margin: 5px 0px 0px 0px; padding: 0px; background: #f1f1f1; float: right; position: absolute;
+            z-index: 1; border-collapse: collapse; border-spacing: 0; }
+ .query-table tr th { text-align: right; font-weight: normal; overflow: hidden; border: solid 1px #ddd; color: #444444; padding:0 10px ; font-size:12px; width:90px; }
+ .query-table tr td { border: solid 1px #ddd; text-align: left; padding: 3px 5px;  }
+/*查询条件table-------end----------*/
+
 /*表单-------begin----------*/
 .formTable table { width: 100%;border-collapse: collapse; }
 .formTable table th,

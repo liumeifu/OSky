@@ -42,7 +42,7 @@ a .icon-stack,a .icon-spin{display:inline-block;text-decoration:none;}
 a .icon-rotate-90:before,a .icon-rotate-180:before,a .icon-rotate-270:before,a .icon-flip-horizontal:before,a .icon-flip-vertical:before{display:inline-block;}
 .icon-glass:before{content:"\f000";}
 .icon-music:before{content:"\f001";}
-.icon-search:before{content:"\f002";}
+/*.icon-search:before{content:"\f002";}*/
 .icon-envelope-alt:before{content:"\f003";}
 .icon-heart:before{content:"\f004";}
 .icon-star:before{content:"\f005";}
@@ -53,7 +53,7 @@ a .icon-rotate-90:before,a .icon-rotate-180:before,a .icon-rotate-270:before,a .
 .icon-th:before{content:"\f00a";}
 .icon-th-list:before{content:"\f00b";}
 .icon-ok:before{content:"\f00c";}
-.icon-remove:before{content:"\f00d";}
+/*.icon-remove:before{content:"\f00d";}*/
 .icon-zoom-in:before{content:"\f00e";}
 .icon-zoom-out:before{content:"\f010";}
 .icon-power-off:before,.icon-off:before{content:"\f011";}
@@ -104,7 +104,7 @@ a .icon-rotate-90:before,a .icon-rotate-180:before,a .icon-rotate-270:before,a .
 .icon-map-marker:before{content:"\f041";}
 .icon-adjust:before{content:"\f042";}
 .icon-tint:before{content:"\f043";}
-.icon-edit:before{content:"\f044";}
+/*.icon-edit:before{content:"\f044";}*/
 .icon-share:before{content:"\f045";}
 .icon-check:before{content:"\f046";}
 .icon-move:before{content:"\f047";}
@@ -215,7 +215,7 @@ a .icon-rotate-90:before,a .icon-rotate-180:before,a .icon-rotate-270:before,a .
 .icon-cut:before{content:"\f0c4";}
 .icon-copy:before{content:"\f0c5";}
 .icon-paperclip:before,.icon-paper-clip:before{content:"\f0c6";}
-.icon-save:before{content:"\f0c7";}
+/*.icon-save:before{content:"\f0c7";}*/
 .icon-sign-blank:before{content:"\f0c8";}
 .icon-reorder:before{content:"\f0c9";}
 .icon-list-ul:before{content:"\f0ca";}
@@ -240,7 +240,7 @@ a .icon-rotate-90:before,a .icon-rotate-180:before,a .icon-rotate-270:before,a .
 .icon-sort-up:before{content:"\f0de";}
 .icon-envelope:before{content:"\f0e0";}
 .icon-linkedin:before{content:"\f0e1";}
-.icon-rotate-left:before,.icon-undo:before{content:"\f0e2";}
+/*.icon-rotate-left:before,.icon-undo:before{content:"\f0e2";}*/
 .icon-legal:before{content:"\f0e3";}
 .icon-dashboard:before{content:"\f0e4";}
 .icon-comment-alt:before{content:"\f0e5";}

@@ -152,10 +152,6 @@
         }
 
         var toolbarData = [
-             @if (toolbarItem.Contains("search"))
-            {
-                @:{ text: "搜索", iconCls: "icon-search", handler: searchRows },
-            }
             @if (toolbarItem.Contains("add"))
             {
                 @:{ text: "新增", iconCls: "icon-add", handler: addNewRow },
@@ -214,7 +210,11 @@
             if (enableFilterData) {
                 grid.datagrid("enableFilter", filterData);
             }
-            
+            //搜索条件
+            $('.datagrid-toolbar').css({ "float": "left", "display": "block", "width": "100%" })
+               .append("<div id='divSearch' style='float:right;'><a id='advanceSearch' href='javascript:void(0)' onclick='moreCondition()' class='btn btn-info' style='top:2px;right:262px;text-decoration:none; position: absolute;'><i id='searchPrompt' class='icon-double-angle-down' style='font-size:12px;'></i> 高级搜索</a><input id='searchKey' type='text'  placeholder='输入查询条件' style='padding-left:5px;'/><a href='javascript:void(0)' class='textbox-icon searchbox-button' icon-index='0' tabindex='-1' style='top:3px;right:10px;width: 18px; height: 16px; position: absolute;'></a></div>");
+            $('#searchKey').css({ "width": "250px", "height": "23px", "position": "absolute", "right": "10px", "top": "2px" });
+
             endfunction();
         });
 
@@ -311,6 +311,45 @@
 
         function loadError() {
             $.OSky.layer.msg.error("远程数据载入失败，请重试或检查参数。");
+        }
+
+        //高级搜索层
+        function moreCondition() {
+            if ($("#advanceSearch").find("i").hasClass("icon-double-angle-up")) {
+                $("#advanceSearch").find("i").removeClass("icon-double-angle-up");
+                $("#advanceSearch").find("i").addClass("icon-double-angle-down");
+                $("#advance").fadeOut("fast");
+                $(document).unbind("mousedown");
+                $(parent.document).unbind("mousedown");
+            } else {
+                $("#advanceSearch").find("i").removeClass("icon-double-angle-down");
+                $("#advanceSearch").find("i").addClass("icon-double-angle-up");
+                $("#advance").css({ right: '10px', top: ($('.datagrid-toolbar').outerHeight(true) + 30) + 'px' })
+                $("#advance").slideDown('fast');
+                $(document).bind("mousedown", function (event) {
+                    if (!(event.target.id == "advanceSearch" || event.target.id == "advance"
+                    || $(event.target).parents("#advance").length > 0
+                    || $(event.target).hasClass("query-table")
+                    || $(event.target).parents(".query-table").length > 0)) {
+                        $("#advanceSearch").find("i").removeClass("icon-double-angle-up");
+                        $("#advanceSearch").find("i").addClass("icon-double-angle-down");
+                        $("#advance").fadeOut("fast");
+                        $(document).unbind("mousedown");
+                    }
+                });
+
+                $(parent.document).bind("mousedown", function (event) {
+                    if (!(event.target.id == "advanceSearch" || event.target.id == "advance"
+                    || $(event.target).parents("#advance").length > 0
+                    || $(event.target).hasClass("query-table")
+                    || $(event.target).parents(".query-table").length > 0)) {
+                        $("#advanceSearch").find("i").removeClass("icon-double-angle-up");
+                        $("#advanceSearch").find("i").addClass("icon-double-angle-down");
+                        $("#advance").fadeOut("fast");
+                        $(parent.document).unbind("mousedown");
+                    }
+                });
+            }
         }
 
     </script>
