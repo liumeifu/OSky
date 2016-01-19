@@ -4,7 +4,6 @@
     string navDataUrl = Url.Action("GetMenuData");
 }
 @section header{
-@*<link href="/Content/font-awesome.min.css" rel="stylesheet" />*@
     <style>
         li:hover {
             background-color: #eee;
@@ -15,7 +14,7 @@
         }
         a p.counter {
             position: absolute;
-            top: 12px;
+            top: 8px;
             height: 18px;
             min-width: 18px;
             padding: 5px -2px 0px 1px;
@@ -34,7 +33,12 @@
             list-style-type: none;
             float: left;
             display: block;
-            padding: 20px 20px 20px 20px;
+            padding: 15px 20px 25px 20px;
+        }
+        .aspan {
+            position: absolute;
+            margin: 0 0 0 -12px;
+            color: #aaa;
         }
     </style>
 
@@ -47,20 +51,22 @@
         <div style="float:right;padding:2px 20px 0px 30px;">
             <ul class="ulclass" style="float:left;">
                 <li>
-                    <a href="#" title="代办事项" onclick="click_atask()" style="height:80px;width:80px;">
-                        <span class="icon-bell" style="width: 20px; height: 20px; font-size: 24px;color:#aaa"></span>
+                    <a href="#" onclick="click_atask()" style=" text-decoration: none;">
+                        <span class="icon-bell" style="font-size: 24px;color:#aaa;"></span>
                         <p id="pTaskCount" class="counter" style="display:none;"></p>
+                        <span class="aspan">代办任务</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" title="用户设置" style="text-decoration:none;">
+                    <a href="#" style="text-decoration:none;">
                         <span class=" icon-cog" style="font-size: 24px;color:#aaa;"></span>
+                        <span class="aspan">系统登录</span>
                     </a>
                 </li>
                 <li>
-                    <a href="@Url.Action("LoginOut","Login")" style="text-decoration:none;" title="退出登录">
+                    <a href="@Url.Action("LoginOut","Login")" style="text-decoration:none;">
                         <span class="icon-signout" style="font-size: 24px;color:#aaa;"></span>
-                        <span style="font-size:18px;">退出</span>
+                        <span class="aspan">退出登录</span>
                     </a>
                 </li>
             </ul>

@@ -18,7 +18,7 @@
             { field: "StepName", title: "步骤名称", width: 120, sortable: true, halign: "center", align: "center" },
             { field: "SenderName", title: "发送人", width: 120, sortable: true, halign: "center", align: "center" },
             { field: "CreatedTime", title: "发送时间", width: 150, sortable: true, halign: "center", align: "center", formatter: function (value) { return $.OSky.tools.formatDate(value); } },
-            { field: "Status", title: "状态", width: 100, halign: "center", align: "center", sortable: true, formatter: formatStatus},
+            { field: "Status", title: "状态", width: 100, halign: "center", align: "center", sortable: true, formatter: formatStatus },
             { field: "StepDay", title: "时限(天)", width: 80, sortable: true, halign: "center", align: "center" },
             {
                 field: "DelayDay", title: "延期(天)", width: 80, sortable: true, halign: "center", align: "center",
@@ -65,23 +65,28 @@
 
 @section footHtml
 {
-    <table class="query-table" id="advance">
-    <tr>
-        <th>步骤名称</th>
-        <td><input type="text" name="Name" class="easyui-validatebox textbox" style="width:200px" /></td>
-    </tr>
-    <tr>
-        <th>发送人</th>
-        <td><input type="text" name="Name" class="easyui-validatebox textbox" style="width:200px" /></td>
-    </tr>
-    <tr>
-        <th>发送时间</th>
-        <td><input type="text" name="Name" class="easyui-validatebox textbox" style="width:200px" /></td>
-    </tr>
-    <tr>
-        <th>状态</th>
-        <td><input type="text" name="Name" class="easyui-validatebox textbox" style="width:200px" /></td>
-    </tr>
-</table>
-
+    <form id="formQuery">
+        <table class="query-table" id="advance">
+            <tr style="display:none;">
+                <th>searchKey</th>
+                <td><input type="hidden" name="key" id="key" /></td>
+            </tr>
+            <tr>
+                <th>步骤名称</th>
+                <td><input type="text" name="Name" class="easyui-validatebox textbox" style="width:200px" /></td>
+            </tr>
+            <tr>
+                <th>发送人</th>
+                <td><input type="text" name="userName" class="easyui-validatebox textbox" style="width:200px" /></td>
+            </tr>
+            <tr>
+                <th>发送时间</th>
+                <td><input type="text" name="sendeDate" class="easyui-validatebox textbox" style="width:200px" /></td>
+            </tr>
+            <tr>
+                <th>状态</th>
+                <td><input type="text" name="status" class="easyui-validatebox textbox" style="width:200px" /></td>
+            </tr>
+        </table>
+    </form>
 }

@@ -212,7 +212,7 @@
             }
             //搜索条件
             $('.datagrid-toolbar').css({ "float": "left", "display": "block", "width": "100%" })
-               .append("<div id='divSearch' style='float:right;'><a id='advanceSearch' href='javascript:void(0)' onclick='moreCondition()' class='btn btn-info' style='top:2px;right:262px;text-decoration:none; position: absolute;'><i id='searchPrompt' class='icon-double-angle-down' style='font-size:12px;'></i> 高级搜索</a><input id='searchKey' type='text'  placeholder='输入查询条件' style='padding-left:5px;'/><a href='javascript:void(0)' class='textbox-icon searchbox-button' icon-index='0' tabindex='-1' style='top:3px;right:10px;width: 18px; height: 16px; position: absolute;'></a></div>");
+               .append("<div id='divSearch' style='float:right;'><a id='advanceSearch' href='javascript:void(0)' onclick='moreCondition()' class='btn btn-info' style='top:2px;right:262px;text-decoration:none; position: absolute;'><i id='searchPrompt' class='icon-double-angle-down' style='font-size:12px;'></i> 更多条件</a><input id='searchKey' type='text'  placeholder='输入查询条件' style='padding-left:5px;'/><a href='javascript:void(0)' onclick='searchClick();' class='textbox-icon searchbox-button' icon-index='0' tabindex='-1' style='top:3px;right:10px;width: 18px; height: 16px; position: absolute;'></a></div>");
             $('#searchKey').css({ "width": "250px", "height": "23px", "position": "absolute", "right": "10px", "top": "2px" });
 
             endfunction();
@@ -349,6 +349,31 @@
                         $(parent.document).unbind("mousedown");
                     }
                 });
+            }
+        }
+        //条件查询
+        function searchClick() {
+            if ($("#advance").length > 0) {
+                $("#key").val($("#searchKey").val());
+                grid.datagrid({ queryParams: form2Json("formQuery") });
+            }
+        }
+
+        //将表单数据转为json
+        function form2Json(id) {
+            if ($("#" + id).length > 0) {
+                var arr = $("#" + id).serializeArray()
+                var jsonStr = "";
+
+                jsonStr += '{';
+                for (var i = 0; i < arr.length; i++) {
+                    jsonStr += '"' + arr[i].name + '":"' + arr[i].value + '",'
+                }
+                jsonStr = jsonStr.substring(0, (jsonStr.length - 1));
+                jsonStr += '}'
+
+                var json = JSON.parse(jsonStr);
+                return json;
             }
         }
 
